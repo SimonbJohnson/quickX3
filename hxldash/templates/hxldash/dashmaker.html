@@ -1,0 +1,142 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+	<div class="row segment">
+		<div id="" class="col-md-12 sectiontitle">
+			<p>1. Data</p>
+        </div>		
+	    <div id="datasegmentcontent" class="col-md-6 col-md-offset-3 center">
+            <div id="status"><p>Loading data...</p></div>
+        </div>
+    </div>
+    <div class="row segment">
+		<div id="" class="col-md-12 sectiontitle">
+			<p>2. Layout</p>
+        </div>		
+	    <div id="layoutchooser" class="col-md-12 center">
+	    	<p>Select a layout for your dashboard.</p>
+	    	<p>Large sections are better for maps.</p>
+	    	<div id="layoutsegmentcontent" class="row">
+	    	</div>
+        </div>
+    </div>
+    <div class="row segment">
+		<div id="" class="col-md-12 sectiontitle">
+			<p>3. Style</p>
+        </div>		
+	    <div id="colorchooser" class="col-md-12 center">
+	    	<p>Please choose a colour scheme</p>
+	    	<div id="colorchoices" class="row">
+	    		<i id="color1" class="circle icon huge colorpick"></i>
+	    		<i id="color2" class="circle icon huge colorpick"></i>
+	    		<i id="color3" class="circle icon huge colorpick"></i>
+	    		<i id="color4" class="circle icon huge colorpick"></i>
+	    		<i id="color5" class="circle icon huge colorpick"></i>
+	    	</div>
+        </div>
+    </div>    
+    <div class="row segment">
+		<div id="" class="col-md-12 sectiontitle">
+			<p>4. Create</p>
+        </div>		
+	    <div class="col-md-12">
+	    	<div id="create-text" class="row">
+	    		<div class="col-md-12">
+	    			<p class="create-text">Title</p>
+		            <div class="ui input fluid huge">
+		                <input id="create-title" type="text" placeholder="Title...">
+		            </div>
+	    			<p class="create-text">Description</p>
+					<div class="ui form">
+					  <div class="field">
+					    <textarea rows="2"></textarea>
+					  </div>
+					</div>
+					<p class="create-text">Filters<i id="filterplus" class="plus circle icon large plusicon"></i></p>
+					<div id="filterchooser" class="row">
+						<div class="col-md-4 filterbox">
+							<div class="filterselect center"><i class="plus circle icon large plusicon"></i></div>
+						</div>
+						<div class="col-md-4 filterbox">
+							<div class="filterselect center"><i class="plus circle icon large plusicon"></i></div>
+						</div>
+						<div class="col-md-4 filterbox">
+							<div class="filterselect center"><i class="plus circle icon large plusicon"></i></div>
+						</div>
+					</div>
+					<p class="create-text">Headline numbers<i id="headlineplus" class="plus circle icon large plusicon"></i></p>
+					<div id="headlinechooser" class="row">
+						<div class="col-md-4 headlinebox">
+							<div id="headline0" class="headlineselect center"><i data-id="0" class="plus circle icon large plusicon headlineselectbutton"></i></div>
+						</div>
+						<div class="col-md-4 headlinebox">
+							<div id="headline1" class="headlineselect center"><i data-id="1" class="plus circle icon large plusicon headlineselectbutton"></i></div>
+						</div>
+						<div class="col-md-4 headlinebox">
+							<div id="headline2" class="headlineselect center"><i data-id="2" class="plus circle icon large plusicon headlineselectbutton"></i></div>
+						</div>
+					</div>
+					<p class="create-text">Dashboard</p>
+					<div id="dashboardlayout" class="row">
+
+					</div>						            
+	    		</div>
+	    	</div>
+        </div>
+    </div>
+    <div class="row segment">
+		<div id="" class="col-md-12 sectiontitle">
+			<p>5. Save and Share</p>
+        </div>		
+	    <div id="layoutchooser" class="col-md-12 center">
+	    	<p>Text</p>
+	    	<div id="layoutsegmentcontent" class="row">
+	    	</div>
+        </div>
+    </div>
+	<div id="headlinemodal" class="ui modal">
+	  <div class="header">
+	    <p>Choose a headline figure</p>
+	  </div>
+	  <div id="headlinecontent" class="content row">
+	  </div>
+	  <div class="actions">
+	    <div class="ui black button cancel">
+	      Close
+	    </div>
+	  </div>
+	</div>
+	<div id="chartmodal" class="ui modal">
+	  <div class="header">
+	    <p>Choose a chart, map or table</p>
+	  </div>
+	  <div id="dashcontent" class="content row">
+		<div class="ui top attached tabular menu">
+		  <div class="active item" data-tab="charts">Charts</div>
+		  <div class="item" data-tab="timeseries">TimeSeries</div>
+		  <div class="item" data-tab="maps">Maps</div>
+		</div>
+		<div class="ui bottom attached active tab segment" data-tab="charts">
+			<div id="chartcontent" class="row"></div>
+		</div>
+		<div class="ui bottom attached tab segment" data-tab="timeseries">
+			<div id="timecontent" class="row"></div>
+		</div>
+		<div class="ui bottom attached tab segment" data-tab="maps">
+		</div>				
+	  </div>
+	  <div class="actions">
+	    <div class="ui black button cancel">
+	      Close
+	    </div>
+	  </div>
+	</div>	
+	<link rel="stylesheet" href="{% static 'css/dash.css' %}">
+    <script>
+    	var dataURL = '{{ dataURL }}';
+    	var gridURL = "{% static 'grid_data/gridxxx.html' %}";
+    </script>
+    <script src="{% static 'js/dashmaker.js' %}"></script> 
+    <script src="{% static 'js/dash_render.js' %}"></script> 
+{% endblock %}

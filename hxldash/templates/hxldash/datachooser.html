@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+	<div class="row">
+        <div class="col-md-6 col-md-offset-3 center">
+            <p>Please insert a URL of a HXL data source to load.</p>
+            <div class="ui input fluid huge">
+                <input id="dataurl" type="text" placeholder="URL...">
+            </div>
+            <button id="loaddata" class="ui right labeled icon button center">
+                <i class="right arrow icon"></i>
+                Load Data
+            </button>
+
+            <p>Datasource supported include Google Documents/Drive, Dropbox and HDX files</p>
+        </div>
+    </div>
+    <script>
+        var createURL = "{% url 'create' 'xxx' %}";
+    </script>
+    <script src="{% static 'js/datachooser.js' %}"></script> 
+{% endblock %}
