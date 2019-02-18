@@ -1,6 +1,5 @@
 function loadData(dataURL){
 	dataURL = dataURL.replace(/amp;/g,'');
-	console.log(dataURL.replace('amp;',''));
 	let proxyURL = 'https://proxy.hxlstandard.org/data.json?force=on&filter01=cut&cut-skip-untagged01=o&url=dataURL';
 	proxyURL = proxyURL.replace('dataURL',encodeURIComponent(dataURL));
 	$.ajax({
@@ -40,6 +39,7 @@ function generateBites(data,dataURL){
 	let headline = 0;
 	let row = 0;
 	let line = 0;
+	let map = 0;
 	hb.getChartBites().forEach(function(bite){
 		matches++;
 		bites.charts.push({'data':dataURL,'bite':bite});
@@ -55,7 +55,9 @@ function generateBites(data,dataURL){
 	});
 	hb.getMapBites().forEach(function(bite){
 		bites.maps.push({'data':dataURL,'bite':bite});
+		$('#mapcontent').append('<div class="col-md-4"><div id="mapselect'+map+'" class="mapedit"><p>'+bite.title+'</p><img class="mappreview" src="'+mapPreviewURL+'"></div></div>');
 		matches++;
+		map++;
 	});
 	hb.getCrossTableBites().forEach(function(bite){
 		bites.crossTables.push({'data':dataURL,'bite':bite});
@@ -71,7 +73,11 @@ function generateBites(data,dataURL){
 		}
 		
 	});
-	console.log(bites);
+	let filters = [];
+	for(let i = 0;i<data[0].length;i++){
+		filters.push({'header':data[0][i],'tag':data[1][i]});
+		$('#filterselect').append('<option value="'+data[0][i]+'('+data[1][i]+'">'+data[0][i]+'('+data[1][i]+')</option>')
+	}
 	return matches;
 }
 
@@ -89,7 +95,6 @@ function injectLayouts(max){
                 	$('#dashboardlayout').html(result);
                 	$('#dashboardlayout .chart').each(function(index){
                 		$(this).attr("id","dashchart"+index);
-                		console.log(index);
                 		$( this ).html('<i id="chartedit'+index+'" data-id="'+index+'" class="plus circle icon large plusicon">');
                 		$('#chartedit'+index).on('click',function(){
                 			$('#chartmodal').modal({
@@ -97,7 +102,6 @@ function injectLayouts(max){
 							    onVisible: function () {
 							    	charts.forEach(function(chart){
 							    		chart.update();
-
 							    	});
 							    	$('#chartmodal').modal('refresh');
 							    }
@@ -107,6 +111,26 @@ function injectLayouts(max){
 								$("#chartselect"+i).on('click',function(){
 									$('#chartmodal').modal('hide');
 									createChart('#dashchart'+index,[chart.bite],true);
+									config.charts[index].data = chart.data;
+									config.charts[index].chartID = chart.bite.uniqueID;
+								});
+							});
+           					bites.time.forEach(function(chart,i){
+								$("#timeselect"+i).off();
+								$("#timeselect"+i).on('click',function(){
+									$('#chartmodal').modal('hide');
+									createChart('#dashchart'+index,[chart.bite],true);
+									config.charts[index].data = chart.data;
+									config.charts[index].chartID = chart.bite.uniqueID;
+								});
+							});
+							bites.maps.forEach(function(mp,i){
+								$("#mapselect"+i).off();
+								$("#mapselect"+i).on('click',function(){
+									$('#chartmodal').modal('hide');
+									createMap('#dashchart'+index,mp.bite);
+									config.charts[index].data = mp.data;
+									config.charts[index].chartID = mp.bite.uniqueID;
 								});
 							});
                 		});
@@ -141,7 +165,22 @@ $('.headlineselectbutton').on('click',function(){
 		$("#headlineselect"+i).on('click',function(){
 			$('#headlinemodal').modal('hide');
 			createHeadLineFigure('#headline'+headlineNum,headline.bite);
+			config.headlinefigurecharts[headlineNum].data = headline.data;
+			config.headlinefigurecharts[headlineNum].chartID = headline.bite.id;
 		});
+	});
+});
+
+$('.filterselectbutton').on('click',function(){
+	$('#filtermodal').modal('show');
+	var filterNum = $(this).attr('data-id');
+	$("#addfilter").off();
+	$("#addfilter").on('click',function(){
+		$('#filtermodal').modal('hide');
+		let val = $('#filterselect').val();
+		$('#filter'+filterNum).html('<p>Filter for '+val+')</p>');
+		config.filters[filterNum].text = val.split('(')[0];
+		config.filters[filterNum].tag = val.split('(')[1];
 	});
 });
 

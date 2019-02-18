@@ -58,7 +58,6 @@ function createChart(id,bite,sort){
     $(id).addClass('chartcontainer');
     $(id).html('<div class="titlecontainer"><p class="bitetitle">'+title+'</p></div><div id="chartcontainer'+id.substring(1)+'" class="chartelement"></div>');
     id = id.substring(1);
-    console.log('#chartcontainer'+id);
     $('#chartcontainer'+id).height($('#'+id).height()-55);
     if(subtype=="row" || subtype=="pie"){
         bite[0].bite.forEach(function(d,i){
@@ -208,4 +207,198 @@ function niceNumber(num) {
   
   // return formatted original number
   return num.toLocaleString()
+}
+
+function createMap(id,bite,scale){
+    var bounds = [];
+
+    id = id.substring(1);
+
+    $('#'+id).html('<p class="bitetitle">'+bite.title+'</p><div id="'+id+'map" class="map"></div>');
+
+    var map = L.map(id+'map', { fadeAnimation: false }).setView([0, 0], 2);
+
+    var maxValue = bite.bite[1][1];
+    var minValue = bite.bite[1][1]-1;
+
+    bite['lookup'] = {}
+
+    bite.bite.forEach(function(d){
+        if(d[1]>maxValue){
+            maxValue = d[1];
+        }
+        if(d[1]-1<minValue){
+            minValue = d[1]-1;
+        }
+        bite.lookup[d[0]] = d[1];
+    });
+
+    L.tileLayer.grayscale('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org/">OpenStreetMap</a> contributors',
+        maxZoom: 14, minZoom: 1
+    }).addTo(map);
+
+    var info = L.control();
+
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info infohover'); // create a div with a class "info"
+        this.update();
+        return this._div;
+    };
+
+    // method that we will use to update the control based on feature properties passed
+    info.update = function (name,id) {
+        value = 'No Data';
+        bite.bite.forEach(function(d){
+                    if(d[0]==id){
+                        value=d[1];
+                    }
+                }); 
+                               
+        this._div.innerHTML = (id ?
+            '<b>'+name+':</b> ' + value
+            : 'Hover for value');
+    };
+
+    info.addTo(map);
+
+    var legend = L.control({position: 'bottomright'});
+
+    legend.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'info legend')
+        var grades = ['No Data', Number(minValue.toPrecision(3)), Number(((maxValue-minValue)/4+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*2+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*3+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*4+minValue).toPrecision(3))]
+        if(scale=='log'){
+            grades.forEach(function(g,i){
+                if(i>0){
+                    grades[i] = Number((Math.exp(((i-1)/4)*Math.log(maxValue - minValue))+minValue).toPrecision(3));
+                }
+            });
+        }
+        var classes = ['mapcolornone','mapcolor0','mapcolor1','mapcolor2','mapcolor3','mapcolor4'];
+
+        for (var i = 0; i < grades.length; i++) {
+            div.innerHTML += '<i class="'+classes[i]+'"></i> ';
+            div.innerHTML += isNaN(Number(grades[i])) ? grades[i] : Math.ceil(grades[i]);
+            div.innerHTML += (grades[i + 1] ? i==0 ? '<br>' : ' &ndash; ' + Math.floor(grades[i + 1]) + '<br>' : '+');
+        }
+
+        return div;
+    };
+
+    legend.addTo(map);
+    console.log(bite);
+    loadGeoms(bite.geom_url,bite.geom_attribute,bite.name_attribute);
+
+    function loadGeoms(urls,geom_attributes,name_attributes){
+        console.log(name_attributes);
+        var total = urls.length;
+        $('.infohover').html('Loading Geoms: '+total + ' to go');
+        $.ajax({
+            url: urls[0],
+            dataType: 'json',
+            success: function(result){
+                var geom = {};
+                if(result.type=='Topology'){
+                  geom = topojson.feature(result,result.objects.geom);
+                } else {
+                  geom = result;
+                }              
+                var layer = L.geoJson(geom,
+                    {
+                        style: styleClosure(geom_attributes[0]),
+                        onEachFeature: onEachFeatureClosure(geom_attributes[0],name_attributes[0])
+                    }
+                ).addTo(map);
+                if(urls.length>1){
+                    loadGeoms(urls.slice(1),geom_attributes.slice(1),name_attributes.slice(1));
+                } else {
+                    $('.infohover').html('Hover for value');
+                    fitBounds();
+                }
+
+            }
+        });          
+
+    }
+
+    function fitBounds(){
+        if(bounds.length>0){
+            var fitBound = bounds[0];
+            bounds.forEach(function(bound){
+              if(fitBound._northEast.lat<bound._northEast.lat){
+                fitBound._northEast.lat=bound._northEast.lat;
+              }
+              if(fitBound._northEast.lng<bound._northEast.lng){
+                fitBound._northEast.lng=bound._northEast.lng;
+              }
+              if(fitBound._southWest.lng>bound._southWest.lng){
+                fitBound._southWest.lng=bound._southWest.lng;
+              }
+              if(fitBound._southWest.lat>bound._southWest.lat){
+                fitBound._southWest.lat=bound._southWest.lat;
+              }                           
+            });
+            fitBound._northEast.lng=fitBound._northEast.lng+(fitBound._northEast.lng-fitBound._southWest.lng)*0.2;
+            map.fitBounds(fitBound);
+        }
+    }
+
+    function onEachFeatureClosure(geom_attribute,name_attribute){
+        return function onEachFeature(feature, layer) {
+            var featureCode = feature.properties[geom_attribute];
+            if(!isNaN(bite.lookup[featureCode])){
+              bounds.push(layer.getBounds());
+            }
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+            });
+        }
+
+        function highlightFeature(e) {
+            info.update(e.target.feature.properties[name_attribute],e.target.feature.properties[geom_attribute]);
+        }
+
+        function resetHighlight(e) {
+            info.update();
+        }   
+
+    }
+
+    function styleClosure(geom_attribute){
+        return function style(feature) {
+            return {
+                className: getClass(feature.properties[geom_attribute]),
+                weight: 1,
+                opacity: 1,
+                color: '#cccccc',
+                dashArray: '3',
+                fillOpacity: 0.7
+            };
+        }
+    } 
+
+    function getClass(id){
+        var value = 0;
+        var found = false;
+        bite.bite.forEach(function(d){
+            if(d[0]==id){
+                value=d[1];
+                found = true;
+            }
+        });
+        if(found){
+            if(scale=='log'){
+                var maxDivide = Math.log(maxValue-minValue)
+                if(maxDivide ==0){return 'mapcolor'+4}
+                return 'mapcolor'+Math.floor(Math.log(value-minValue)/Math.log(maxValue-minValue)*4);
+            } else {
+                return 'mapcolor'+Math.floor((value-minValue)/(maxValue-minValue)*4);
+            }
+        } else {
+            return 'mapcolornone';
+        }
+    }        
+
 }

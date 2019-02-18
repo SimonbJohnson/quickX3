@@ -17,7 +17,7 @@ hxlBites._mapBites = [{
 'criteria':['where > 0'],
 'variables': ['where', 'sum(value)'],
 'map':'',
-'title':'Map of {2}',
+'title':'Map of {2} by {1}',
 'priority': 10,
 }];
 

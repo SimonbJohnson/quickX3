@@ -11,3 +11,9 @@ def create(request,url):
     data = {}
     data['dataURL'] = url 
     return render(request, 'hxldash/dashmaker.html', data)
+
+def save(request,url):
+    if request.is_ajax():
+        if request.method == 'POST':
+            print 'Raw Data: "%s"' % request.body   
+    return HttpResponse("OK")

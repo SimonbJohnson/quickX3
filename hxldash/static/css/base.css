@@ -198,6 +198,13 @@ body {
 	display:none;
 }
 
+/* filter editing */
+
+#filtercontent {
+	margin-left:0px;
+	margin-right:0px;
+}
+
 /* headline figures edit */
 
 .headlineselect {
@@ -242,4 +249,9 @@ body {
 
 .chartelement {
 	height:100%;
+}
+
+.mappreview {
+	width:100%;
+	border: 1px solid #ccc;
 }
