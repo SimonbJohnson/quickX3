@@ -93,6 +93,7 @@ function injectLayouts(max){
                 $('#layout'+current).on('click',function(){
                 	$('#layoutchooser').slideUp();
                 	$('#dashboardlayout').html(result);
+                	config.grid = current+1;
                 	$('#dashboardlayout .chart').each(function(index){
                 		$(this).attr("id","dashchart"+index);
                 		$( this ).html('<i id="chartedit'+index+'" data-id="'+index+'" class="plus circle icon large plusicon">');
@@ -182,6 +183,13 @@ $('.filterselectbutton').on('click',function(){
 		config.filters[filterNum].text = val.split('(')[0];
 		config.filters[filterNum].tag = val.split('(')[1];
 	});
+});
+
+$('#save').on('click',function(){
+	config.title = $('#create-title').val();
+	config.subtext = $('#create-description').val();
+	$('#formconfig').val(encodeURIComponent(JSON.stringify(config)));
+	$('#savemodal').modal('show');
 });
 
 $('.menu .item').tab({'onVisible':function(){

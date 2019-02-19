@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+            <div class="row">
+                <div id="title" class="col-md-12">
+                </div>
+            </div>
+            <div class="row">
+                <div id="description" class="col-md-12">
+                </div>
+            </div>
+            <div class="row">
+                <div id="update" class="col-md-12">
+            </div>
+            </div>
+            <div id="filter" class="row">
+            </div>
+            <div id="filterline" class="row">
+            </div>
+            <div id="headline" class="row">
+            </div>             
+            <div class="row">
+                <div id="grid" class="col-md-12">
+                </div>
+            </div>
+    <link rel="stylesheet" href="{% static 'css/dash.css' %}"> 
+    <script>
+        var config = {{ config|safe }};
+        var gridURL = "{% static 'grid_data/gridxxx.html' %}";
+    </script>
+    <script src="{% static 'js/dash_render.js' %}"></script> 
+    <script src="{% static 'js/dashview.js' %}"></script>
+    
+{% endblock %}

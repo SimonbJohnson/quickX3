@@ -2,6 +2,11 @@
 {% load staticfiles %}
 
 {% block content %}
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script> 
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/icon.min.css' />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />	
+	<link rel="stylesheet" href="{% static 'css/dash.css' %}">
 	<div class="row segment">
 		<div id="" class="col-md-12 sectiontitle">
 			<p>1. Data</p>
@@ -50,7 +55,7 @@
 	    			<p class="create-text">Description</p>
 					<div class="ui form">
 					  <div class="field">
-					    <textarea rows="2"></textarea>
+					    <textarea id="create-description" rows="2"></textarea>
 					  </div>
 					</div>
 					<p class="create-text">Filters<i id="filterplus" class="plus circle icon large plusicon"></i></p>
@@ -145,12 +150,32 @@
 	    </div>
 	  </div>
 	</div>
-	<div id="filtermodal" class="ui modal">
+	<div id="savemodal" class="ui modal">
 	  <div class="header">
 	    <p>Save your dashboard</p>
 	  </div>
-	  <div id="filtercontent" class="content row">
+	  <div id="savecontent" class="content row">
 	  	<p>Saving your dashboard content</p>
+	  	<form action="/save" method="post" id="form1">{% csrf_token %}
+	  		<input type="hidden" id="formconfig" name="formconfig" value="">
+	  		<p>Enter password if you want to edit this dashboard in the future (optional)</p>
+	  		<div class="ui input fluid large">
+                <input type="text" placeholder="password...">
+            </div>
+	  		<p>Enter password for view access (optional)</p>
+	  		<div class="ui input fluid large">
+                <input type="text" placeholder="password...">
+            </div>
+	  		<p>Your name (optional). Used if we want to follow up on testing.</p>
+	  		<div class="ui input fluid large">
+                <input type="text" placeholder="name...">
+            </div>
+	  		<p>Your organisation (optional). Used if we want to follow up on testing.</p>
+	  		<div class="ui input fluid large">
+                <input type="text" placeholder="organisation...">
+            </div>
+            <button class="ui primary button large" type="submit" form="form1" value="Submit">Submit</button>
+		</form>
 	  </div>
 	  <div class="actions">
 	    <div class="ui black button cancel">
@@ -158,9 +183,8 @@
 	    </div>
 	  </div>
 	</div>		
-	<link rel="stylesheet" href="{% static 'css/dash.css' %}">
     <script>
-    	var dataURL = '{{ dataURL }}';
+    	var dataURL = '{{ dataURL|safe }}';
     	var gridURL = "{% static 'grid_data/gridxxx.html' %}";
     	var mapPreviewURL = "{% static 'images/map_placeholder.png' %}";
     	var config = {

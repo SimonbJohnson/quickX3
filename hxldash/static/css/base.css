@@ -255,3 +255,10 @@ body {
 	width:100%;
 	border: 1px solid #ccc;
 }
+
+/* saving */
+
+#savecontent {
+	margin-left:0px;
+	margin-right:0px;
+}

@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script> 
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/icon.min.css' />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css" /> 
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 center">
+            <p>View</p>
+            <p><a href="{% url 'view' dashID %}">{% url 'view' dashID %}</a></p>
+            <p>Edit</p>
+            <p><a href="{% url 'view' 'dashID' %}">Not ready yet</a></p>
+        </div>
+    </div>
+    <script src="{% static 'js/datachooser.js' %}"></script> 
+{% endblock %}

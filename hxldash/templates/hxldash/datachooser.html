@@ -2,7 +2,11 @@
 {% load staticfiles %}
 
 {% block content %}
-	<div class="row">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script> 
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/icon.min.css' />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" /> 
+    <div class="row">
         <div class="col-md-6 col-md-offset-3 center">
             <p>Please insert a URL of a HXL data source to load.</p>
             <div class="ui input fluid huge">
@@ -12,7 +16,6 @@
                 <i class="right arrow icon"></i>
                 Load Data
             </button>
-
             <p>Datasource supported include Google Documents/Drive, Dropbox and HDX files</p>
         </div>
     </div>
