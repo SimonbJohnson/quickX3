@@ -63,7 +63,7 @@ def view(request,id):
 	config['subtext'] = dashConfig.subtext
 	config['grid'] = dashConfig.grid
 	for bite in dashConfig.bites.all():
-		if bite.biteID!="[u'']":
+		if bite.biteID!="[u'']" and len(bite.dataSource)>1:
 			if bite.variety=='headline' :
 				config['headlinefigurecharts'].append({'data':bite.dataSource,'chartID':bite.biteID})
 				config['headlinefigures'] = config['headlinefigures'] +1

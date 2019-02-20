@@ -1,5 +1,4 @@
 function init(){
-    console.log(config);
     loadGrid(config);
 }
 
@@ -42,7 +41,7 @@ function loadData(config){
     var dataSetLoaded=0;
     dataSets.forEach(function(dataSet,i){
         $.ajax({
-            url: "https://proxy.hxlstandard.org/data.json?url="+encodeURIComponent(dataSet),
+            url: "https://proxy.hxlstandard.org/data.json?force=on&filter01=cut&cut-skip-untagged01=o&url="+encodeURIComponent(dataSet),
             success: function(result){
                 dataSets[i] = result;
                 dataSetLoaded++;
@@ -68,7 +67,6 @@ function loadGrid(config){
 function createDashboard(dataSets,filterDataSets,config){
     $('.sp-circle').remove();
     var height = $(window).height()- 100
-    console.log(height);
     $('.whole').height(height);
     $('.half').height(height/2-15);
     $('.quarter').height(height/4);
@@ -90,7 +88,6 @@ function createDashboard(dataSets,filterDataSets,config){
         }
     }
 
-
     config.charts.forEach(function(chart,i){
         if(chart.chartID!='[]'){
             if(typeof chart.chartID === 'string'){
@@ -101,7 +98,6 @@ function createDashboard(dataSets,filterDataSets,config){
                 $(id).html('<p>No Data</p>');
             } else {
                 var bites = [];
-
                 chart.chartID.forEach(function(id){
                     bites.push(hxlBites.data(filterDataSets[chart.data]).reverse(id));
                 });

@@ -24,7 +24,7 @@ let hxlBites = {
 		let self = this;
 		
 		//get values for tags that match
-		let matches = self._getIngredientValues({'name':'#date','tags':['#date-update','#date-report','#date-start']},self._data);
+		let matches = self._getIngredientValues({'name':'#date','tags':['#date-update','#date-report','#date-start','#date-occurred']},self._data);
 		let timeSeries = true;
 		
 		//tracking which column to filter on and by what value
@@ -973,7 +973,6 @@ let hxlBites = {
 		for(i=0;i<length;i++){
 			columns.push({'tag':parts[i*2+1],'number':+parts[i*2+2]})
 		}
-
 		//for each column confirm if tag is present	
 		columns.forEach(function(col,i){
 			columns[i]=self.confirmCols(col);
@@ -1023,6 +1022,12 @@ let hxlBites = {
 			if(tag=='#adm1+code'){
 				level = 1;
 			}
+			if(tag=='#adm2+code'){
+				level = 2;
+			}
+			if(tag=='#adm3+code'){
+				level = 3;
+			}	
 			if(level>-1){
 				//let titleVariables = self._getTitleVariables(bite.variables,matchingValues);				
 				//let titles = self._generateTextBite(bite.title,titleVariables);
@@ -1036,7 +1041,7 @@ let hxlBites = {
 				});	*/	
 				newBites = self._generateMapBite(bite.chart,variables);
 			}
-		}		
+		}
 		newBites.forEach(function(newBite,i){
 			if (biteID.substr(0,4)=='time'){
 				let headers = newBite.bite.slice(0, 1);
