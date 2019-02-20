@@ -15,7 +15,7 @@ def create(request,url):
 	data = {}
 	if url[0:7]=="https:/" and url[8]!="/":
 		url = "https://"+url[8:]
-	if url[0:6]=="https:/" and url[7]!="/":
+	if url[0:6]=="http:/" and url[7]!="/":
 		url = "http://"+url[7:]
 	data['dataURL'] = url 
 	return render(request, 'hxldash/dashmaker.html', data)
