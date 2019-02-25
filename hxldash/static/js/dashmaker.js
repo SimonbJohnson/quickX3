@@ -98,42 +98,7 @@ function injectLayouts(max){
                 		$(this).attr("id","dashchart"+index);
                 		$( this ).html('<i id="chartedit'+index+'" data-id="'+index+'" class="plus circle icon large plusicon">');
                 		$('#chartedit'+index).on('click',function(){
-                			$('#chartmodal').modal({
-                				duration:0,
-							    onVisible: function () {
-							    	charts.forEach(function(chart){
-							    		chart.update();
-							    	});
-							    	$('#chartmodal').modal('refresh');
-							    }
-							}).modal('show');
-                			bites.charts.forEach(function(chart,i){
-								$("#chartselect"+i).off();
-								$("#chartselect"+i).on('click',function(){
-									$('#chartmodal').modal('hide');
-									createChart('#dashchart'+index,[chart.bite],true);
-									config.charts[index].data = chart.data;
-									config.charts[index].chartID = chart.bite.uniqueID;
-								});
-							});
-           					bites.time.forEach(function(chart,i){
-								$("#timeselect"+i).off();
-								$("#timeselect"+i).on('click',function(){
-									$('#chartmodal').modal('hide');
-									createChart('#dashchart'+index,[chart.bite],true);
-									config.charts[index].data = chart.data;
-									config.charts[index].chartID = chart.bite.uniqueID;
-								});
-							});
-							bites.maps.forEach(function(mp,i){
-								$("#mapselect"+i).off();
-								$("#mapselect"+i).on('click',function(){
-									$('#chartmodal').modal('hide');
-									createMap('#dashchart'+index,mp.bite);
-									config.charts[index].data = mp.data;
-									config.charts[index].chartID = mp.bite.uniqueID;
-								});
-							});
+                			chooseChart(index);
                 		});
                 	});
                 });
@@ -144,6 +109,57 @@ function injectLayouts(max){
             }
     	});
 	}
+}
+
+function chooseChart(index){
+	$('#chartmodal').modal({
+		duration:0,
+	    onVisible: function () {
+	    	charts.forEach(function(chart){
+	    		chart.update();
+	    	});
+	    	$('#chartmodal').modal('refresh');
+	    }
+	}).modal('show');
+	bites.charts.forEach(function(chart,i){
+		$("#chartselect"+i).off();
+		$("#chartselect"+i).on('click',function(){
+			$('#chartmodal').modal('hide');
+			createChart('#dashchart'+index,[chart.bite],true);
+			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
+			$('.editchartbutton').on('click',function(){
+				chooseChart($(this).attr('data-id'));
+			});
+			config.charts[index].data = chart.data;
+			config.charts[index].chartID = chart.bite.uniqueID;
+		});
+	});
+	bites.time.forEach(function(chart,i){
+		$("#timeselect"+i).off();
+		$("#timeselect"+i).on('click',function(){
+			$('#chartmodal').modal('hide');
+			createChart('#dashchart'+index,[chart.bite],true);
+			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
+			$('.editchartbutton').on('click',function(){
+				chooseChart($(this).attr('data-id'));
+			});
+			config.charts[index].data = chart.data;
+			config.charts[index].chartID = chart.bite.uniqueID;
+		});
+	});
+	bites.maps.forEach(function(mp,i){
+		$("#mapselect"+i).off();
+		$("#mapselect"+i).on('click',function(){
+			$('#chartmodal').modal('hide');
+			createMap('#dashchart'+index,mp.bite);
+			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
+			$('.editchartbutton').on('click',function(){
+				chooseChart($(this).attr('data-id'));
+			});
+			config.charts[index].data = mp.data;
+			config.charts[index].chartID = mp.bite.uniqueID;
+		});
+	});	
 }
 
 $('.colorpick').on('click',function(){
@@ -159,31 +175,48 @@ $('#headlineplus').on('click',function(){
 });
 
 $('.headlineselectbutton').on('click',function(){
-	$('#headlinemodal').modal('show');
 	var headlineNum = $(this).attr('data-id');
+	chooseHeadline(headlineNum);
+});
+
+function chooseHeadline(headlineNum){
+	$('#headlinemodal').modal('show');
 	bites.headlines.forEach(function(headline,i){
 		$("#headlineselect"+i).off();
 		$("#headlineselect"+i).on('click',function(){
 			$('#headlinemodal').modal('hide');
 			createHeadLineFigure('#headline'+headlineNum,headline.bite);
+			$('#headline'+headlineNum).append('<i data-id="'+headlineNum+'" class="edit icon large editchartbutton"></i>');
+			$('.editchartbutton').on('click',function(){
+				chooseHeadline($(this).attr('data-id'));
+			});			
 			config.headlinefigurecharts[headlineNum].data = headline.data;
 			config.headlinefigurecharts[headlineNum].chartID = headline.bite.id;
 		});
 	});
-});
+}
 
 $('.filterselectbutton').on('click',function(){
-	$('#filtermodal').modal('show');
+	
 	var filterNum = $(this).attr('data-id');
+	chooseFilter(filterNum);
+});
+
+function chooseFilter(filterNum){
+	$('#filtermodal').modal('show');
 	$("#addfilter").off();
 	$("#addfilter").on('click',function(){
 		$('#filtermodal').modal('hide');
 		let val = $('#filterselect').val();
 		$('#filter'+filterNum).html('<p>Filter for '+val+')</p>');
+		$('#filter'+filterNum).append('<i data-id="'+filterNum+'" class="edit icon large editchartbutton"></i>');
+			$('.editchartbutton').on('click',function(){
+				chooseFilter($(this).attr('data-id'));
+			});	
 		config.filters[filterNum].text = val.split('(')[0];
 		config.filters[filterNum].tag = val.split('(')[1];
-	});
-});
+	});	
+}
 
 $('#save').on('click',function(){
 	config.title = $('#create-title').val();

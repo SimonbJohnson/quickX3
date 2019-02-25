@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from models import DashboardConfig,BiteConfig,FilterConfig
+from django.contrib.auth.hashers import make_password, check_password
 
 import urllib
 import json
@@ -28,10 +29,12 @@ def save(request):
 		dashConfig.title = config['title']
 		dashConfig.subtext = config['subtext']
 		dashConfig.grid = config['grid']
-		dashConfig.editpassword = ''
-		dashConfig.viewpassword = ''
-		dashConfig.user = ''
-		dashConfig.org = ''
+		dashConfig.editpassword = make_password(request.POST['editpassword'])
+		viewpassword = request.POST['viewpassword']
+		if viewpassword != '':
+			dashConfig.viewpassword = make_password(request.POST['viewpassword'])
+		dashConfig.user = request.POST['user']
+		dashConfig.org = request.POST['org']
 		dashConfig.headlinefigures = 0
 		dashConfig.save()
 		dashID = dashConfig.id
@@ -47,8 +50,16 @@ def save(request):
 	
 	return render(request, 'hxldash/dashsave.html', {'dashID':dashID})
 
+
 def view(request,id):
 	dashConfig = DashboardConfig.objects.get(pk=id)
+	viewpassword = dashConfig.viewpassword
+	if viewpassword != '':
+		user = '';
+		if 'user' in request.session:
+			user = request.session['user']
+		if check_password(user,viewpassword)==False:
+			return password(request,'view',id)
 	config = {
 		"title":"",
 		"subtext":"",
@@ -76,3 +87,10 @@ def view(request,id):
 			config['filters'].append({'text':filt.text,'tag':filt.tag})
 
 	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''","")})
+
+def password(request,page,id):
+	return render(request, 'hxldash/password.html', {'page':page,'id':id})
+
+def setpassword(request,page,id):
+	request.session['user'] = request.POST['viewpassword']
+	return redirect('/'+page+'/'+id);
