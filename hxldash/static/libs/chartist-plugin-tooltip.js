@@ -45,6 +45,7 @@
           $chart.appendChild($toolTip);
         } else {
           document.body.appendChild($toolTip);
+          $toolTip.style.top = 0;
         }
       }
       var height = $toolTip.offsetHeight;

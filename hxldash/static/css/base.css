@@ -61,10 +61,22 @@ body {
 	color:white;
 }
 
+.edit .icon {
+	cursor:pointer;
+}
+
 /* layout picker */
 
 .layout {
 	padding:30px;
+}
+
+#layoutedit {
+	padding-left:20px;
+}
+
+#styleedit {
+	padding-left:20px;
 }
 
 #layoutsegmentcontent .grid {
@@ -276,3 +288,4 @@ body {
 	margin-left:0px;
 	margin-right:0px;
 }
+

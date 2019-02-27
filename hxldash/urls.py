@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^save$', views.save, name='save'),
     url(r'^view/(?P<id>.*)$', views.view, name='view'),
     url(r'^passwordset/(?P<page>.*)/(?P<id>.*)$', views.setpassword, name='setpassword'),
+    url(r'^edit/(?P<id>.*)$', views.edit, name='edit'),
+    url(r'^update/(?P<id>.*)$', views.update, name='update'),
 ]

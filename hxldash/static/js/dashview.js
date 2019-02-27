@@ -119,6 +119,7 @@ function createDashboard(dataSets,filterDataSets,config){
             }
         }        
     });
+    $('.chartist-tooltip').css('top','0px');
 }
 
 function getLastDate(config,dataSets){

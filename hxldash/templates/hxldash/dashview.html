@@ -24,6 +24,20 @@
                 <div id="grid" class="col-md-12">
                 </div>
             </div>
+    </div>
+    <div class="footer container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Powered By <a href="http://hxlstandard.org/" target="_blank">#HXL</a></p>
+                </div>
+                <div class="col-md-6 right">
+                    <p><a href="{% url 'edit' id %}">Edit</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content container">
     <link rel="stylesheet" href="{% static 'css/dash.css' %}"> 
     <script>
         var config = {{ config|safe }};

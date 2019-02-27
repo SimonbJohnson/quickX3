@@ -7,8 +7,9 @@ function loadData(dataURL){
             success: function(result){
                 dataSets.push(result);
                 $('#status').html('<p>Data Loaded Successfully</p>');
-                console.log(result);
-                let matches = generateBites(result,dataURL);
+                let hb = hxlBites.data(result);
+                let matches = generateBites(hb,result,dataURL);
+                injectLayouts(hb,9);
                 updateStatusForBites(bites,matches);
 
             },
@@ -33,8 +34,8 @@ function updateStatusForBites(bites,matches){
 	}
 }
 
-function generateBites(data,dataURL){
-	let hb = hxlBites.data(data);
+function generateBites(hb,data,dataURL){
+	
 	let matches = 0;
 	let headline = 0;
 	let row = 0;
@@ -81,7 +82,59 @@ function generateBites(data,dataURL){
 	return matches;
 }
 
-function injectLayouts(max){
+function populateEditor(hb){
+	$('#create-title').val(config.title);
+	$('#create-description').val(config.subtext);
+	config.headlinefigurecharts.forEach(function(headline,i){
+		$('#headlinechooser').slideDown();
+		if(headline.chartID!=''){
+			let bite = hb.reverse(headline.chartID);
+			createHeadLineFigure('#headline'+i,bite);
+			$('#headline'+i).append('<i data-id="'+i+'" class="edit icon large editchartbutton"></i>');
+			$('.editchartbutton').on('click',function(){
+				chooseHeadline($(this).attr('data-id'));
+			});		
+		}
+	});
+	populateCharts(hb);
+    config.filters.forEach(function(filter,i){
+    	if(filter.text!=''){
+    		$('#filterchooser').slideDown();
+	    	$('#filter'+i).html('<p>Filter for '+filter.text+' ('+filter.tag+')</p>');
+			$('#filter'+i).append('<i data-id="'+i+'" class="edit icon large editchartbutton"></i>');
+			$('.editchartbutton').on('click',function(){
+				chooseFilter($(this).attr('data-id'));
+			});
+		}
+    });
+}
+
+function populateCharts(hb){
+	config.charts.forEach(function(chart,i){
+		if(chart.chartID!=''){
+			let bite = hb.reverse(chart.chartID);
+			if(bite.type=='chart'){
+				createChart('#dashchart'+i,[bite],true);
+				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="edit icon editchartbutton"></i>');
+				$('.editchartbutton').on('click',function(){
+					chooseChart($(this).attr('data-id'));
+				});
+	        }
+	        if(bite.type=='map'){
+	            if(chart.scale==undefined){
+	                chart.scale = 'linear';
+	            }
+	            createMap('#dashchart'+i,bite);
+				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="edit icon editchartbutton"></i>');
+				$('.editchartbutton').on('click',function(){
+					chooseChart($(this).attr('data-id'));
+				});
+	        }
+	    }
+    });
+}
+
+function injectLayouts(hb,max){
 	for(var i=0;i<max;i++){
 		let current = i;
 		let html = '<div id="layout'+i+'" class="col-md-3 layout"></div>';
@@ -89,18 +142,17 @@ function injectLayouts(max){
 		$.ajax({
             url: gridURL.replace('xxx',(current+1).toString()),
             success: function(result){
+            	if(current+1==config.grid){
+            		$('#layoutchooser').slideUp();
+            		insertLayout(result);
+            		populateEditor(hb);
+            	}
                 $('#layout'+current).html(result);
                 $('#layout'+current).on('click',function(){
                 	$('#layoutchooser').slideUp();
-                	$('#dashboardlayout').html(result);
                 	config.grid = current+1;
-                	$('#dashboardlayout .chart').each(function(index){
-                		$(this).attr("id","dashchart"+index);
-                		$( this ).html('<i id="chartedit'+index+'" data-id="'+index+'" class="plus circle icon large plusicon">');
-                		$('#chartedit'+index).on('click',function(){
-                			chooseChart(index);
-                		});
-                	});
+                	insertLayout(result);
+                	populateCharts(hb);
                 });
             },
             error: function(err){
@@ -109,6 +161,17 @@ function injectLayouts(max){
             }
     	});
 	}
+}
+
+function insertLayout(html){
+	$('#dashboardlayout').html(html);
+	$('#dashboardlayout .chart').each(function(index){
+		$(this).attr("id","dashchart"+index);
+		$( this ).html('<i id="chartedit'+index+'" data-id="'+index+'" class="plus circle icon large plusicon">');
+		$('#chartedit'+index).on('click',function(){
+			chooseChart(index);
+		});
+	});
 }
 
 function chooseChart(index){
@@ -153,7 +216,7 @@ function chooseChart(index){
 			$('#chartmodal').modal('hide');
 			createMap('#dashchart'+index,mp.bite);
 			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
-			$('.editchartbutton').on('click',function(){
+			$('#dashchart'+index+' .editchartbutton').on('click',function(){
 				chooseChart($(this).attr('data-id'));
 			});
 			config.charts[index].data = mp.data;
@@ -187,7 +250,7 @@ function chooseHeadline(headlineNum){
 			$('#headlinemodal').modal('hide');
 			createHeadLineFigure('#headline'+headlineNum,headline.bite);
 			$('#headline'+headlineNum).append('<i data-id="'+headlineNum+'" class="edit icon large editchartbutton"></i>');
-			$('.editchartbutton').on('click',function(){
+			$('#headline'+headlineNum+' .editchartbutton').on('click',function(){
 				chooseHeadline($(this).attr('data-id'));
 			});			
 			config.headlinefigurecharts[headlineNum].data = headline.data;
@@ -210,7 +273,7 @@ function chooseFilter(filterNum){
 		let val = $('#filterselect').val();
 		$('#filter'+filterNum).html('<p>Filter for '+val+')</p>');
 		$('#filter'+filterNum).append('<i data-id="'+filterNum+'" class="edit icon large editchartbutton"></i>');
-			$('.editchartbutton').on('click',function(){
+			$('#filter'+filterNum+' .editchartbutton').on('click',function(){
 				chooseFilter($(this).attr('data-id'));
 			});	
 		config.filters[filterNum].text = val.split('(')[0];
@@ -232,8 +295,22 @@ $('.menu .item').tab({'onVisible':function(){
 	}
 });
 
+$('#layoutedit').on('click',function(){
+	$('#layoutchooser').slideDown();
+});
+
+$('#styleedit').on('click',function(){
+	$('#colorchooser').slideDown();
+});
+
+if(create=='True'){
+	$('#updateform').remove();
+} else {
+	$('#saveform').remove();
+	$('#form1').attr("action",'/update/'+id);
+}
+
 let bites = {'charts':[],'maps':[],'crossTables':[],'headlines':[],'time':[]};
 let dataSets = [];
 let charts = [];
 loadData(dataURL);
-injectLayouts(9);

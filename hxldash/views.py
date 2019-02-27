@@ -18,7 +18,41 @@ def create(request,url):
 		url = "https://"+url[7:]
 	if url[0:6]=="http:/" and url[6]!="/":
 		url = "http://"+url[6:]
-	data['dataURL'] = url 
+	data['dataURL'] = url
+	data['id'] = 1 
+	data['config'] = {
+		"title":"",
+		"subtext":"",
+		"filtersOn":False,
+		"filters":[{"text":"","tag":""},{"text":"","tag":""},{"text":"","tag":""}],
+		"headlinefigures":0,
+		"headlinefigurecharts":[{"data":"",
+		"chartID":""},
+		{"data":"",
+		"chartID":""},
+		{"data":"",
+		"chartID":""}],
+		"grid":"",
+		"charts":[
+			{"data":"",
+			"chartID":[]
+			},
+			{"data":"",
+			"chartID":[""]
+			},						
+			{"data":"",
+			"chartID":[""]
+			},						
+			{"data":"",
+			"chartID":[""]
+			},						
+			{"data":"",
+			"chartID":[""]
+			}
+		]
+	}
+	data['create'] = True
+	data['config'] = json.dumps(data['config'])
 	return render(request, 'hxldash/dashmaker.html', data)
 
 def save(request):
@@ -29,7 +63,9 @@ def save(request):
 		dashConfig.title = config['title']
 		dashConfig.subtext = config['subtext']
 		dashConfig.grid = config['grid']
-		dashConfig.editpassword = make_password(request.POST['editpassword'])
+		editpassword = request.POST['editpassword'] 
+		if editpassword != '':
+			dashConfig.editpassword = make_password(request.POST['editpassword'])
 		viewpassword = request.POST['viewpassword']
 		if viewpassword != '':
 			dashConfig.viewpassword = make_password(request.POST['viewpassword'])
@@ -50,6 +86,38 @@ def save(request):
 	
 	return render(request, 'hxldash/dashsave.html', {'dashID':dashID})
 
+def update(request,id):
+	dashConfig = DashboardConfig.objects.get(pk=id)
+	editpassword = dashConfig.editpassword	
+	if editpassword == '':
+		editpassword = 'a'
+	user = '';
+	if 'user' in request.session:
+		user = request.session['user']
+	if check_password(user,editpassword)==False:
+		return password(request,'edit',id)
+	if request.method == 'POST':
+		jsonstring = urllib.unquote(request.POST['formconfig'])
+		config = json.loads(jsonstring)
+		dashConfig.title = config['title']
+		dashConfig.subtext = config['subtext']
+		dashConfig.grid = config['grid']
+		dashConfig.headlinefigures = 0
+		dashConfig.save()
+		for bite in dashConfig.bites.all():
+			dashConfig.bites.remove(bite)
+		for filt in dashConfig.filters.all():
+			dashConfig.filters.remove(filt)
+		for headline in config['headlinefigurecharts']:
+			hl = BiteConfig.objects.create(variety = 'headline', dataSource = headline['data'], biteID = headline['chartID'])
+			dashConfig.bites.add(hl)
+		for chart in config['charts']:
+			ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'])
+			dashConfig.bites.add(ch)
+		for filt in config['filters']:
+			ft = FilterConfig.objects.create(text=filt['text'],tag=filt['tag'])
+			dashConfig.filters.add(ft)
+		return render(request, 'hxldash/dashsave.html', {'dashID':id})
 
 def view(request,id):
 	dashConfig = DashboardConfig.objects.get(pk=id)
@@ -73,20 +141,73 @@ def view(request,id):
 	config['title'] = dashConfig.title
 	config['subtext'] = dashConfig.subtext
 	config['grid'] = dashConfig.grid
-	for bite in dashConfig.bites.all():
+	for bite in dashConfig.bites.all().order_by('id'):
 		if bite.biteID!="[u'']" and len(bite.dataSource)>1:
 			if bite.variety=='headline' :
 				config['headlinefigurecharts'].append({'data':bite.dataSource,'chartID':bite.biteID})
 				config['headlinefigures'] = config['headlinefigures'] +1
 			else:
 				config['charts'].append({'data':bite.dataSource,'chartID':bite.biteID})
-	for filt in dashConfig.filters.all():
+	for filt in dashConfig.filters.all().order_by('id'):
 		print filt
 		if filt.text!='':
 			config['filtersOn'] = True
 			config['filters'].append({'text':filt.text,'tag':filt.tag})
 
-	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''","")})
+	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id})
+
+def edit(request,id):
+	dashConfig = DashboardConfig.objects.get(pk=id)
+	editpassword = dashConfig.editpassword
+	if editpassword == '':
+		editpassword = 'a'
+	user = '';
+	if 'user' in request.session:
+		user = request.session['user']
+	if check_password(user,editpassword)==False:
+		return password(request,'edit',id)
+	
+
+	config = {
+		"title":"",
+		"subtext":"",
+		"filtersOn":False,
+		"filters":[],
+		"headlinefigures":0,
+		"headlinefigurecharts":[],
+		"grid":"",
+		"charts":[]
+	}
+	config['title'] = dashConfig.title
+	config['subtext'] = dashConfig.subtext
+	config['grid'] = dashConfig.grid
+	for bite in dashConfig.bites.all().order_by('id'):
+		if bite.biteID!="[u'']" and len(bite.dataSource)>1:
+			if bite.variety=='headline' :
+				config['headlinefigurecharts'].append({'data':bite.dataSource,'chartID':bite.biteID})
+				config['headlinefigures'] = config['headlinefigures'] +1
+			else:
+				config['charts'].append({'data':bite.dataSource,'chartID':bite.biteID})
+	for filt in dashConfig.filters.all().order_by('id'):
+		if filt.text!='':
+			config['filtersOn'] = True
+			config['filters'].append({'text':filt.text,'tag':filt.tag})
+	if len(config['filters'])<3:
+		for i in range(len(config['filters'])-1,3):
+			config['filters'].append({'text':'','tag':''})
+	if len(config['headlinefigurecharts'])<3:
+		for i in range(len(config['headlinefigurecharts'])-1,3):
+			config['headlinefigurecharts'].append({'data':'','chartID':''})
+	if len(config['charts'])<5:
+		for i in range(len(config['charts'])-1,5):
+			config['charts'].append({'data':'','chartID':''})
+
+	data = {}
+	data['create'] = False
+	data['dataURL'] = config['charts'][0]['data']
+	data['config'] = json.dumps(config)
+	data['id'] = id
+	return render(request, 'hxldash/dashmaker.html', data)
 
 def password(request,page,id):
 	return render(request, 'hxldash/password.html', {'page':page,'id':id})

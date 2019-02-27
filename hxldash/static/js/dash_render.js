@@ -98,7 +98,7 @@ function createChart(id,bite,sort){
           plugins: [
             Chartist.plugins.tooltip({appendToBody:true,tooltipFnc:tooltip})
             ]
-        });        
+        });     
     } else if (subtype=="pie") {
 
         bite[0].bite.forEach(function(d,i){

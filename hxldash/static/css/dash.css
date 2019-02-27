@@ -301,3 +301,23 @@ table {
   background-color: #a748ca;
   border-color: #a748ca;
 }
+
+/* footer */
+
+.footer {
+	background-color:#000;
+	color: #ccc;
+	margin-top:40px;
+	height:80px;
+	font-size:2em;
+	padding-top:20px;
+}
+
+.footer a {
+	color: #ccc;
+	text-decoration: underline;
+}
+
+.right {
+	text-align:right;
+}

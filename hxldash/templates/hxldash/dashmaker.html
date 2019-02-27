@@ -10,15 +10,15 @@
 	<div class="row segment">
 		<div id="" class="col-md-12 sectiontitle">
 			<p>1. Data</p>
-        </div>		
+        </div>
 	    <div id="datasegmentcontent" class="col-md-6 col-md-offset-3 center">
             <div id="status"><p>Loading data...</p></div>
         </div>
     </div>
     <div class="row segment">
-		<div id="" class="col-md-12 sectiontitle">
-			<p>2. Layout</p>
-        </div>		
+		<div class="col-md-12 sectiontitle">
+			<p id="layoutsegment">2. Layout<i id="layoutedit" class="edit icon"></i></p>
+        </div>
 	    <div id="layoutchooser" class="col-md-12 center">
 	    	<p>Select a layout for your dashboard.</p>
 	    	<p>Large sections are better for maps.</p>
@@ -28,7 +28,7 @@
     </div>
     <div class="row segment">
 		<div id="" class="col-md-12 sectiontitle">
-			<p>3. Style</p>
+			<p>3. Style<i id="styleedit" class="edit icon"></i></p>
         </div>		
 	    <div id="colorchooser" class="col-md-12 center">
 	    	<p>Please choose a colour scheme</p>
@@ -158,22 +158,25 @@
 	  	<p>Saving your dashboard content</p>
 	  	<form action="/save" method="post" id="form1">{% csrf_token %}
 	  		<input type="hidden" id="formconfig" name="formconfig" value="">
-	  		<p>Enter password if you want to edit this dashboard in the future (optional)</p>
-	  		<div class="ui input fluid large">
-                <input id="viewpassword" name="viewpassword" type="password" placeholder="password...">
+	  		<div id="saveform">
+		  		<p>Enter password if you want to edit this dashboard in the future (optional)</p>
+		  		<div class="ui input fluid large">
+	                <input id="editpassword" name="editpassword" type="password" placeholder="password...">
+	            </div>
+		  		<p>Enter password for view access (optional)</p>
+		  		<div class="ui input fluid large">
+	                <input id="viewpassword" name="viewpassword" type="password" placeholder="password...">
+	            </div>
+		  		<p>Your name (optional). Used if we want to follow up on testing.</p>
+		  		<div class="ui input fluid large">
+	                <input id="user" name="user" type="text" placeholder="name...">
+	            </div>
+		  		<p>Your organisation (optional). Used if we want to follow up on testing.</p>
+		  		<div class="ui input fluid large">
+	                <input  id="org" name="org" type="text" placeholder="organisation...">
+	            </div>
             </div>
-	  		<p>Enter password for view access (optional)</p>
-	  		<div class="ui input fluid large">
-                <input id="editpassword" name="editpassword" type="password" placeholder="password...">
-            </div>
-	  		<p>Your name (optional). Used if we want to follow up on testing.</p>
-	  		<div class="ui input fluid large">
-                <input id="user" name="user" type="text" placeholder="name...">
-            </div>
-	  		<p>Your organisation (optional). Used if we want to follow up on testing.</p>
-	  		<div class="ui input fluid large">
-                <input  id="org" name="org" type="text" placeholder="organisation...">
-            </div>
+            <div id="updateform"><p>This will save changes over old dashboard</p></div>
             <button class="ui primary button large" type="submit" form="form1" value="Submit">Submit</button>
 		</form>
 	  </div>
@@ -186,40 +189,10 @@
     <script>
     	var dataURL = '{{ dataURL|safe }}';
     	var gridURL = "{% static 'grid_data/gridxxx.html' %}";
+    	var create = '{{ create }}';
     	var mapPreviewURL = "{% static 'images/map_placeholder.jpg' %}";
-    	var config = {
-	"title":"",
-	"subtext":"",
-	"filtersOn":false,
-	"filters":[{"text":"","tag":""},{"text":"","tag":""},{"text":"","tag":""}],
-	"headlinefigures":0,
-	"headlinefigurecharts":[
-		{"data":"",
-		"chartID":""},
-		{"data":"",
-		"chartID":""},
-		{"data":"",
-		"chartID":""}
-	],
-	"grid":"",
-	"charts":[
-			{"data":"",
-			"chartID":[]
-			},
-			{"data":"",
-			"chartID":[""]
-			},						
-			{"data":"",
-			"chartID":[""]
-			},						
-			{"data":"",
-			"chartID":[""]
-			},						
-			{"data":"",
-			"chartID":[""]
-			}
-		]
-	}
+    	var config = {{ config|safe }};
+    	var id = {{id}}
     </script>
     <script src="{% static 'js/dashmaker.js' %}"></script> 
     <script src="{% static 'js/dash_render.js' %}"></script> 
