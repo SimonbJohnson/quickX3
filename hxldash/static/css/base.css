@@ -234,6 +234,10 @@ body {
 	padding-left:10px;
 }
 
+#addfilter {
+	margin-left:20px;
+}
+
 /* filter editing */
 
 #filtercontent {
