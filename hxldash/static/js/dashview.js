@@ -72,6 +72,7 @@ function createDashboard(dataSets,filterDataSets,config){
     $('.quarter').height(height/4);
     $('.third').height(height/3);
     $('.twothird').height(height/3*2);
+    $('.threequarter').height(height/4*3);
 
     $('#title').html('<h2>'+config.title+'</h2>');
     $('#description').html('<p>'+config.subtext+'</p>');
