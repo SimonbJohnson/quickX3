@@ -16,7 +16,8 @@ body {
 .segment {
 	background-color:white;
 	border-radius:20px;
-	margin-top:20px;
+	margin-top:15px;
+	margin-bottom:15px;
 }
 
 .sectiontitle {
@@ -192,6 +193,11 @@ body {
 	color:#2196F3;
 }
 
+.color2 {
+	color:#2196F3;
+	stroke:#2196F3 !important;
+}
+
 #color3 {
 	color:#283593;
 }
@@ -209,6 +215,10 @@ body {
 	cursor:pointer;
 }
 
+#colorchoices {
+	padding-bottom:20px;
+}
+
 .filterselect {
 	border: 1px solid #ccc;
 	border-radius:5px;
@@ -217,6 +227,11 @@ body {
 
 #filterchooser {
 	display:none;
+}
+
+.deletechartbutton {
+	float:none;
+	padding-left:10px;
 }
 
 /* filter editing */
@@ -287,5 +302,9 @@ body {
 #savecontent {
 	margin-left:0px;
 	margin-right:0px;
+}
+
+#savebutton {
+	padding-bottom:20px;
 }
 

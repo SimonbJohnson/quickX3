@@ -33,6 +33,7 @@ def create(request,url):
 		{"data":"",
 		"chartID":""}],
 		"grid":"",
+		"color":0,
 		"charts":[
 			{"data":"",
 			"chartID":[]
@@ -59,10 +60,12 @@ def save(request):
 	if request.method == 'POST':
 		jsonstring = urllib.unquote(request.POST['formconfig'])
 		config = json.loads(jsonstring)
+		print config
 		dashConfig = DashboardConfig()
 		dashConfig.title = config['title']
 		dashConfig.subtext = config['subtext']
 		dashConfig.grid = config['grid']
+		dashConfig.color = config['color']
 		editpassword = request.POST['editpassword'] 
 		if editpassword != '':
 			dashConfig.editpassword = make_password(request.POST['editpassword'])
@@ -102,6 +105,7 @@ def update(request,id):
 		dashConfig.title = config['title']
 		dashConfig.subtext = config['subtext']
 		dashConfig.grid = config['grid']
+		dashConfig.color = config['color']
 		dashConfig.headlinefigures = 0
 		dashConfig.save()
 		for bite in dashConfig.bites.all():
@@ -136,11 +140,13 @@ def view(request,id):
 		"headlinefigures":0,
 		"headlinefigurecharts":[],
 		"grid":"",
-		"charts":[]
+		"charts":[],
+		"color":0
 	}
 	config['title'] = dashConfig.title
 	config['subtext'] = dashConfig.subtext
 	config['grid'] = dashConfig.grid
+	config['color'] = dashConfig.color
 	for bite in dashConfig.bites.all().order_by('id'):
 		if bite.biteID!="[u'']" and len(bite.dataSource)>1:
 			if bite.variety=='headline' :
@@ -176,11 +182,13 @@ def edit(request,id):
 		"headlinefigures":0,
 		"headlinefigurecharts":[],
 		"grid":"",
-		"charts":[]
+		"charts":[],
+		"color":0
 	}
 	config['title'] = dashConfig.title
 	config['subtext'] = dashConfig.subtext
 	config['grid'] = dashConfig.grid
+	config['color'] = dashConfig.color
 	for bite in dashConfig.bites.all().order_by('id'):
 		if bite.biteID!="[u'']" and len(bite.dataSource)>1:
 			if bite.variety=='headline' :

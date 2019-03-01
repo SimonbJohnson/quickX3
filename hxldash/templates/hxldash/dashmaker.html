@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />	
 	<link rel="stylesheet" href="{% static 'css/dash.css' %}">
+	<style id="colourstyle"></style>
 	<div class="row segment">
 		<div id="" class="col-md-12 sectiontitle">
 			<p>1. Data</p>
@@ -33,11 +34,11 @@
 	    <div id="colorchooser" class="col-md-12 center">
 	    	<p>Please choose a colour scheme</p>
 	    	<div id="colorchoices" class="row">
-	    		<i id="color1" class="circle icon huge colorpick"></i>
-	    		<i id="color2" class="circle icon huge colorpick"></i>
-	    		<i id="color3" class="circle icon huge colorpick"></i>
-	    		<i id="color4" class="circle icon huge colorpick"></i>
-	    		<i id="color5" class="circle icon huge colorpick"></i>
+	    		<i id="color1" data-id="0" class="circle icon huge colorpick"></i>
+	    		<i id="color2" data-id="1" class="circle icon huge colorpick"></i>
+	    		<i id="color3" data-id="2" class="circle icon huge colorpick"></i>
+	    		<i id="color4" data-id="3" class="circle icon huge colorpick"></i>
+	    		<i id="color5" data-id="4" class="circle icon huge colorpick"></i>
 	    	</div>
         </div>
     </div>    
@@ -93,7 +94,7 @@
 		<div id="" class="col-md-12 sectiontitle">
 			<p>5. Save and Share</p>
         </div>		
-	    <div id="layoutchooser" class="col-md-12 center">
+	    <div id="savebutton" class="col-md-12 center">
 			<button id="save" class="ui primary button large">Save</button>
         </div>
     </div>

@@ -89,24 +89,18 @@ function populateEditor(hb){
 		$('#headlinechooser').slideDown();
 		if(headline.chartID!=''){
 			let bite = hb.reverse(headline.chartID);
-			createHeadLineFigure('#headline'+i,bite);
-			$('#headline'+i).append('<i data-id="'+i+'" class="edit icon large editchartbutton"></i>');
-			$('.editchartbutton').on('click',function(){
-				chooseHeadline($(this).attr('data-id'));
-			});		
+			let head = {'data':headline.data,'bite':bite};
+			addHeadline(head,i)
 		}
 	});
 	populateCharts(hb);
     config.filters.forEach(function(filter,i){
     	if(filter.text!=''){
+    		addFilter(i,filter.text+' ('+filter.tag+')');
     		$('#filterchooser').slideDown();
-	    	$('#filter'+i).html('<p>Filter for '+filter.text+' ('+filter.tag+')</p>');
-			$('#filter'+i).append('<i data-id="'+i+'" class="edit icon large editchartbutton"></i>');
-			$('.editchartbutton').on('click',function(){
-				chooseFilter($(this).attr('data-id'));
-			});
 		}
     });
+    setColors(config.color);
 }
 
 function populateCharts(hb){
@@ -116,7 +110,7 @@ function populateCharts(hb){
 			if(bite.type=='chart'){
 				createChart('#dashchart'+i,[bite],true);
 				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="edit icon editchartbutton"></i>');
-				$('.editchartbutton').on('click',function(){
+				$('#dashchart'+i+' .editchartbutton').on('click',function(){
 					chooseChart($(this).attr('data-id'));
 				});
 	        }
@@ -126,7 +120,7 @@ function populateCharts(hb){
 	            }
 	            createMap('#dashchart'+i,bite);
 				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="edit icon editchartbutton"></i>');
-				$('.editchartbutton').on('click',function(){
+				$('#dashchart'+i+' .editchartbutton').on('click',function(){
 					chooseChart($(this).attr('data-id'));
 				});
 	        }
@@ -190,7 +184,7 @@ function chooseChart(index){
 			$('#chartmodal').modal('hide');
 			createChart('#dashchart'+index,[chart.bite],true);
 			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
-			$('.editchartbutton').on('click',function(){
+			$('#dashchart'+index+' .editchartbutton').on('click',function(){
 				chooseChart($(this).attr('data-id'));
 			});
 			config.charts[index].data = chart.data;
@@ -203,7 +197,7 @@ function chooseChart(index){
 			$('#chartmodal').modal('hide');
 			createChart('#dashchart'+index,[chart.bite],true);
 			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
-			$('.editchartbutton').on('click',function(){
+			$('#dashchart'+index+' .editchartbutton').on('click',function(){
 				chooseChart($(this).attr('data-id'));
 			});
 			config.charts[index].data = chart.data;
@@ -226,8 +220,15 @@ function chooseChart(index){
 }
 
 $('.colorpick').on('click',function(){
+	let num = $(this).attr('data-id');
+	setColors(num);
 	$('#colorchooser').slideUp();
 });
+
+function setColors(num){
+	$('#colourstyle').html('.ct-series-a .ct-bar {stroke: '+colors[num]+'} .ct-series-a .ct-line {stroke: '+colors[num]+'} .mapcolor0 {fill: '+mapColors[num][0]+';background-color:'+mapColors[num][0]+';} .mapcolor1 {fill: '+mapColors[num][1]+';background-color:'+mapColors[num][1]+';} .mapcolor2 {fill: '+mapColors[num][2]+';background-color:'+mapColors[num][2]+';} .mapcolor3 {fill: '+mapColors[num][3]+';background-color:'+mapColors[num][3]+';} .mapcolor4 {fill: '+mapColors[num][4]+';background-color:'+mapColors[num][4]+';} .headlinenumber{border-bottom-color:'+colors[num]+'}');
+	config.color = num;
+}
 
 $('#filterplus').on('click',function(){
 	$('#filterchooser').slideDown();
@@ -248,15 +249,29 @@ function chooseHeadline(headlineNum){
 		$("#headlineselect"+i).off();
 		$("#headlineselect"+i).on('click',function(){
 			$('#headlinemodal').modal('hide');
-			createHeadLineFigure('#headline'+headlineNum,headline.bite);
-			$('#headline'+headlineNum).append('<i data-id="'+headlineNum+'" class="edit icon large editchartbutton"></i>');
-			$('#headline'+headlineNum+' .editchartbutton').on('click',function(){
-				chooseHeadline($(this).attr('data-id'));
-			});			
-			config.headlinefigurecharts[headlineNum].data = headline.data;
-			config.headlinefigurecharts[headlineNum].chartID = headline.bite.id;
+			addHeadline(headline,headlineNum);
 		});
 	});
+}
+
+function addHeadline(headline,headlineNum){
+	console.log(headlineNum);
+	createHeadLineFigure('#headline'+headlineNum,headline.bite);
+	$('#headline'+headlineNum).append('<i data-id="'+headlineNum+'" class="edit icon large editchartbutton"></i>');
+	$('#headline'+headlineNum+' .editchartbutton').on('click',function(){
+		chooseHeadline(headlineNum);
+	});	
+	$('#headline'+headlineNum).append('<i data-id="'+headlineNum+'" class="close icon large deletechartbutton"></i>');
+	$('#headline'+headlineNum +' .deletechartbutton').on('click',function(){
+		config.filters[headlineNum] = {"data":"","chartID":""};
+		$('#headline'+headlineNum).html('<i data-id="'+headlineNum+'" class="plus circle icon large plusicon headlineselectbutton"></i>');
+		$('.headlineselectbutton').on('click',function(){
+			var headlineNum = $(this).attr('data-id');
+			chooseHeadline(headlineNum);
+		});		
+	});		
+	config.headlinefigurecharts[headlineNum].data = headline.data;
+	config.headlinefigurecharts[headlineNum].chartID = headline.bite.id;
 }
 
 $('.filterselectbutton').on('click',function(){
@@ -271,14 +286,27 @@ function chooseFilter(filterNum){
 	$("#addfilter").on('click',function(){
 		$('#filtermodal').modal('hide');
 		let val = $('#filterselect').val();
-		$('#filter'+filterNum).html('<p>Filter for '+val+')</p>');
-		$('#filter'+filterNum).append('<i data-id="'+filterNum+'" class="edit icon large editchartbutton"></i>');
-			$('#filter'+filterNum+' .editchartbutton').on('click',function(){
-				chooseFilter($(this).attr('data-id'));
-			});	
-		config.filters[filterNum].text = val.split('(')[0];
-		config.filters[filterNum].tag = val.split('(')[1];
+		addFilter(filterNum,val);
 	});	
+}
+
+function addFilter(filterNum,val){
+	$('#filter'+filterNum).html('<p>Filter for '+val+'</p>');
+	$('#filter'+filterNum).append('<i data-id="'+filterNum+'" class="edit icon large editchartbutton"></i>');
+	$('#filter'+filterNum+' .editchartbutton').on('click',function(){
+		chooseFilter($(this).attr('data-id'));
+	});
+	$('#filter'+filterNum).append('<i data-id="'+filterNum+'" class="close icon large deletechartbutton"></i>');
+	$('#filter'+filterNum +' .deletechartbutton').on('click',function(){
+		config.filters[filterNum] = {"text":"","tag":""};
+		$('#filter'+filterNum).html('<i data-id="'+filterNum+'" class="plus circle icon large plusicon filterselectbutton"></i>');
+		$('.filterselectbutton').on('click',function(){
+			var filterNum = $(this).attr('data-id');
+			chooseFilter(filterNum);
+		});		
+	});
+	config.filters[filterNum].text = val.split('(')[0];
+	config.filters[filterNum].tag = val.split('(')[1].split(')')[0];
 }
 
 $('#save').on('click',function(){
@@ -313,4 +341,6 @@ if(create=='True'){
 let bites = {'charts':[],'maps':[],'crossTables':[],'headlines':[],'time':[]};
 let dataSets = [];
 let charts = [];
+var colors=['#E53935','#2196F3','#283593','#388E3C','#FDD835'];
+var mapColors = [['#FFEBEE','#FFCDD2','#E57373','#F44336','#d70206'],['#E3F2FD','#90CAF9','#2196F3','#1976D2','#0D47A1'],['#C5CAE9','#7986CB','#3F51B5','#283593','#1A237E'],['#E8F5E9','#A5D6A7','#66BB6A','#388E3C','#1B5E20'],['#FFF9C4','#FFF176','#FDD835','#F9A825','#F57F17']];
 loadData(dataURL);

@@ -2,6 +2,8 @@
 {% load staticfiles %}
 
 {% block content %}
+            <link rel="stylesheet" href="{% static 'css/dash.css' %}"> 
+            <style id="colourstyle"></style>
             <div class="row">
                 <div id="title" class="col-md-12">
                 </div>
@@ -25,6 +27,7 @@
                 </div>
             </div>
     </div>
+    <div class="sp sp-circle"></div>
     <div class="footer container-fluid">
         <div class="container">
             <div class="row">
@@ -37,8 +40,8 @@
             </div>
         </div>
     </div>
-    <div class="content container">
-    <link rel="stylesheet" href="{% static 'css/dash.css' %}"> 
+    <div class="container">
+
     <script>
         var config = {{ config|safe }};
         var gridURL = "{% static 'grid_data/gridxxx.html' %}";
