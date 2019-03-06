@@ -238,57 +238,75 @@ function createMap(id,bite,scale){
         maxZoom: 14, minZoom: 1
     }).addTo(map);
 
-    var info = L.control();
+    if(bite.subtype=='choropleth'){
+        var info = L.control();
 
-    info.onAdd = function (map) {
-        this._div = L.DomUtil.create('div', 'info infohover'); // create a div with a class "info"
-        this.update();
-        return this._div;
-    };
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info infohover'); // create a div with a class "info"
+            this.update();
+            return this._div;
+        };
 
-    // method that we will use to update the control based on feature properties passed
-    info.update = function (name,id) {
-        value = 'No Data';
-        bite.bite.forEach(function(d){
-                    if(d[0]==id){
-                        value=d[1];
+        // method that we will use to update the control based on feature properties passed
+        info.update = function (name,id) {
+            value = 'No Data';
+            bite.bite.forEach(function(d){
+                        if(d[0]==id){
+                            value=d[1];
+                        }
+                    }); 
+                                   
+            this._div.innerHTML = (id ?
+                '<b>'+name+':</b> ' + value
+                : 'Hover for value');
+        };
+
+        info.addTo(map);
+
+        var legend = L.control({position: 'bottomright'});
+
+        legend.onAdd = function (map) {
+
+            var div = L.DomUtil.create('div', 'info legend')
+            var grades = ['No Data', Number(minValue.toPrecision(3)), Number(((maxValue-minValue)/4+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*2+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*3+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*4+minValue).toPrecision(3))]
+            if(scale=='log'){
+                grades.forEach(function(g,i){
+                    if(i>0){
+                        grades[i] = Number((Math.exp(((i-1)/4)*Math.log(maxValue - minValue))+minValue).toPrecision(3));
                     }
-                }); 
-                               
-        this._div.innerHTML = (id ?
-            '<b>'+name+':</b> ' + value
-            : 'Hover for value');
-    };
+                });
+            }
+            var classes = ['mapcolornone','mapcolor0','mapcolor1','mapcolor2','mapcolor3','mapcolor4'];
 
-    info.addTo(map);
+            for (var i = 0; i < grades.length; i++) {
+                div.innerHTML += '<i class="'+classes[i]+'"></i> ';
+                div.innerHTML += isNaN(Number(grades[i])) ? grades[i] : Math.ceil(grades[i]);
+                div.innerHTML += (grades[i + 1] ? i==0 ? '<br>' : ' &ndash; ' + Math.floor(grades[i + 1]) + '<br>' : '+');
+            }
 
-    var legend = L.control({position: 'bottomright'});
+            return div;
+        };
 
-    legend.onAdd = function (map) {
+        legend.addTo(map);
 
-        var div = L.DomUtil.create('div', 'info legend')
-        var grades = ['No Data', Number(minValue.toPrecision(3)), Number(((maxValue-minValue)/4+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*2+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*3+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*4+minValue).toPrecision(3))]
-        if(scale=='log'){
-            grades.forEach(function(g,i){
-                if(i>0){
-                    grades[i] = Number((Math.exp(((i-1)/4)*Math.log(maxValue - minValue))+minValue).toPrecision(3));
-                }
-            });
-        }
-        var classes = ['mapcolornone','mapcolor0','mapcolor1','mapcolor2','mapcolor3','mapcolor4'];
+        loadGeoms(bite.geom_url,bite.geom_attribute,bite.name_attribute);
+    }
 
-        for (var i = 0; i < grades.length; i++) {
-            div.innerHTML += '<i class="'+classes[i]+'"></i> ';
-            div.innerHTML += isNaN(Number(grades[i])) ? grades[i] : Math.ceil(grades[i]);
-            div.innerHTML += (grades[i + 1] ? i==0 ? '<br>' : ' &ndash; ' + Math.floor(grades[i + 1]) + '<br>' : '+');
-        }
-
-        return div;
-    };
-
-    legend.addTo(map);
-    console.log(bite);
-    loadGeoms(bite.geom_url,bite.geom_attribute,bite.name_attribute);
+    if(bite.subtype = 'point'){
+        var circles = []
+        bite.bite[0].forEach(function(d,i){
+            if(i>0){
+                var circle = L.circleMarker([d, bite.bite[1][i]], {
+                        className: 'circlepoint',
+                        fillOpacity: 0.5,
+                        radius: 5
+                    }).addTo(map);
+                circles.push(circle);
+            }
+        });
+        var group = new L.featureGroup(circles);
+        map.fitBounds(group.getBounds().pad(0.1));
+    }
 
     function loadGeoms(urls,geom_attributes,name_attributes){
         console.log(name_attributes);
@@ -319,7 +337,6 @@ function createMap(id,bite,scale){
 
             }
         });          
-
     }
 
     function fitBounds(){

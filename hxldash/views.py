@@ -84,6 +84,7 @@ def save(request):
 			ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'])
 			dashConfig.bites.add(ch)
 		for filt in config['filters']:
+			print filt['text']
 			ft = FilterConfig.objects.create(text=filt['text'],tag=filt['tag'])
 			dashConfig.filters.add(ft)
 	

@@ -66,6 +66,7 @@ function generateBites(hb,data,dataURL){
 	});
 	hb.getTextBites().forEach(function(bite){
 		if(bite.subtype == 'topline figure'){
+			console.log(bite);
 			bites.headlines.push({'data':dataURL,'bite':bite});
 			$('#headlinecontent').append('<div class="col-md-4"><div id="headlineselect'+headline+'" class="headlinefigure headlinefigureedit"></div></div>');
 			createHeadLineFigure('#headlineselect'+headline,bite);
@@ -226,7 +227,7 @@ $('.colorpick').on('click',function(){
 });
 
 function setColors(num){
-	$('#colourstyle').html('.ct-series-a .ct-bar {stroke: '+colors[num]+'} .ct-series-a .ct-line {stroke: '+colors[num]+'} .mapcolor0 {fill: '+mapColors[num][0]+';background-color:'+mapColors[num][0]+';} .mapcolor1 {fill: '+mapColors[num][1]+';background-color:'+mapColors[num][1]+';} .mapcolor2 {fill: '+mapColors[num][2]+';background-color:'+mapColors[num][2]+';} .mapcolor3 {fill: '+mapColors[num][3]+';background-color:'+mapColors[num][3]+';} .mapcolor4 {fill: '+mapColors[num][4]+';background-color:'+mapColors[num][4]+';} .headlinenumber{border-bottom-color:'+colors[num]+'}');
+	$('#colourstyle').html('.circlepoint {stroke: '+colors[num]+';fill:'+colors[num]+'} .ct-series-a .ct-bar {stroke: '+colors[num]+'} .ct-series-a .ct-line {stroke: '+colors[num]+'} .mapcolor0 {fill: '+mapColors[num][0]+';background-color:'+mapColors[num][0]+';} .mapcolor1 {fill: '+mapColors[num][1]+';background-color:'+mapColors[num][1]+';} .mapcolor2 {fill: '+mapColors[num][2]+';background-color:'+mapColors[num][2]+';} .mapcolor3 {fill: '+mapColors[num][3]+';background-color:'+mapColors[num][3]+';} .mapcolor4 {fill: '+mapColors[num][4]+';background-color:'+mapColors[num][4]+';} .headlinenumber{border-bottom-color:'+colors[num]+'}');
 	config.color = num;
 }
 
@@ -255,7 +256,6 @@ function chooseHeadline(headlineNum){
 }
 
 function addHeadline(headline,headlineNum){
-	console.log(headlineNum);
 	createHeadLineFigure('#headline'+headlineNum,headline.bite);
 	$('#headline'+headlineNum).append('<i data-id="'+headlineNum+'" class="edit icon large editchartbutton"></i>');
 	$('#headline'+headlineNum+' .editchartbutton').on('click',function(){
@@ -263,15 +263,15 @@ function addHeadline(headline,headlineNum){
 	});	
 	$('#headline'+headlineNum).append('<i data-id="'+headlineNum+'" class="close icon large deletechartbutton"></i>');
 	$('#headline'+headlineNum +' .deletechartbutton').on('click',function(){
-		config.filters[headlineNum] = {"data":"","chartID":""};
+		config.headlinefigurecharts[headlineNum] = {"data":"","chartID":""};
 		$('#headline'+headlineNum).html('<i data-id="'+headlineNum+'" class="plus circle icon large plusicon headlineselectbutton"></i>');
 		$('.headlineselectbutton').on('click',function(){
 			var headlineNum = $(this).attr('data-id');
 			chooseHeadline(headlineNum);
 		});		
-	});		
+	});	
 	config.headlinefigurecharts[headlineNum].data = headline.data;
-	config.headlinefigurecharts[headlineNum].chartID = headline.bite.id;
+	config.headlinefigurecharts[headlineNum].chartID = headline.bite.uniqueID;
 }
 
 $('.filterselectbutton').on('click',function(){
