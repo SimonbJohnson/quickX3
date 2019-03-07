@@ -292,7 +292,7 @@ function createMap(id,bite,scale){
         loadGeoms(bite.geom_url,bite.geom_attribute,bite.name_attribute);
     }
 
-    if(bite.subtype = 'point'){
+    if(bite.subtype == 'point'){
         var circles = []
         bite.bite[0].forEach(function(d,i){
             if(i>0){

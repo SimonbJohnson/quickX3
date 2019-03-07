@@ -7,7 +7,7 @@ from django.db import models
 
 class BiteConfig(models.Model):
 	variety = models.CharField(max_length=200)
-	dataSource =  models.CharField(max_length=200)
+	dataSource =  models.CharField(max_length=2000)
 	biteID =  models.CharField(max_length=200)
 
 class FilterConfig(models.Model):
