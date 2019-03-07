@@ -34,10 +34,6 @@ function createChart(id,bite,sort){
         });
         bite[0].bite.unshift(topline);
     }
-    var offset = 70;
-    if(maxLength>30){
-        offset = 120
-    }
     var variables = [];
     bite.forEach(function(b){
         variables.push(b.title.split(' by ')[0]);
@@ -64,15 +60,21 @@ function createChart(id,bite,sort){
             if(i>0){
                 var label = d[0];
                 if(label.length>maxLength){
+                    console.log(label);
                     maxLength = label.length;
                 }
-                if(label.length>40){
-                    label = label.substring(0,35)+'...'
+                if(label.length>20){
+                    label = label.substring(0,18)+'...'
+                    console.log(label);
                 }
                 labels.push(label);
                 series.push(d[1]);
             }  
         });
+        var offset = 70;
+            if(maxLength>20){
+                offset = 120
+            }
         chart = new Chartist.Bar('#chartcontainer'+id, {
             labels: labels,
             series: [series]
@@ -99,49 +101,6 @@ function createChart(id,bite,sort){
             Chartist.plugins.tooltip({appendToBody:true,tooltipFnc:tooltip})
             ]
         });     
-    } else if (subtype=="pie") {
-
-        bite[0].bite.forEach(function(d,i){
-            if(i>0){
-                var label = d[0];
-                if(label.length>maxLength){
-                    maxLength = label.length;
-                }
-                if(label.length>40){
-                    label = label.substring(0,35)+'...'
-                }
-                labels.push(label);
-                series.push(d[1]);
-            }  
-        });
-
-        var data = {
-          labels: labels,
-          series: series
-        };
-
-        var options = {
-          labelInterpolationFnc: function(value) {
-            return value[6]
-          }
-        };
-
-        var responsiveOptions = [
-          ['screen and (min-width: 640px)', {
-            chartPadding: 40,
-            labelOffset: 80,
-            labelDirection: 'explode',
-            labelInterpolationFnc: function(value) {
-              return value;
-            }
-          }],
-          ['screen and (min-width: 1024px)', {
-            labelOffset: 80,
-            chartPadding: 40
-          }]
-        ];
-
-        chart = new Chartist.Pie('#chartcontainer'+id, data, options, responsiveOptions);        
     } else {
         
         var dataSetsLines = [];
