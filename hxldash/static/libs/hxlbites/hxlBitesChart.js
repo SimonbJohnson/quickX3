@@ -51,7 +51,7 @@ hxlBites._chartBites.push({
 'criteria':['what > 10'],
 'variables': ['what', 'sum(value)'],
 'chart':'rows(10)',
-'title':'Top 10 of {1} by count',
+'title':'Top 10 of {1} by {2}',
 'priority': 8,
 });
 
@@ -169,7 +169,7 @@ hxlBites._chartBites.push({
 });
 
 //charts to do with other text tags
-//#indicator, #severity, #status, #event, #modality, #sector, #activity, #channel
+//#indicator, #severity, #status, #event, #modality, #channel
 
 //value by tag under 10
 
@@ -177,7 +177,7 @@ hxlBites._chartBites.push({
 'id':'chart0007',
 'type':'chart',
 'subType':'row',
-'ingredients':[{'name':'indicator','tags':['#indicator-value-pct','#severity','#status','#event','#modality','#sector','#activity','#channel','#crisis']},{'name':'value','tags':['#value','#affected','#population','#reached','#indicator+value']}],
+'ingredients':[{'name':'indicator','tags':['#indicator-value-pct','#severity','#status','#event','#modality','#channel','#crisis','#respondee']},{'name':'value','tags':['#value','#affected','#population','#reached','#indicator+value']}],
 'criteria':['indicator > 1','indicator < 11'],
 'variables': ['indicator', 'sum(value)'],
 'chart':'',
@@ -189,7 +189,7 @@ hxlBites._chartBites.push({
 'id':'chart0011',
 'type':'chart',
 'subType':'row',
-'ingredients':[{'name':'indicator','tags':['#indicator-value-pct','#severity','#status','#group','#event','#modality','#sector','#activity','#channel','#crisis']},{'name':'value','tags':['#value','#affected','#population','#reached','#indicator+value']}],
+'ingredients':[{'name':'indicator','tags':['#indicator-value-pct','#severity','#status','#group','#event','#modality','#channel','#crisis','#respondee']},{'name':'value','tags':['#value','#affected','#population','#reached','#indicator+value']}],
 'criteria':['indicator > 2','indicator < 11','value ! 0'],
 'variables': ['indicator', 'count()'],
 'chart':'',
@@ -201,7 +201,7 @@ hxlBites._chartBites.push({
 'id':'chart0014',
 'type':'chart',
 'subType':'row',
-'ingredients':[{'name':'indicator','tags':['#indicator-value-pct','#severity','#status','#event','#modality','#sector','#activity','#channel','#crisis']},{'name':'value','tags':['#value','#affected','#population','#reached','#indicator+value']}],
+'ingredients':[{'name':'indicator','tags':['#indicator-value-pct','#severity','#status','#event','#modality','#channel','#crisis','#respondee']},{'name':'value','tags':['#value','#affected','#population','#reached','#indicator+value']}],
 'criteria':['indicator > 10'],
 'variables': ['indicator', 'sum(value)'],
 'chart':'rows(10)',
@@ -213,7 +213,7 @@ hxlBites._chartBites.push({
 'id':'chart0015',
 'type':'chart',
 'subType':'row',
-'ingredients':[{'name':'indicator','tags':['#indicator-value-pct','#severity','#status','#group','#event','#modality','#sector','#activity','#channel','#crisis']},{'name':'value','tags':['#value','#affected','#population','#reached','#indicator+value']}],
+'ingredients':[{'name':'indicator','tags':['#indicator-value-pct','#severity','#status','#group','#event','#modality','#channel','#crisis','#respondee']},{'name':'value','tags':['#value','#affected','#population','#reached','#indicator+value']}],
 'criteria':['indicator > 10','value ! 0'],
 'variables': ['indicator', 'count()'],
 'chart':'rows(10)',

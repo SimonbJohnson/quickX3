@@ -128,5 +128,25 @@ hxlBites._textBites = [
 'variables': ['count(countries)'],
 'phrase': 'Countries:{1}',
 'priority': 8,
+},
+{
+'id':'text0014',	
+'type':'text',
+'subType':'topline figure',
+'ingredients':[{'name':'respondees','tags':['#respondee']}],
+'criteria':['respondees > 0'],
+'variables': ['header(respondees)','count(respondees)'],
+'phrase': 'Number of {1}:{2}',
+'priority': 8,
+},
+{
+'id':'text0015',	
+'type':'text',
+'subType':'topline figure',
+'ingredients':[{'name':'respondees','tags':['#respondee']}],
+'criteria':['respondees > 0'],
+'variables': ['total()'],
+'phrase': 'Total respondee:{1}',
+'priority': 8,
 }
 ];

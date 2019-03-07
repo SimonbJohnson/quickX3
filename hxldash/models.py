@@ -15,7 +15,6 @@ class FilterConfig(models.Model):
 	tag = models.CharField(max_length=20)
 
 class DashboardConfig(models.Model):
-
 	title =  models.CharField(max_length=200)
 	subtext = models.CharField(max_length=2000)
 	grid = models.CharField(max_length=10)
