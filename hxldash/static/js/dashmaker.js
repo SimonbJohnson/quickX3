@@ -11,6 +11,7 @@ function loadData(dataURL){
                 let matches = generateBites(hb,result,dataURL);
                 injectLayouts(hb,9);
                 updateStatusForBites(bites,matches);
+                setColors(0);
 
             },
             error: function(err){
@@ -23,13 +24,13 @@ function loadData(dataURL){
 function updateStatusForBites(bites,matches){
 	$('#status').append('<p>'+bites.charts.length+' chart(s) generated');
 	$('#status').append('<p>'+bites.maps.length+' map(s)  generated');
-	$('#status').append('<p>'+bites.crossTables.length+' cross table(s) generated');
+	//$('#status').append('<p>'+bites.crossTables.length+' cross table(s) generated');
 	$('#status').append('<p>'+bites.headlines.length+' headline figure(s) generated');
 	if(matches>2){
 		$('#status').append('<div class="greencheck"><i class="check icon"></i></div>');
-		setTimeout(function(){
+		/*setTimeout(function(){
 			$('#status').slideUp()
-		},1000)
+		},1000)*/
 		
 	}
 }
