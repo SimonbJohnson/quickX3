@@ -102,6 +102,8 @@ def update(request,id):
 		return password(request,'edit',id)
 	if request.method == 'POST':
 		jsonstring = urllib.unquote(request.POST['formconfig'])
+		dashConfig.user = request.POST['user']
+		dashConfig.org = request.POST['org']
 		config = json.loads(jsonstring)
 		dashConfig.title = config['title']
 		dashConfig.subtext = config['subtext']
@@ -224,3 +226,11 @@ def password(request,page,id):
 def setpassword(request,page,id):
 	request.session['user'] = request.POST['viewpassword']
 	return redirect('/'+page+'/'+id);
+
+def catalogue(request):
+	dashboards = []
+	dashes = DashboardConfig.objects.all()
+	for dash in dashes:
+		dashboards.append({'title':dash.title,'org':dash.org,'user':dash.user,'id':dash.id})
+	return render(request, 'hxldash/catalogue.html', {'dashboards':dashboards})	
+
