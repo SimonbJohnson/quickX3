@@ -124,7 +124,7 @@ hxlBites._textBites = [
 'type':'text',
 'subType':'topline figure',
 'ingredients':[{'name':'countries','tags':['#country-code']}],
-'criteria':['countries > 0'],
+'criteria':['countries > 1'],
 'variables': ['count(countries)'],
 'phrase': 'Countries:{1}',
 'priority': 8,
