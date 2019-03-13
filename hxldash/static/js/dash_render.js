@@ -170,7 +170,7 @@ function niceNumber(num) {
 
 function createMap(id,bite,scale){
     var bounds = [];
-
+    console.log(bite);
     id = id.substring(1);
 
     $('#'+id).html('<p class="bitetitle">'+bite.title+'</p><div id="'+id+'map" class="map"></div>');
@@ -275,6 +275,7 @@ function createMap(id,bite,scale){
             url: urls[0],
             dataType: 'json',
             success: function(result){
+                console.log(result);
                 var geom = {};
                 if(result.type=='Topology'){
                   geom = topojson.feature(result,result.objects.geom);
@@ -294,6 +295,9 @@ function createMap(id,bite,scale){
                     fitBounds();
                 }
 
+            },
+            error: function(err){
+                console.log(err);
             }
         });          
     }
