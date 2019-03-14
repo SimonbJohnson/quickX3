@@ -125,7 +125,7 @@ function populateCharts(hb){
 	            if(chart.scale==undefined){
 	                chart.scale = 'linear';
 	            }
-	            createMap('#dashchart'+i,bite);
+	            createMap('#dashchart'+i,bite,'linear',dataSets[0]);
 				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="edit icon editchartbutton"></i>');
 				$('#dashchart'+i+' .editchartbutton').on('click',function(){
 					chooseChart($(this).attr('data-id'));
@@ -215,7 +215,7 @@ function chooseChart(index){
 		$("#mapselect"+i).off();
 		$("#mapselect"+i).on('click',function(){
 			$('#chartmodal').modal('hide');
-			createMap('#dashchart'+index,mp.bite);
+			createMap('#dashchart'+index,mp.bite,'linear',dataSets[0]);
 			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
 			$('#dashchart'+index+' .editchartbutton').on('click',function(){
 				chooseChart($(this).attr('data-id'));

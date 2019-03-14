@@ -168,7 +168,7 @@ function niceNumber(num) {
   return num.toLocaleString()
 }
 
-function createMap(id,bite,scale){
+function createMap(id,bite,scale,data){
     var bounds = [];
     console.log(bite);
     id = id.substring(1);
@@ -252,14 +252,45 @@ function createMap(id,bite,scale){
     }
 
     if(bite.subtype == 'point'){
-        var circles = []
+        var circles = [];
+
+        var info = L.control();
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info infohover'); // create a div with a class "info"
+            this.update();
+            return this._div;
+        };
+
+        // method that we will use to update the control based on feature properties passed
+        info.update = function (info) { 
+            this._div.innerHTML = (info ?
+                info
+                : 'Hover for value');
+        };
+
+        info.addTo(map);
+
         bite.bite[0].forEach(function(d,i){
             if(i>0){
                 var circle = L.circleMarker([d, bite.bite[1][i]], {
                         className: 'circlepoint',
                         fillOpacity: 0.5,
-                        radius: 5
+                        radius: 5,
                     }).addTo(map);
+
+                circle.on('mouseover',function(){
+                    var text = '';
+                    data[0].forEach(function(d,j){
+                        if(j<8){
+                            text += '<p>'+data[0][j]+': '+data[i+1][j]+'</p>';
+                        }
+                    });
+                    info.update(text);
+                });
+                circle.on('mouseout',function(){
+                    info.update();
+                });
                 circles.push(circle);
             }
         });

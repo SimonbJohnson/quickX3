@@ -115,7 +115,7 @@ function createDashboard(dataSets,filterDataSets,config){
                     if(chart.scale==undefined){
                         chart.scale = 'linear';
                     }
-                    createMap(id,bites[0],chart.scale);
+                    createMap(id,bites[0],chart.scale,dataSets[0]);
                 }
             }
         }        
