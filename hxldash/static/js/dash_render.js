@@ -289,7 +289,7 @@ function createMap(id,bite,scale,data){
                     info.update(text);
                 });
                 circle.on('mouseout',function(){
-                    info.update();
+                    setTimeout(function(){info.update()},1000);
                 });
                 circles.push(circle);
             }
