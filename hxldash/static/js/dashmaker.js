@@ -16,7 +16,12 @@ function loadData(dataURL){
             },
             error: function(err){
             	console.log(err);
-            	$('#status').html(err['responseJSON']['message']);
+            	$('#status').html('<p>'+err['statusText']+'</p>');
+            	if(err['responseJSON']){
+            		$('#status').append('<p>'+err['responseJSON']['message']+'</p>');
+            	} else {
+            		$('#status').append('<p>Please check data source has HXL tags and is accessible from the web (sharing is turned on)</p>');
+            	}
             }
     });
 }
