@@ -85,7 +85,7 @@ let hxlBites = {
 				timeSeries = false;
 			} else {
 				var sd = stddev(diffs);
-				if(sd<0.5 || lastValue>2){
+				if(sd<0.6|| lastValue>2){
 					//filter for latest date from sort
 					filterValue = keyValues[length-1].key;
 					filterCol = match.col;
