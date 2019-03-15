@@ -160,25 +160,25 @@
 	  	<form action="/save" method="post" id="form1">{% csrf_token %}
 	  		<input type="hidden" id="formconfig" name="formconfig" value="">
 	  		<div id="saveform">
-		  		<p>Enter password if you want to edit this dashboard in the future (optional)</p>
+		  		<p id="editprompt" class="savetext">Enter password if you want to edit this dashboard in the future (optional)</p>
 		  		<div class="ui input fluid large">
 	                <input id="editpassword" name="editpassword" type="password" placeholder="password...">
 	            </div>
-		  		<p>Enter password for view access (optional)</p>
+		  		<p class="savetext">Enter password for view access (optional)</p>
 		  		<div class="ui input fluid large">
 	                <input id="viewpassword" name="viewpassword" type="password" placeholder="password...">
 	            </div>
-		  		<p>Your name (optional). Used if we want to follow up on testing.</p>
+		  		<p class="savetext">Your name (optional). Used if we want to follow up on testing.</p>
 		  		<div class="ui input fluid large">
 	                <input id="user" name="user" type="text" placeholder="name...">
 	            </div>
-		  		<p>Your organisation (optional). Used if we want to follow up on testing.</p>
+		  		<p class="savetext">Your organisation (optional). Used if we want to follow up on testing.</p>
 		  		<div class="ui input fluid large">
-	                <input  id="org" name="org" type="text" placeholder="organisation...">
+	                <input id="org" name="org" type="text" placeholder="organisation...">
 	            </div>
             </div>
             <div id="updateform"><p>This will save changes over old dashboard</p></div>
-            <button class="ui primary button large" type="submit" form="form1" value="Submit">Submit</button>
+            <button id="submitbutton" class="ui primary button large" type="submit" form="form1" value="Submit">Submit</button>
 		</form>
 	  </div>
 	  <div class="actions">

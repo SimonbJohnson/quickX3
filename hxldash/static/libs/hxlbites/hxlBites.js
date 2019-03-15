@@ -616,7 +616,6 @@ let hxlBites = {
 			let func = variable.split('(')[0];
 			let ingredient = variable.split(')')[0].split('(')[1];
 			let items=[];
-			console.log(func);
 			if(func == 'total'){
 				items.push(self._data.length-2);
 			} else {

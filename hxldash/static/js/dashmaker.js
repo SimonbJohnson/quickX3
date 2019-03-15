@@ -9,9 +9,9 @@ function loadData(dataURL){
                 $('#status').html('<p>Data Loaded Successfully</p>');
                 let hb = hxlBites.data(result);
                 let matches = generateBites(hb,result,dataURL);
+                setColors(0,false);
                 injectLayouts(hb,9);
                 updateStatusForBites(bites,matches);
-                setColors(0);
 
             },
             error: function(err){
@@ -72,7 +72,6 @@ function generateBites(hb,data,dataURL){
 	});
 	hb.getTextBites().forEach(function(bite){
 		if(bite.subtype == 'topline figure'){
-			console.log(bite);
 			bites.headlines.push({'data':dataURL,'bite':bite});
 			$('#headlinecontent').append('<div class="col-md-4"><div id="headlineselect'+headline+'" class="headlinefigure headlinefigureedit"></div></div>');
 			createHeadLineFigure('#headlineselect'+headline,bite);
@@ -107,7 +106,7 @@ function populateEditor(hb){
     		$('#filterchooser').slideDown();
 		}
     });
-    setColors(config.color);
+    setColors(config.color,true);
 }
 
 function populateCharts(hb){
@@ -228,13 +227,16 @@ function chooseChart(index){
 
 $('.colorpick').on('click',function(){
 	let num = $(this).attr('data-id');
-	setColors(num);
+	setColors(num,true);
 	$('#colorchooser').slideUp();
 });
 
-function setColors(num){
+function setColors(num,setConfig){
 	$('#colourstyle').html('.ct-legend .ct-series-0:before {background-color: '+colors[num]+';border-color:'+colors[num]+'} .circlepoint {stroke: '+colors[num]+';fill:'+colors[num]+'} .ct-series-a .ct-bar {stroke: '+colors[num]+'} .ct-series-a .ct-line {stroke: '+colors[num]+'} .mapcolor0 {fill: '+mapColors[num][0]+';background-color:'+mapColors[num][0]+';} .mapcolor1 {fill: '+mapColors[num][1]+';background-color:'+mapColors[num][1]+';} .mapcolor2 {fill: '+mapColors[num][2]+';background-color:'+mapColors[num][2]+';} .mapcolor3 {fill: '+mapColors[num][3]+';background-color:'+mapColors[num][3]+';} .mapcolor4 {fill: '+mapColors[num][4]+';background-color:'+mapColors[num][4]+';} .headlinenumber{border-bottom-color:'+colors[num]+'}');
-	config.color = num;
+	if(setConfig){
+		config.color = num;
+	}
+	
 }
 
 $('#filterplus').on('click',function(){

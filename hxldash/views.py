@@ -102,8 +102,6 @@ def update(request,id):
 		return password(request,'edit',id)
 	if request.method == 'POST':
 		jsonstring = urllib.unquote(request.POST['formconfig'])
-		dashConfig.user = request.POST['user']
-		dashConfig.org = request.POST['org']
 		config = json.loads(jsonstring)
 		dashConfig.title = config['title']
 		dashConfig.subtext = config['subtext']

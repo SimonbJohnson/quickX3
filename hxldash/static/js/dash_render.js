@@ -60,12 +60,10 @@ function createChart(id,bite,sort){
             if(i>0){
                 var label = d[0];
                 if(label.length>maxLength){
-                    console.log(label);
                     maxLength = label.length;
                 }
                 if(label.length>20){
                     label = label.substring(0,18)+'...'
-                    console.log(label);
                 }
                 labels.push(label);
                 series.push(d[1]);
@@ -170,7 +168,6 @@ function niceNumber(num) {
 
 function createMap(id,bite,scale,data){
     var bounds = [];
-    console.log(bite);
     id = id.substring(1);
 
     $('#'+id).html('<p class="bitetitle">'+bite.title+'</p><div id="'+id+'map" class="map"></div>');
@@ -299,14 +296,12 @@ function createMap(id,bite,scale,data){
     }
 
     function loadGeoms(urls,geom_attributes,name_attributes){
-        console.log(name_attributes);
         var total = urls.length;
         $('.infohover').html('Loading Geoms: '+total + ' to go');
         $.ajax({
             url: urls[0],
             dataType: 'json',
             success: function(result){
-                console.log(result);
                 var geom = {};
                 if(result.type=='Topology'){
                   geom = topojson.feature(result,result.objects.geom);

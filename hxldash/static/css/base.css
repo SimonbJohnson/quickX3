@@ -313,3 +313,15 @@ body {
 	padding-bottom:20px;
 }
 
+#editprompt {
+	font-weight:800;
+	color:#ff0000;
+}
+
+.savetext {
+	padding-top:10px;
+}
+
+#submitbutton {
+	margin-top:10px;
+}
