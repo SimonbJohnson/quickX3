@@ -93,13 +93,12 @@ def save(request):
 def update(request,id):
 	dashConfig = DashboardConfig.objects.get(pk=id)
 	editpassword = dashConfig.editpassword	
-	if editpassword == '':
-		editpassword = 'a'
-	user = '';
-	if 'user' in request.session:
-		user = request.session['user']
-	if check_password(user,editpassword)==False:
-		return password(request,'edit',id)
+	if editpassword != '':
+		user = '';
+		if 'user' in request.session:
+			user = request.session['user']
+		if check_password(user,editpassword)==False:
+			return password(request,'edit',id)
 	if request.method == 'POST':
 		jsonstring = urllib.unquote(request.POST['formconfig'])
 		config = json.loads(jsonstring)
@@ -166,13 +165,12 @@ def view(request,id):
 def edit(request,id):
 	dashConfig = DashboardConfig.objects.get(pk=id)
 	editpassword = dashConfig.editpassword
-	#if editpassword == '':
-	#	editpassword = 'a'
-	user = '';
-	if 'user' in request.session:
-		user = request.session['user']
-	if check_password(user,editpassword)==False:
-		return password(request,'edit',id)
+	if editpassword != '':
+		user = '';
+		if 'user' in request.session:
+			user = request.session['user']
+		if check_password(user,editpassword)==False:
+			return password(request,'edit',id)
 	
 
 	config = {
