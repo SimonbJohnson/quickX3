@@ -11,8 +11,8 @@ class BiteConfig(models.Model):
 	biteID =  models.CharField(max_length=200)
 
 class FilterConfig(models.Model):
-	text = models.CharField(max_length=20)
-	tag = models.CharField(max_length=20)
+	text = models.CharField(max_length=200)
+	tag = models.CharField(max_length=200)
 
 class DashboardConfig(models.Model):
 	title =  models.CharField(max_length=200)
