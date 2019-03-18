@@ -166,6 +166,8 @@ def view(request,id):
 def edit(request,id):
 	dashConfig = DashboardConfig.objects.get(pk=id)
 	editpassword = dashConfig.editpassword
+	if editpassword == '':
+		editpassword = 'a'
 	user = '';
 	if 'user' in request.session:
 		user = request.session['user']
