@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}" /> 
     <div class="row">
         <div id="datachooser" class="col-md-6 col-md-offset-3 center">
+            <h1>QuickDash (Alpha-test)</h1>
             <p>Please insert a URL of a HXL data source to load.</p>
             <div class="ui input fluid huge">
                 <input id="dataurl" type="text" placeholder="URL...">
@@ -16,7 +17,9 @@
                 <i class="right arrow icon"></i>
                 Load Data
             </button>
-            <p>Datasource supported include Google Documents/Drive, Dropbox and HDX files</p>
+            <p id="frontinstructions">Datasource supported include Google Documents/Drive, Dropbox and HDX files</p>
+            <p>Create an online sharable dashboard in less than 2 minutes. Watch the example video below to see how easy it is.</p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/5ZmRjLfoS3k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>
     <script>
