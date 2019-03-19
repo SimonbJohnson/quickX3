@@ -18,6 +18,10 @@ def create(request,url):
 		url = "https://"+url[7:]
 	if url[0:6]=="http:/" and url[6]!="/":
 		url = "http://"+url[6:]
+
+	place = url.find('%3A/')
+	if url[place+4]!='/':
+		url = url.replace('%3A/','%3A//')
 	data['dataURL'] = url
 	data['id'] = 1 
 	data['config'] = {
