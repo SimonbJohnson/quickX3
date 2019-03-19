@@ -27,10 +27,13 @@ function loadData(dataURL){
 }
 
 function updateStatusForBites(bites,matches){
-	$('#status').append('<p>'+bites.charts.length+' chart(s) generated');
-	$('#status').append('<p>'+bites.maps.length+' map(s)  generated');
-	//$('#status').append('<p>'+bites.crossTables.length+' cross table(s) generated');
-	$('#status').append('<p>'+bites.headlines.length+' headline figure(s) generated');
+	$('#status').append('<p>'+bites.charts.length+' chart(s) generated</p>');
+	$('#status').append('<p>'+bites.maps.length+' map(s)  generated</p>');
+	$('#status').append('<p>'+bites.time.length+' time series chart(s) generated</p>');
+	if(bites.time.length>0){
+		$('#status').append('<p><b>As time series detected row charts and headline figures will filter to show latest date only.</b></p>');
+	}
+	$('#status').append('<p>'+bites.headlines.length+' headline figure(s) generated</p>');
 	if(matches>2){
 		$('#status').append('<div class="greencheck"><i class="check icon"></i></div>');
 		/*setTimeout(function(){
