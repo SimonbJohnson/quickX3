@@ -62,6 +62,7 @@ hxlBites._mapValues = {'world':[
 		{'iso3':'KGZ', 'iso2':'KG', 'use':'KG', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}RefName'},
 		{'iso3':'KHM', 'iso2':'KH', 'use':'KH', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}RefName'},
 		{'iso3':'LBN', 'iso2':'LB', 'use':'LB', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}RefName'},
+		{'iso3':'MOZ', 'iso2':'MZ', 'use':'MZ', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}RefName'},
 		{'iso3':'MRT', 'iso2':'MT', 'use':'MT', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}RefName'},
 		{'iso3':'MWI', 'iso2':'MW', 'use':'MW', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}RefName'},
 		{'iso3':'NER', 'iso2':'NE', 'use':'NE', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}RefName'},
