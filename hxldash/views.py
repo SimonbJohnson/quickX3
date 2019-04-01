@@ -64,7 +64,6 @@ def save(request):
 	if request.method == 'POST':
 		jsonstring = urllib.unquote(request.POST['formconfig'])
 		config = json.loads(jsonstring)
-		print config
 		dashConfig = DashboardConfig()
 		dashConfig.title = config['title']
 		dashConfig.subtext = config['subtext']
@@ -88,7 +87,6 @@ def save(request):
 			ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'])
 			dashConfig.bites.add(ch)
 		for filt in config['filters']:
-			print filt['text']
 			ft = FilterConfig.objects.create(text=filt['text'],tag=filt['tag'])
 			dashConfig.filters.add(ft)
 	
@@ -159,7 +157,6 @@ def view(request,id):
 			else:
 				config['charts'].append({'data':bite.dataSource,'chartID':bite.biteID})
 	for filt in dashConfig.filters.all().order_by('id'):
-		print filt
 		if filt.text!='':
 			config['filtersOn'] = True
 			config['filters'].append({'text':filt.text,'tag':filt.tag})
