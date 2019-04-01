@@ -114,9 +114,12 @@ let hxlBites = {
 
 		function stddev(array){
 			n = array.length;
-			mean = array.reduce((a,b) => a+b)/n;
-			s = Math.sqrt(array.map(x => Math.pow(x-mean,2)).reduce((a,b) => a+b)/n);
-			return s;
+			if(n>0){
+				mean = array.reduce((a,b) => a+b)/n;
+				s = Math.sqrt(array.map(x => Math.pow(x-mean,2)).reduce((a,b) => a+b)/n);
+				return s;
+			}
+			return 100;
 		}
 	},
 
