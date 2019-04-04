@@ -220,4 +220,3 @@ hxlBites._chartBites.push({
 'title':'Top 10 of count of {1}',
 'priority': 8,
 });
-

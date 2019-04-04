@@ -38,6 +38,7 @@ let hxlBites = {
 		} else {
 			[timeSeries,filterValue,filterHeader,filterCol] = self._checkColumnMatchesForTimeSeries(matches);
 		}
+		console.log(timeSeries);
 		//if time series data is found filter for last date
 		if(timeSeries){
 			let headers = data.slice(0, 2);
@@ -55,15 +56,16 @@ let hxlBites = {
 	//loops through matches and returns first timeseries
 	_checkColumnMatchesForTimeSeries: function(matches){
 		let self = this;
-		timeSeries = true
+		timeSeries = [];
 		let filterValue='';
 		let filterHeader = '';
 		let filterCol = 0;
 
 
 		//loop through every match
-		matches.forEach(function(match){
-
+		matches.forEach(function(match,i){
+			timeSeries.push(true);
+			console.log(match);
 			//keyvalue of date plus count of occurences
 			let keyValues = self._varFuncKeyValue(match);
 			//check there enough unique values to be a time series
@@ -82,20 +84,28 @@ let hxlBites = {
 			var diffs = diff(values);
 			
 			if(length<3){
-				timeSeries = false;
+				timeSeries[i] = false;
 			} else {
 				var sd = stddev(diffs);
+				console.log(sd);
 				if(sd<0.6|| lastValue>2){
 					//filter for latest date from sort
-					filterValue = keyValues[length-1].key;
-					filterCol = match.col;
-					filterHeader = match.header;
+					if(filterValue!=''){
+						filterValue = keyValues[length-1].key;
+						filterCol = match.col;
+						filterHeader = match.header;						
+					}
 				} else {
-					timeSeries = false;
+					timeSeries[i] = false;
 				}
 			}
 		});
-		return [timeSeries,filterValue,filterHeader,filterCol];
+		for(var i = 0;i<timeSeries.length;i++){
+			if(timeSeries[i]){
+				return [timeSeries[i],filterValue,filterHeader,filterCol];
+			}
+		}
+		return [false,filterValue,filterHeader,filterCol];
 
 		function diff(arr){
 			var output = [];
@@ -459,6 +469,49 @@ let hxlBites = {
 							workingTables.forEach(function(table,i){
 								workingTables[i].push(col);
 							});
+						}
+						if(func == 'countDistinct'){
+							let sumValue = variable.split('(')[1].split(')')[0];
+							var newWorkingTables = [];
+							var newIDMatches = [];
+							var newHeaderMatches = [];
+							var length = matchingValues[sumValue].length;
+							for (i = 0; i < length; i++){
+								newWorkingTables = newWorkingTables.concat(JSON.parse(JSON.stringify(workingTables)));
+								newIDMatches = newIDMatches.concat(JSON.parse(JSON.stringify(idMatches)));
+								newHeaderMatches = newIDMatches.concat(JSON.parse(JSON.stringify(headerMatches)));
+							}
+							workingTables = JSON.parse(JSON.stringify(newWorkingTables));
+							idMatches = JSON.parse(JSON.stringify(newIDMatches));
+							headerMatches = JSON.parse(JSON.stringify(newHeaderMatches));
+							matchingValues[sumValue].forEach(function(match, ti){
+								let col = new Array(firstCol.length).fill(0);
+								idMatches.forEach(function(idMatch,i){
+									if(i % length==ti){
+										idMatches[i].push({'tag':match.tag,'col':match.col});
+										headerMatches[i].push(match.header);
+									}
+								});
+								col[0] = 'Value';
+								firstCol.forEach(function(value,index){
+									if(index>0){
+										let filteredData = self._filterData(data,keyMatch.col,value);
+										let sum = [];
+										filteredData.forEach(function(row,index){
+											let value = row[match.col];
+											if(sum.indexOf(value)==-1){
+												sum.push(value);
+											}							
+										});
+										col[index] = sum.length;
+									}
+								});
+								workingTables.forEach(function(table,i){
+									if(i % length==ti){
+										workingTables[i].push(col);
+									}
+								});								
+							});	
 						}
 						if(func == 'sum'){
 							let sumValue = variable.split('(')[1].split(')')[0];
