@@ -46,6 +46,9 @@ let hxlBites = {
 			data = self._filterData(data,filterCol,filterValue);
 			data = headers.concat(data);
 		}
+		console.log(filterCol);
+		console.log(filterValue);
+		console.log(data);
 		//global time series 
 		self.timeSeries = timeSeries;
 		self.timeSeriesFilter = filterValue;
@@ -90,7 +93,7 @@ let hxlBites = {
 				console.log(sd);
 				if(sd<0.6|| lastValue>2){
 					//filter for latest date from sort
-					if(filterValue!=''){
+					if(filterValue==''){
 						filterValue = keyValues[length-1].key;
 						filterCol = match.col;
 						filterHeader = match.header;						
