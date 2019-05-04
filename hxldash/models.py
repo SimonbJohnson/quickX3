@@ -10,9 +10,15 @@ class BiteConfig(models.Model):
 	dataSource =  models.CharField(max_length=2000)
 	biteID =  models.CharField(max_length=200)
 
+	def __str__(self):
+		return str(self.id)
+
 class FilterConfig(models.Model):
 	text = models.CharField(max_length=200)
 	tag = models.CharField(max_length=200)
+
+	def __str__(self):
+		return str(self.id)
 
 class DashboardConfig(models.Model):
 	title =  models.CharField(max_length=200)
