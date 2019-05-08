@@ -270,25 +270,29 @@ function createMap(id,bite,scale,data){
 
         bite.bite[0].forEach(function(d,i){
             if(i>0){
-                var circle = L.circleMarker([d, bite.bite[1][i]], {
-                        className: 'circlepoint',
-                        fillOpacity: 0.5,
-                        radius: 5,
-                    }).addTo(map);
+                if(!isNaN(d) && !isNaN(bite.bite[1][i])){
+                    var circle = L.circleMarker([d, bite.bite[1][i]], {
+                            className: 'circlepoint',
+                            fillOpacity: 0.5,
+                            radius: 5,
+                        }).addTo(map);
 
-                circle.on('mouseover',function(){
-                    var text = '';
-                    data[0].forEach(function(d,j){
-                        if(j<8){
-                            text += '<p>'+data[0][j]+': '+data[i+1][j]+'</p>';
-                        }
+                    circle.on('mouseover',function(){
+                        var text = '';
+                        data[0].forEach(function(d,j){
+                            if(j<8){
+                                text += '<p>'+data[0][j]+': '+data[i+1][j]+'</p>';
+                            }
+                        });
+                        info.update(text);
                     });
-                    info.update(text);
-                });
-                circle.on('mouseout',function(){
-                    setTimeout(function(){info.update()},1000);
-                });
-                circles.push(circle);
+                    circle.on('mouseout',function(){
+                        setTimeout(function(){info.update()},1000);
+                    });
+                    circles.push(circle);
+                } else {
+                    console.log('Skipping badly formed lat/lon: ' +d+','+bite.bite[1][i])
+                }
             }
         });
         var group = new L.featureGroup(circles);
