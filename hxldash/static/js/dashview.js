@@ -118,7 +118,7 @@ function createDashboard(dataSets,filterDataSets,config){
                     if(chart.scale==undefined){
                         chart.scale = 'linear';
                     }
-                    if(chart.diplay==undefined){
+                    if(chart.display==undefined){
                         chart.display = [];
                     }
                     createMap(id,bites[0],chart.scale,filterDataSets[chart.data],chart.display);
