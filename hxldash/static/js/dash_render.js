@@ -266,7 +266,7 @@ function createMap(id,bite,scale,data,display){
             for (var i = 0; i < grades.length; i++) {
                 div.innerHTML += '<i class="'+classes[i]+'"></i> ';
                 div.innerHTML += isNaN(Number(grades[i])) ? grades[i] : Math.ceil(grades[i]);
-                div.innerHTML += (grades[i + 1] ? i==0 ? '<br>' : ' &ndash; ' + Math.floor(grades[i + 1]) + '<br>' : '+');
+                div.innerHTML += ((i + 1)<grades.length ? i==0 ? '<br>' : ' &ndash; ' + Math.floor(grades[i + 1]) + '<br>' : '+');
             }
 
             return div;
