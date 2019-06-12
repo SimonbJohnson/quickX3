@@ -126,8 +126,11 @@ def update(request,id):
 			dashConfig.filters.add(ft)
 		return render(request, 'hxldash/dashsave.html', {'dashID':id})
 
+def iframe(request,id):
+	return view(request,id,True)
+
 @xframe_options_exempt
-def view(request,id):
+def view(request,id,iframe=False):
 	dashConfig = DashboardConfig.objects.get(pk=id)
 	viewpassword = dashConfig.viewpassword
 	if viewpassword != '':
@@ -167,7 +170,7 @@ def view(request,id):
 			config['filtersOn'] = True
 			config['filters'].append({'text':filt.text,'tag':filt.tag})
 
-	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id})
+	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':iframe})
 
 def edit(request,id):
 	dashConfig = DashboardConfig.objects.get(pk=id)

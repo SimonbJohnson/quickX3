@@ -67,6 +67,9 @@ function loadGrid(config){
 function createDashboard(dataSets,filterDataSets,config){
     $('.sp-circle').remove();
     var height = $(window).height()- 100
+    if(iframe){
+        height = $(window).height()-450
+    }
     $('.whole').height(height);
     $('.half').height(height/2-15);
     $('.quarter').height(height/4);
@@ -167,8 +170,6 @@ function createDropDowns(dataSets,filters,config){
     filters.forEach(function(filter,i){
         var values = []
         dataSets.forEach(function(dataset){
-            console.log(dataset);
-            console.log(filter.tag);
             hxl.wrap(dataset).getValues(filter.tag).forEach(function(v){
                 values.push(v);
             })

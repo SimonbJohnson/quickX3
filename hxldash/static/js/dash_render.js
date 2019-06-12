@@ -173,7 +173,6 @@ function createMap(id,bite,scale,data,display){
     let displayColumn = 0;
     let idTag = bite.uniqueID.split('/')[1];
     let idColumn = '';
-    console.log(display);
     if(display.length>0){
         data[1].forEach(function(d,i){
             if(d == display[0]){
