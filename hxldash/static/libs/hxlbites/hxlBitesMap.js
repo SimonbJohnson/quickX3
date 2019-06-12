@@ -41,6 +41,17 @@ hxlBites._mapBites = [{
 'map':'',
 'title':'Distinct Count of {2} by {1}',
 'priority': 10,
+},
+{
+'id':'map0005',
+'type':'map',
+'subType':'choropleth',
+'ingredients':[{'name':'where','tags':['#country+code','#adm1+code','#adm2+code']},{'name':'people','tags':['#contact-email']}],
+'criteria':['where > 1'],
+'variables': ['where', 'countDistinct(people)'],
+'map':'',
+'title':'Distinct Count of {2} by {1}',
+'priority': 10,
 }];
 
 hxlBites._mapValues = {'world':[

@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from models import DashboardConfig,BiteConfig,FilterConfig
 from django.contrib.auth.hashers import make_password, check_password
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 import urllib
 import json
@@ -125,6 +126,7 @@ def update(request,id):
 			dashConfig.filters.add(ft)
 		return render(request, 'hxldash/dashsave.html', {'dashID':id})
 
+@xframe_options_exempt
 def view(request,id):
 	dashConfig = DashboardConfig.objects.get(pk=id)
 	viewpassword = dashConfig.viewpassword
@@ -155,7 +157,11 @@ def view(request,id):
 				config['headlinefigurecharts'].append({'data':bite.dataSource,'chartID':bite.biteID})
 				config['headlinefigures'] = config['headlinefigures'] +1
 			else:
-				config['charts'].append({'data':bite.dataSource,'chartID':bite.biteID})
+				try:
+					display = [bite.display.displayField]
+				except:
+					display = []
+				config['charts'].append({'data':bite.dataSource,'chartID':bite.biteID,'display':display})
 	for filt in dashConfig.filters.all().order_by('id'):
 		if filt.text!='':
 			config['filtersOn'] = True

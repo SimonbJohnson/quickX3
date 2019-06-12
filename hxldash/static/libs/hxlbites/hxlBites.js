@@ -46,9 +46,6 @@ let hxlBites = {
 			data = self._filterData(data,filterCol,filterValue);
 			data = headers.concat(data);
 		}
-		console.log(filterCol);
-		console.log(filterValue);
-		console.log(data);
 		//global time series 
 		self.timeSeries = timeSeries;
 		self.timeSeriesFilter = filterValue;
@@ -601,6 +598,7 @@ let hxlBites = {
 				tables.push({'table':table,'uniqueID':uniqueID,'title':titles[0]});
 			});
 		});
+		console.log(tables);
 		return tables;
 	},
 

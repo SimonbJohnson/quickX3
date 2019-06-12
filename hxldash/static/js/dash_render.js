@@ -166,9 +166,26 @@ function niceNumber(num) {
   return num.toLocaleString()
 }
 
-function createMap(id,bite,scale,data){
+function createMap(id,bite,scale,data,display){
     var bounds = [];
     id = id.substring(1);
+
+    let displayColumn = 0;
+    console.log(bite);
+    let idTag = bite.uniqueID.split('/')[1];
+    let idColumn = '';
+
+    data[1].forEach(function(d,i){
+        if(d == display[0]){
+            displayColumn = i;
+        }
+    });
+
+    data[1].forEach(function(d,i){
+        if(d == idTag){
+            idColumn = i;
+        }
+    });      
 
     $('#'+id).html('<p class="bitetitle">'+bite.title+'</p><div id="'+id+'map" class="map"></div>');
 
@@ -206,14 +223,25 @@ function createMap(id,bite,scale,data){
         // method that we will use to update the control based on feature properties passed
         info.update = function (name,id) {
             value = 'No Data';
+            let displayValue = [];
             bite.bite.forEach(function(d){
                         if(d[0]==id){
                             value=d[1];
                         }
-                    }); 
-                                   
+                    });
+
+            data.forEach(function(d,i){
+                if(d[idColumn]==id){
+                    if(displayValue.indexOf(d[displayColumn])==-1){
+                        displayValue.push(d[displayColumn]);
+                    }
+                    
+                }
+            });
+            displayValue = displayValue.join('</p><p>')
+                    
             this._div.innerHTML = (id ?
-                '<b>'+name+':</b> ' + value
+                '<p><b>'+name+':</b> ' + value + '</p><p>'+displayValue+'</p>'
                 : 'Hover for value');
         };
 
@@ -245,7 +273,7 @@ function createMap(id,bite,scale,data){
 
         legend.addTo(map);
 
-        loadGeoms(bite.geom_url,bite.geom_attribute,bite.name_attribute);
+        loadGeoms(bite.geom_url,bite.geom_attribute,bite.name_attribute,display);
     }
 
     if(bite.subtype == 'point'){

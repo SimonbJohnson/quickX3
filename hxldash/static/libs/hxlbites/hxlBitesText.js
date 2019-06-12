@@ -148,5 +148,16 @@ hxlBites._textBites = [
 'variables': ['total()'],
 'phrase': 'Total respondee:{1}',
 'priority': 8,
+},
+{
+'id':'text0016',	
+'type':'text',
+'subType':'topline figure',
+'ingredients':[{'name':'people','tags':['#contact-email-id-phone']}],
+'criteria':['people > 0'],
+'variables': ['count(people)'],
+'phrase': 'People:{1}',
+'priority': 8,
 }
+
 ];
