@@ -171,15 +171,16 @@ function createMap(id,bite,scale,data,display){
     id = id.substring(1);
 
     let displayColumn = 0;
-    console.log(bite);
     let idTag = bite.uniqueID.split('/')[1];
     let idColumn = '';
-
-    data[1].forEach(function(d,i){
-        if(d == display[0]){
-            displayColumn = i;
-        }
-    });
+    console.log(display);
+    if(display.length>0){
+        data[1].forEach(function(d,i){
+            if(d == display[0]){
+                displayColumn = i;
+            }
+        });
+    }
 
     data[1].forEach(function(d,i){
         if(d == idTag){
@@ -229,15 +230,16 @@ function createMap(id,bite,scale,data,display){
                             value=d[1];
                         }
                     });
-
-            data.forEach(function(d,i){
-                if(d[idColumn]==id){
-                    if(displayValue.indexOf(d[displayColumn])==-1){
-                        displayValue.push(d[displayColumn]);
+            if(display.length>0){
+                data.forEach(function(d,i){
+                    if(d[idColumn]==id){
+                        if(displayValue.indexOf(d[displayColumn])==-1){
+                            displayValue.push(d[displayColumn]);
+                        }
+                        
                     }
-                    
-                }
-            });
+                });
+            }
             displayValue = displayValue.join('</p><p>')
                     
             this._div.innerHTML = (id ?
