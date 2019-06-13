@@ -155,8 +155,8 @@ hxlBites._textBites = [
 'subType':'topline figure',
 'ingredients':[{'name':'people','tags':['#contact-email-id-phone']}],
 'criteria':['people > 0'],
-'variables': ['count(people)'],
-'phrase': 'People:{1}',
+'variables': ['header(people)','count(people)'],
+'phrase': '{1}:{2}',
 'priority': 8,
 }
 
