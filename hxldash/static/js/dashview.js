@@ -115,13 +115,10 @@ function createDashboard(dataSets,filterDataSets,config){
                     createCrossTable(id,bites[0]);
                 }
                 if(bites[0].type=='map'){
-                    if(chart.scale==undefined){
-                        chart.scale = 'linear';
+                    if(chart.mapOptions[0]==undefined){
+                        chart.mapOptions[0] = {'scale':'linear','display':''};
                     }
-                    if(chart.display==undefined){
-                        chart.display = [];
-                    }
-                    createMap(id,bites[0],chart.scale,filterDataSets[chart.data],chart.display);
+                    createMap(id,bites[0],filterDataSets[chart.data],chart.mapOptions[0]);
                 }
             }
         }        

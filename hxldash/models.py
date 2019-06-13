@@ -5,12 +5,13 @@ from django.db import models
 
 class MapBite(models.Model):
 	displayField = models.CharField(max_length=200)
+	scale = models.CharField(max_length=20)
 
 class BiteConfig(models.Model):
 	variety = models.CharField(max_length=200)
 	dataSource =  models.CharField(max_length=2000)
 	biteID =  models.CharField(max_length=200)
-	display = models.OneToOneField(MapBite, null=True, blank=True)
+	mapOptions = models.OneToOneField(MapBite, null=True, blank=True)
 
 	def __str__(self):
 		return str(self.id)

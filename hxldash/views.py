@@ -161,10 +161,10 @@ def view(request,id,iframe=False):
 				config['headlinefigures'] = config['headlinefigures'] +1
 			else:
 				try:
-					display = [bite.display.displayField]
+					mapOptions = [{'display':bite.mapOptions.displayField,'scale':bite.mapOptions.scale}]
 				except:
-					display = []
-				config['charts'].append({'data':bite.dataSource,'chartID':bite.biteID,'display':display})
+					mapOptions = []
+				config['charts'].append({'data':bite.dataSource,'chartID':bite.biteID,'mapOptions':mapOptions})
 	for filt in dashConfig.filters.all().order_by('id'):
 		if filt.text!='':
 			config['filtersOn'] = True

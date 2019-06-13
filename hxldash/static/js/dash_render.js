@@ -166,16 +166,19 @@ function niceNumber(num) {
   return num.toLocaleString()
 }
 
-function createMap(id,bite,scale,data,display){
+function createMap(id,bite,data,mapOptions){
     var bounds = [];
     id = id.substring(1);
-
+    let display = mapOptions.display;
+    let scale = mapOptions.scale;
     let displayColumn = 0;
     let idTag = bite.uniqueID.split('/')[1];
     let idColumn = '';
-    if(display.length>0){
+    console.log(display);
+    if(display!=''){
+        console.log(data[1])
         data[1].forEach(function(d,i){
-            if(d == display[0]){
+            if(d == display){
                 displayColumn = i;
             }
         });
@@ -240,7 +243,18 @@ function createMap(id,bite,scale,data,display){
                 });
             }
             displayValue = displayValue.join('</p><p>')
-                    
+            if(value==0){
+                displayValue='';
+            }      
+            if(scale=='binary'){
+                if(value==0){
+                    value = 'No';
+                }
+                if(value>0) {
+                    value= 'Yes';
+                }
+            }
+
             this._div.innerHTML = (id ?
                 '<p><b>'+name+':</b> ' + value + '</p><p>'+displayValue+'</p>'
                 : 'Hover for value');
@@ -253,21 +267,10 @@ function createMap(id,bite,scale,data,display){
         legend.onAdd = function (map) {
 
             var div = L.DomUtil.create('div', 'info legend')
-            var grades = ['No Data', Number(minValue.toPrecision(3)), Number(((maxValue-minValue)/4+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*2+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*3+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*4+minValue).toPrecision(3))]
-            if(scale=='log'){
-                grades.forEach(function(g,i){
-                    if(i>0){
-                        grades[i] = Number((Math.exp(((i-1)/4)*Math.log(maxValue - minValue))+minValue).toPrecision(3));
-                    }
-                });
-            }
+            var grades = getScale(scale,minValue,maxValue);
             var classes = ['mapcolornone','mapcolor0','mapcolor1','mapcolor2','mapcolor3','mapcolor4'];
 
-            for (var i = 0; i < grades.length; i++) {
-                div.innerHTML += '<i class="'+classes[i]+'"></i> ';
-                div.innerHTML += isNaN(Number(grades[i])) ? grades[i] : Math.ceil(grades[i]);
-                div.innerHTML += ((i + 1)<grades.length ? i==0 ? '<br>' : ' &ndash; ' + Math.floor(grades[i + 1]) + '<br>' : '+');
-            }
+            div = createLegend(div,scale,grades,classes);
 
             return div;
         };
@@ -326,6 +329,36 @@ function createMap(id,bite,scale,data,display){
         });
         var group = new L.featureGroup(circles);
         map.fitBounds(group.getBounds().pad(0.1));
+    }
+
+    function getScale(scale,minValue,maxValue){
+        var grades = ['No Data', Number(minValue.toPrecision(3)), Number(((maxValue-minValue)/4+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*2+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*3+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*4+minValue).toPrecision(3))]
+        if(scale=='log'){
+            grades.forEach(function(g,i){
+                if(i>0){
+                    grades[i] = Number((Math.exp(((i-1)/4)*Math.log(maxValue - minValue))+minValue).toPrecision(3));
+                }
+            });
+        }
+        if(scale=='binary'){
+            grades = ['No Data',0,1];
+        }
+        return grades;
+    }
+
+    function createLegend(div,scale,grades,classes){
+        if(scale=='binary'){
+            div.innerHTML += '<i class="'+classes[0]+'"></i> No Data<br />';
+            div.innerHTML += '<i class="'+classes[1]+'"></i> No<br />';
+            div.innerHTML += '<i class="'+classes[5]+'"></i> Yes<br />';
+        } else {
+            for (var i = 0; i < grades.length; i++) {
+                div.innerHTML += '<i class="'+classes[i]+'"></i> ';
+                div.innerHTML += isNaN(Number(grades[i])) ? grades[i] : Math.ceil(grades[i]);
+                div.innerHTML += ((i + 1)<grades.length ? i==0 ? '<br>' : ' &ndash; ' + Math.floor(grades[i + 1]) + '<br>' : '+');
+            }    
+        }
+        return div;
     }
 
     function loadGeoms(urls,geom_attributes,name_attributes){
@@ -428,11 +461,19 @@ function createMap(id,bite,scale,data,display){
             }
         });
         if(found){
+            //in future this should take the values calculated in grades/legend
             if(scale=='log'){
                 var maxDivide = Math.log(maxValue-minValue)
                 if(maxDivide ==0){return 'mapcolor'+4}
                 return 'mapcolor'+Math.floor(Math.log(value-minValue)/Math.log(maxValue-minValue)*4);
-            } else {
+            } else if(scale=='binary'){
+                if(value>0){
+                    return 'mapcolor4';
+                } else {
+                    return 'mapcolor0';
+                }
+            }
+            else {
                 return 'mapcolor'+Math.floor((value-minValue)/(maxValue-minValue)*4);
             }
         } else {
