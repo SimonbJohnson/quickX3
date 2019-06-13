@@ -177,7 +177,7 @@ def view(request,id,iframe=False):
 def edit(request,id):
 	dashConfig = DashboardConfig.objects.get(pk=id)
 	editpassword = dashConfig.editpassword
-	if editpassword != '':
+	if editpassword != '' and editpassword!= None:
 		user = '';
 		if 'user' in request.session:
 			user = request.session['user']
