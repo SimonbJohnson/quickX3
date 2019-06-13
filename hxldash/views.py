@@ -133,7 +133,9 @@ def iframe(request,id):
 def view(request,id,iframe=False):
 	dashConfig = DashboardConfig.objects.get(pk=id)
 	viewpassword = dashConfig.viewpassword
-	if viewpassword != '':
+	print 'viewpassword'
+	print viewpassword
+	if viewpassword != '' and viewpassword != None:
 		user = '';
 		if 'user' in request.session:
 			user = request.session['user']
