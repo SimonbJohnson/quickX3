@@ -152,6 +152,10 @@ def view(request,id,iframe=False):
 		"charts":[],
 		"color":0
 	}
+	if dashConfig.title == None:
+		dashConfig.title = ''
+	if dashConfig.subtext == None:
+		dashConfig.subtext = ''
 	config['title'] = dashConfig.title
 	config['subtext'] = dashConfig.subtext
 	config['grid'] = dashConfig.grid
