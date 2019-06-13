@@ -69,6 +69,7 @@ function createDashboard(dataSets,filterDataSets,config){
     var height = $(window).height()- 100
     if(iframe){
         height = $(window).height()-450
+        $('#editlink').html('');
     }
     $('.whole').height(height);
     $('.half').height(height/2-15);
