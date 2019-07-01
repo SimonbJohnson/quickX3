@@ -110,7 +110,8 @@ function createDashboard(dataSets,filterDataSets,config){
                     if(chart.sort==undefined){
                         chart.sort = 'unsorted';
                     }
-                    createChart(id,bites,chart.sort);
+                    console.log(chart);
+                    createChart(id,bites,chart.sort,chart.title);
                 }
                 if(bites[0].type=='crosstable'){
                     createCrossTable(id,bites[0]);
@@ -119,7 +120,7 @@ function createDashboard(dataSets,filterDataSets,config){
                     if(chart.mapOptions[0]==undefined){
                         chart.mapOptions[0] = {'scale':'linear','display':''};
                     }
-                    createMap(id,bites[0],filterDataSets[chart.data],chart.mapOptions[0]);
+                    createMap(id,bites[0],filterDataSets[chart.data],chart.mapOptions[0],chart.title);
                 }
             }
         }        
@@ -248,7 +249,7 @@ function createHeadlineFigures(count,charts,dataSets){
         } else {
             var bite = hxlBites.data(dataSets[chart.data]).reverse(chart.chartID);
             $('#headline').append('<div id="'+id.slice(1)+'" class="col-md-4 headlinefigure"></div>');
-            createHeadLineFigure(id,bite);
+            createHeadLineFigure(id,bite,chart.title);
         }
     });
 }

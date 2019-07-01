@@ -10,6 +10,7 @@ class MapBite(models.Model):
 class BiteConfig(models.Model):
 	variety = models.CharField(max_length=200)
 	dataSource =  models.CharField(max_length=2000)
+	title =  models.CharField(max_length=200, null=True, blank=True)
 	biteID =  models.CharField(max_length=200)
 	mapOptions = models.OneToOneField(MapBite, null=True, blank=True)
 

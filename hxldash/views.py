@@ -163,14 +163,14 @@ def view(request,id,iframe=False):
 	for bite in dashConfig.bites.all().order_by('id'):
 		if bite.biteID!="[u'']" and len(bite.dataSource)>1:
 			if bite.variety=='headline' :
-				config['headlinefigurecharts'].append({'data':bite.dataSource,'chartID':bite.biteID})
+				config['headlinefigurecharts'].append({'data':bite.dataSource,'chartID':bite.biteID,'title':bite.title})
 				config['headlinefigures'] = config['headlinefigures'] +1
 			else:
 				try:
 					mapOptions = [{'display':bite.mapOptions.displayField,'scale':bite.mapOptions.scale}]
 				except:
 					mapOptions = []
-				config['charts'].append({'data':bite.dataSource,'chartID':bite.biteID,'mapOptions':mapOptions})
+				config['charts'].append({'data':bite.dataSource,'chartID':bite.biteID,'mapOptions':mapOptions,'title':bite.title})
 	for filt in dashConfig.filters.all().order_by('id'):
 		if filt.text!='':
 			config['filtersOn'] = True
@@ -187,7 +187,6 @@ def edit(request,id):
 			user = request.session['user']
 		if check_password(user,editpassword)==False:
 			return password(request,'edit',id)
-	
 
 	config = {
 		"title":"",
@@ -200,6 +199,7 @@ def edit(request,id):
 		"charts":[],
 		"color":0
 	}
+	
 	config['title'] = dashConfig.title
 	config['subtext'] = dashConfig.subtext
 	config['grid'] = dashConfig.grid

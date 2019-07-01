@@ -11,16 +11,18 @@ function createHeadlineFigures(count,charts,dataSets){
     });
 }
 
-function createHeadLineFigure(id,bite){
+function createHeadLineFigure(id,bite,title){
     var headlineHTML = '<div id="'+id.slice(1)+'text" class="headlinetext"></div><div id="'+id.slice(1)+'number" class="headlinenumber"></div>';
     $(id).html(headlineHTML);
-    var text = bite.bite.split(':')[0];
+    if(title==null){
+        title = bite.bite.split(':')[0];
+    }
     var number = String(parseInt(bite.bite.split(':')[1].replace(/[^0-9\.]/g, ''))).replace(/(<([^>]+)>)/ig,"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    $(id+'text').html(text);
+    $(id+'text').html(title);
     $(id+'number').html(number);
 }
 
-function createChart(id,bite,sort){
+function createChart(id,bite,sort,title){
 
     var labels = [];
     var series = [];
@@ -35,21 +37,22 @@ function createChart(id,bite,sort){
         bite[0].bite.unshift(topline);
     }
     var variables = [];
-    bite.forEach(function(b){
-        variables.push(b.title.split(' by ')[0]);
-    });
-    var title = '';
-    if(variables.length>1){
-        variables.forEach(function(v,i){
-            if(i==0){
-                title = v
-            } else {
-                title +=', '+v;
-            }
+    if(title==null){
+        bite.forEach(function(b){
+            variables.push(b.title.split(' by ')[0]);
         });
-        title += ' by ' + bite[0].title.split(' by ')[1];
-    } else {
-        title = bite[0].title;
+        if(variables.length>1){
+            variables.forEach(function(v,i){
+                if(i==0){
+                    title = v
+                } else {
+                    title +=', '+v;
+                }
+            });
+            title += ' by ' + bite[0].title.split(' by ')[1];
+        } else {
+            title = bite[0].title;
+        }
     }
     $(id).addClass('chartcontainer');
     $(id).html('<div class="titlecontainer"><p class="bitetitle">'+title+'</p></div><div id="chartcontainer'+id.substring(1)+'" class="chartelement"></div>');
@@ -166,7 +169,7 @@ function niceNumber(num) {
   return num.toLocaleString()
 }
 
-function createMap(id,bite,data,mapOptions){
+function createMap(id,bite,data,mapOptions,title){
     var bounds = [];
     id = id.substring(1);
     let display = mapOptions.display;
@@ -174,9 +177,7 @@ function createMap(id,bite,data,mapOptions){
     let displayColumn = 0;
     let idTag = bite.uniqueID.split('/')[1];
     let idColumn = '';
-    console.log(display);
     if(display!=''){
-        console.log(data[1])
         data[1].forEach(function(d,i){
             if(d == display){
                 displayColumn = i;
@@ -189,8 +190,11 @@ function createMap(id,bite,data,mapOptions){
             idColumn = i;
         }
     });      
+    if(title==null){
+        title = bite.title;
+    }
 
-    $('#'+id).html('<p class="bitetitle">'+bite.title+'</p><div id="'+id+'map" class="map"></div>');
+    $('#'+id).html('<p class="bitetitle">'+title+'</p><div id="'+id+'map" class="map"></div>');
 
     var map = L.map(id+'map', { fadeAnimation: false }).setView([0, 0], 2);
 
