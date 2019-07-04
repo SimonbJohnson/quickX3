@@ -110,7 +110,6 @@ function createDashboard(dataSets,filterDataSets,config){
                     if(chart.sort==undefined){
                         chart.sort = 'unsorted';
                     }
-                    console.log(chart);
                     createChart(id,bites,chart.sort,chart.title);
                 }
                 if(bites[0].type=='crosstable'){
@@ -214,9 +213,8 @@ function filterDataSets(dataSets,filters,config){
     if(hxlFilter.length==0){
         createDashboard(dataSets,dataSets,config);
     } else {
-        
         dataSets.forEach(function(dataSet,i){
-            filteredDataSets[i]=[];
+            filteredDataSets.push([]);
             hxlData = hxl.wrap(dataSet);
             hxlFilter.forEach(function(f,i){
                 hxlData = hxlData.withRows(f)
@@ -236,14 +234,15 @@ function filterDataSets(dataSets,filters,config){
 
                 });
             });
-            createDashboard(dataSets,filteredDataSets,config);
         });
+        createDashboard(dataSets,filteredDataSets,config);
     }
 }
 
 function createHeadlineFigures(count,charts,dataSets){
     charts.forEach(function(chart,i){
         var id="#headline"+i;
+        
         if(dataSets[chart.data].length==0){
             $(id).html('No Data');
         } else {

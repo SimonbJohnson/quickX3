@@ -305,16 +305,17 @@ table {
 /* footer */
 
 .footer {
-	background-color:#000;
-	color: #ccc;
+	background-color:#fff;
+	color: #000;
 	margin-top:40px;
-	height:50px;
-	font-size:1.25em;
+	min-height:50px;
+	font-size:1em;
 	padding-top:10px;
+	border-top: 1px solid #000;
 }
 
 .footer a {
-	color: #ccc;
+	color: #000;
 	text-decoration: underline;
 }
 

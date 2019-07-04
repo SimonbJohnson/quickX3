@@ -158,6 +158,16 @@ hxlBites._textBites = [
 'variables': ['header(people)','count(people)'],
 'phrase': '{1}:{2}',
 'priority': 8,
+},
+{
+'id':'text0017',	
+'type':'text',
+'subType':'topline figure',
+'ingredients':[{'name':'indicator','tags':['#indicator+value']}],
+'criteria':['indicator > 0'],
+'variables': ['header(indicator)','sum(indicator)'],
+'phrase': '{1}: {2}',
+'priority': 8,
 }
 
 ];

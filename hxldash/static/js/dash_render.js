@@ -171,6 +171,7 @@ function niceNumber(num) {
 
 function createMap(id,bite,data,mapOptions,title){
     var bounds = [];
+    var clickOn = null;
     id = id.substring(1);
     let display = mapOptions.display;
     let scale = mapOptions.scale;
@@ -290,8 +291,8 @@ function createMap(id,bite,data,mapOptions,title){
         var info = L.control();
 
         info.onAdd = function (map) {
-            this._div = L.DomUtil.create('div', 'info infohover'); // create a div with a class "info"
-            this.update();
+            this._div = L.DomUtil.create('div', 'info infohover');
+            L.DomEvent.disableClickPropagation(this._div);
             return this._div;
         };
 
@@ -429,15 +430,29 @@ function createMap(id,bite,data,mapOptions,title){
             layer.on({
                 mouseover: highlightFeature,
                 mouseout: resetHighlight,
+                click: clickFeature,
             });
         }
 
         function highlightFeature(e) {
+            if(clickOn===null){
+                info.update(e.target.feature.properties[name_attribute],e.target.feature.properties[geom_attribute]);
+            }
+        }
+
+        function clickFeature(e) {
             info.update(e.target.feature.properties[name_attribute],e.target.feature.properties[geom_attribute]);
+            if(clickOn == e.target.feature.properties[geom_attribute]){
+                clickOn=null;
+            } else {
+                clickOn = e.target.feature.properties[geom_attribute];
+            }
         }
 
         function resetHighlight(e) {
-            info.update();
+            if(clickOn===null){
+                info.update();
+            }
         }   
 
     }
