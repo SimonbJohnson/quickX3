@@ -77,7 +77,7 @@ function generateBites(hb,data,dataURL){
 		if(bite.subtype == 'topline figure'){
 			bites.headlines.push({'data':dataURL,'bite':bite});
 			$('#headlinecontent').append('<div class="col-md-4"><div id="headlineselect'+headline+'" class="headlinefigure headlinefigureedit"></div></div>');
-			createHeadLineFigure('#headlineselect'+headline,bite);
+			createHeadLineFigure('#headlineselect'+headline,bite,null);
 			matches++;
 			headline++;
 		}
@@ -98,7 +98,7 @@ function populateEditor(hb){
 		$('#headlinechooser').slideDown();
 		if(headline.chartID!=''){
 			let bite = hb.reverse(headline.chartID);
-			let head = {'data':headline.data,'bite':bite};
+			let head = {'data':headline.data,'bite':bite,'title':headline.title};
 			addHeadline(head,i)
 		}
 	});
@@ -117,17 +117,20 @@ function populateCharts(hb){
 		if(chart.chartID!=''){
 			let bite = hb.reverse(chart.chartID);
 			if(bite.type=='chart'){
-				createChart('#dashchart'+i,[bite],true);
+				createChart('#dashchart'+i,[bite],true,chart.title);
 				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="edit icon editchartbutton"></i>');
 				$('#dashchart'+i+' .editchartbutton').on('click',function(){
 					chooseChart($(this).attr('data-id'));
 				});
 	        }
 	        if(bite.type=='map'){
-	            if(chart.scale==undefined){
-	                chart.scale = 'linear';
+	            if(chart.mapOptions == null){
+	                chart.mapOptions=[{'scale':'linear','display':''}];
 	            }
-	            createMap('#dashchart'+i,bite,dataSets[0],{'scale':'linear','display':''});
+	            if(chart.mapOptions[0]==undefined){
+	                chart.mapOptions.push({'scale':'linear','display':''});
+	            }
+	            createMap('#dashchart'+i,bite,dataSets[0],chart.mapOptions[0],chart.title);
 				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="edit icon editchartbutton"></i>');
 				$('#dashchart'+i+' .editchartbutton').on('click',function(){
 					chooseChart($(this).attr('data-id'));
@@ -267,14 +270,14 @@ function chooseHeadline(headlineNum){
 }
 
 function addHeadline(headline,headlineNum){
-	createHeadLineFigure('#headline'+headlineNum,headline.bite);
+	createHeadLineFigure('#headline'+headlineNum,headline.bite,headline.title);
 	$('#headline'+headlineNum).append('<i data-id="'+headlineNum+'" class="edit icon large editchartbutton"></i>');
 	$('#headline'+headlineNum+' .editchartbutton').on('click',function(){
 		chooseHeadline(headlineNum);
 	});	
 	$('#headline'+headlineNum).append('<i data-id="'+headlineNum+'" class="close icon large deletechartbutton"></i>');
 	$('#headline'+headlineNum +' .deletechartbutton').on('click',function(){
-		config.headlinefigurecharts[headlineNum] = {"data":"","chartID":""};
+		config.headlinefigurecharts[headlineNum] = {"data":"","chartID":"","title":null};
 		$('#headline'+headlineNum).html('<i data-id="'+headlineNum+'" class="plus circle icon large plusicon headlineselectbutton"></i>');
 		$('.headlineselectbutton').on('click',function(){
 			var headlineNum = $(this).attr('data-id');

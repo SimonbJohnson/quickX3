@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from models import DashboardConfig,BiteConfig,FilterConfig
+from models import DashboardConfig,BiteConfig,FilterConfig,MapBite
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.clickjacking import xframe_options_exempt
 
@@ -105,6 +105,7 @@ def update(request,id):
 	if request.method == 'POST':
 		jsonstring = urllib.unquote(request.POST['formconfig'])
 		config = json.loads(jsonstring)
+		print config
 		dashConfig.title = config['title']
 		dashConfig.subtext = config['subtext']
 		dashConfig.grid = config['grid']
@@ -116,10 +117,14 @@ def update(request,id):
 		for filt in dashConfig.filters.all():
 			dashConfig.filters.remove(filt)
 		for headline in config['headlinefigurecharts']:
-			hl = BiteConfig.objects.create(variety = 'headline', dataSource = headline['data'], biteID = headline['chartID'])
+			hl = BiteConfig.objects.create(variety = 'headline', dataSource = headline['data'], biteID = headline['chartID'], title = headline['title'])
 			dashConfig.bites.add(hl)
 		for chart in config['charts']:
-			ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'])
+			ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'], title = chart['title'])
+			if chart['mapOptions']!=None and len(chart['mapOptions'])>0:
+				mb = MapBite.objects.create(displayField = chart['mapOptions'][0]['display'], scale = chart['mapOptions'][0]['scale'] )
+				ch.mapOptions = mb
+				ch.save()
 			dashConfig.bites.add(ch)
 		for filt in config['filters']:
 			ft = FilterConfig.objects.create(text=filt['text'],tag=filt['tag'])
@@ -207,10 +212,13 @@ def edit(request,id):
 	for bite in dashConfig.bites.all().order_by('id'):
 		if bite.biteID!="[u'']" and len(bite.dataSource)>1:
 			if bite.variety=='headline' :
-				config['headlinefigurecharts'].append({'data':bite.dataSource,'chartID':bite.biteID})
+				config['headlinefigurecharts'].append({'data':bite.dataSource,'chartID':bite.biteID,'title':bite.title})
 				config['headlinefigures'] = config['headlinefigures'] +1
 			else:
-				config['charts'].append({'data':bite.dataSource,'chartID':bite.biteID})
+				chartData = {'data':bite.dataSource,'chartID':bite.biteID,'title':bite.title,'mapOptions':[]}
+				if bite.mapOptions!=None:
+					chartData['mapOptions'].append({'scale':bite.mapOptions.scale,'display':bite.mapOptions.displayField})
+				config['charts'].append(chartData)	
 	for filt in dashConfig.filters.all().order_by('id'):
 		if filt.text!='':
 			config['filtersOn'] = True
@@ -220,10 +228,10 @@ def edit(request,id):
 			config['filters'].append({'text':'','tag':''})
 	if len(config['headlinefigurecharts'])<3:
 		for i in range(len(config['headlinefigurecharts'])-1,3):
-			config['headlinefigurecharts'].append({'data':'','chartID':''})
+			config['headlinefigurecharts'].append({'data':'','chartID':'','title':None})
 	if len(config['charts'])<5:
 		for i in range(len(config['charts'])-1,5):
-			config['charts'].append({'data':'','chartID':''})
+			config['charts'].append({'data':'','chartID':'','title':None,'mapOptions':None})
 
 	data = {}
 	data['create'] = False
