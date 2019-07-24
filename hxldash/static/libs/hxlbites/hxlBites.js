@@ -38,7 +38,6 @@ let hxlBites = {
 		} else {
 			[timeSeries,filterValue,filterHeader,filterCol] = self._checkColumnMatchesForTimeSeries(matches);
 		}
-		console.log(timeSeries);
 		//if time series data is found filter for last date
 		if(timeSeries){
 			let headers = data.slice(0, 2);
@@ -65,7 +64,6 @@ let hxlBites = {
 		//loop through every match
 		matches.forEach(function(match,i){
 			timeSeries.push(true);
-			console.log(match);
 			//keyvalue of date plus count of occurences
 			let keyValues = self._varFuncKeyValue(match);
 			//check there enough unique values to be a time series
@@ -87,7 +85,6 @@ let hxlBites = {
 				timeSeries[i] = false;
 			} else {
 				var sd = stddev(diffs);
-				console.log(sd);
 				if(sd<0.6|| lastValue>2){
 					//filter for latest date from sort
 					if(filterValue==''){
@@ -598,7 +595,6 @@ let hxlBites = {
 				tables.push({'table':table,'uniqueID':uniqueID,'title':titles[0]});
 			});
 		});
-		console.log(tables);
 		return tables;
 	},
 
