@@ -81,7 +81,7 @@ let hxlBites = {
 			var values = keyValues.map(function(d){return new Date(d.key)});
 			var diffs = diff(values);
 			
-			if(length<3){
+			if(length<5){
 				timeSeries[i] = false;
 			} else {
 				var sd = stddev(diffs);
