@@ -354,7 +354,6 @@ function createMap(id,bite,data,mapOptions,title){
     function createLegend(div,scale,grades,classes){
         if(scale=='binary'){
             div.innerHTML += '<i class="'+classes[0]+'"></i> No Data<br />';
-            div.innerHTML += '<i class="'+classes[1]+'"></i> No<br />';
             div.innerHTML += '<i class="'+classes[5]+'"></i> Yes<br />';
         } else {
             for (var i = 0; i < grades.length; i++) {
