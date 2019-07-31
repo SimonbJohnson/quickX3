@@ -93,6 +93,8 @@ function createDashboard(dataSets,filterDataSets,config){
         }
     }
 
+    createDataTable('#table',filterDataSets[0],config.table);
+
     config.charts.forEach(function(chart,i){
         if(chart.chartID!='[]'){
             if(typeof chart.chartID === 'string'){

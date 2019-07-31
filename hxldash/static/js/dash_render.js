@@ -22,6 +22,75 @@ function createHeadLineFigure(id,bite,title){
     $(id+'number').html(number);
 }
 
+function createDataTable(id,data,fields,start=0,tableLength=10){
+    let dataTable = [];
+    let fieldNums = [];
+    let end = start+tableLength;
+    if(end>data.length-1){
+        end = data.length-1;
+    }
+    if(start<0){
+        start = 0
+    }
+    fields.forEach(function(f){
+        if(data[1][f.column]==f.tag){
+            fieldNums.push(f.column);
+        }
+        //} else {
+        //    console.log(f);
+        //    let hxlData = hxl.wrap(data);
+        //   hxlData.withColumns([f.tag]).getColumns().forEach(function(col){
+        //        console.log(col);
+        //    });
+        //}
+    });
+    fieldNums = fieldNums.sort();
+    data.forEach(function(row,i){
+        let temprow = [];
+        if(i==0 || i>=start+2 && i<end+2){
+            fieldNums.forEach(function(f){
+                temprow.push(data[i][f]);
+            });
+            dataTable.push(temprow);
+        }
+    });
+    let len = data.length-1
+    let before = '<span id="buttonspace"></span>';
+    if(start>1){
+        before = '<button id="before" class="btn btn-default"><</button>';
+    }
+    let after = '';
+    if(end != data.length-1){
+        after = '<button id="after" class="btn btn-default">></button>';
+    }
+    let topText = before + ' Showing '+(start+1)+' - '+(end)+' of '+len +' '+after;
+    $(id).html(topText + '<table id="dataTable" class="table table-striped"><thead id="thead"></thead><tbody id="tbody"></tbody></table>');
+    
+    $('#after').on('click',function(){
+        createDataTable(id,data,fields,start+10,tableLength);
+    });
+
+    $('#before').on('click',function(){
+        createDataTable(id,data,fields,start-10,tableLength);
+    });
+
+    dataTable.forEach(function(row,i){
+        if(i==0){
+            $('#thead').append('<tr id="dataTableRow'+i+'"></tr>');
+        } else {
+            $('#tbody').append('<tr id="dataTableRow'+i+'"></tr>');
+        }
+        row.forEach(function(cell,j){
+            if(i==0){
+                $('#dataTableRow'+i).append('<th>'+cell+'</th>');
+            } else {
+                $('#dataTableRow'+i).append('<td>'+cell+'</td>');
+            }
+        });
+    })
+    
+}
+
 function createChart(id,bite,sort,title){
 
     var labels = [];

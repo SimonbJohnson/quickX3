@@ -51,15 +51,7 @@ td {
 	font-size:15px;
 }
 
-table {
-	height:90%;
-}
-
 .crosstable {
-	margin-bottom:20px;
-}
-
-.table {
 	margin-bottom:20px;
 }
 
@@ -325,4 +317,14 @@ table {
 
 .dashcontent {
 	min-height:500px;
+}
+
+#table {
+	margin-top:50px;
+	min-height:500px;
+}
+
+#buttonspace {
+	display:inline-block;
+	width:35px;
 }

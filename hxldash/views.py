@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from models import DashboardConfig,BiteConfig,FilterConfig,MapBite
+from models import DashboardConfig,BiteConfig,FilterConfig,MapBite,DataTable,TableField
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.clickjacking import xframe_options_exempt
 
@@ -61,6 +61,7 @@ def create(request,url):
 	data['config'] = json.dumps(data['config'])
 	return render(request, 'hxldash/dashmaker.html', data)
 
+#need to add mapoptions, table, title overrides
 def save(request):
 	if request.method == 'POST':
 		jsonstring = urllib.unquote(request.POST['formconfig'])
@@ -114,8 +115,10 @@ def update(request,id):
 		dashConfig.save()
 		for bite in dashConfig.bites.all():
 			dashConfig.bites.remove(bite)
+			bite.delete()
 		for filt in dashConfig.filters.all():
 			dashConfig.filters.remove(filt)
+			filt.delete()
 		for headline in config['headlinefigurecharts']:
 			hl = BiteConfig.objects.create(variety = 'headline', dataSource = headline['data'], biteID = headline['chartID'], title = headline['title'])
 			dashConfig.bites.add(hl)
@@ -155,7 +158,8 @@ def view(request,id,iframe=False):
 		"headlinefigurecharts":[],
 		"grid":"",
 		"charts":[],
-		"color":0
+		"color":0,
+		"table":[],
 	}
 	if dashConfig.title == None:
 		dashConfig.title = ''
@@ -180,6 +184,9 @@ def view(request,id,iframe=False):
 		if filt.text!='':
 			config['filtersOn'] = True
 			config['filters'].append({'text':filt.text,'tag':filt.tag})
+	if dashConfig.dataTable.on == 1:
+		for field in dashConfig.dataTable.tableField.all():
+			config['table'].append({'tag':field.tag,'column':field.columnNum})
 
 	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':iframe})
 
@@ -202,7 +209,8 @@ def edit(request,id):
 		"headlinefigurecharts":[],
 		"grid":"",
 		"charts":[],
-		"color":0
+		"color":0,
+		"table":[],
 	}
 	
 	config['title'] = dashConfig.title
@@ -232,6 +240,9 @@ def edit(request,id):
 	if len(config['charts'])<5:
 		for i in range(len(config['charts'])-1,5):
 			config['charts'].append({'data':'','chartID':'','title':None,'mapOptions':None})
+	if dashConfig.dataTable.on == 1:
+		for field in dashConfig.dataTable.tableField.all():
+			config['table'].append({'tag':field.tag,'column':field.columnNum})
 
 	data = {}
 	data['create'] = False

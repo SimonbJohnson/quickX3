@@ -3,6 +3,15 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+class DataTable(models.Model):
+	on = models.IntegerField()
+	dataSource =  models.CharField(max_length=2000)
+
+class TableField(models.Model):
+	dataTable = models.ForeignKey(DataTable, related_name='tableField')
+	columnNum = models.IntegerField()
+	tag = models.CharField(max_length=200)
+
 class MapBite(models.Model):
 	displayField = models.CharField(max_length=200)
 	scale = models.CharField(max_length=20)
@@ -35,3 +44,4 @@ class DashboardConfig(models.Model):
 	user = models.CharField(max_length=200, null=True, blank=True)
 	org = models.CharField(max_length=200, null=True, blank=True)
 	color = models.IntegerField()
+	dataTable = models.OneToOneField(DataTable, null=True, blank=True)
