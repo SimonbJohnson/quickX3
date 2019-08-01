@@ -92,8 +92,12 @@ function createDashboard(dataSets,filterDataSets,config){
             createFilterBar(dataSets,config.filters,config);
         }
     }
-
-    createDataTable('#table',filterDataSets[0],config.table);
+    if(config.table.fields.length>0){
+        createDataTable('#table',filterDataSets[0],config.table.fields);
+    } else {
+        $('#table').remove();
+    }
+    
 
     config.charts.forEach(function(chart,i){
         if(chart.chartID!='[]'){

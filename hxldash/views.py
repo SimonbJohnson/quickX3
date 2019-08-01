@@ -106,32 +106,41 @@ def update(request,id):
 	if request.method == 'POST':
 		jsonstring = urllib.unquote(request.POST['formconfig'])
 		config = json.loads(jsonstring)
-		print config
 		dashConfig.title = config['title']
 		dashConfig.subtext = config['subtext']
 		dashConfig.grid = config['grid']
 		dashConfig.color = config['color']
 		dashConfig.headlinefigures = 0
 		dashConfig.save()
+
+		if dashConfig.dataTable:
+			dashConfig.dataTable.delete()
+		if len(config['table']['fields'])>0:
+			print 'createtable'
+			dt = DataTable.objects.create(on = 1,dataSource = config['table']['data'])
+			dashConfig.dataTable = dt
+			dashConfig.save()
+			for field in config['table']['fields']:
+				TableField.objects.create(dataTable = dt, columnNum = field['column'], tag = field['tag'])
 		for bite in dashConfig.bites.all():
-			dashConfig.bites.remove(bite)
-			bite.delete()
+		 	dashConfig.bites.remove(bite)
+		 	bite.delete()
 		for filt in dashConfig.filters.all():
-			dashConfig.filters.remove(filt)
+		 	dashConfig.filters.remove(filt)
 			filt.delete()
 		for headline in config['headlinefigurecharts']:
-			hl = BiteConfig.objects.create(variety = 'headline', dataSource = headline['data'], biteID = headline['chartID'], title = headline['title'])
-			dashConfig.bites.add(hl)
+		 	hl = BiteConfig.objects.create(variety = 'headline', dataSource = headline['data'], biteID = headline['chartID'], title = headline['title'])
+		 	dashConfig.bites.add(hl)
 		for chart in config['charts']:
-			ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'], title = chart['title'])
-			if chart['mapOptions']!=None and len(chart['mapOptions'])>0:
-				mb = MapBite.objects.create(displayField = chart['mapOptions'][0]['display'], scale = chart['mapOptions'][0]['scale'] )
-				ch.mapOptions = mb
-				ch.save()
-			dashConfig.bites.add(ch)
+		 	ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'], title = chart['title'])
+		 	if chart['mapOptions']!=None and len(chart['mapOptions'])>0:
+		 		mb = MapBite.objects.create(displayField = chart['mapOptions'][0]['display'], scale = chart['mapOptions'][0]['scale'] )
+		 		ch.mapOptions = mb
+		 		ch.save()
+		 	dashConfig.bites.add(ch)
 		for filt in config['filters']:
-			ft = FilterConfig.objects.create(text=filt['text'],tag=filt['tag'])
-			dashConfig.filters.add(ft)
+		 	ft = FilterConfig.objects.create(text=filt['text'],tag=filt['tag'])
+		 	dashConfig.filters.add(ft)
 		return render(request, 'hxldash/dashsave.html', {'dashID':id})
 
 def iframe(request,id):
@@ -159,7 +168,7 @@ def view(request,id,iframe=False):
 		"grid":"",
 		"charts":[],
 		"color":0,
-		"table":[],
+		"table":{'fields':[],'data':''},
 	}
 	if dashConfig.title == None:
 		dashConfig.title = ''
@@ -184,9 +193,10 @@ def view(request,id,iframe=False):
 		if filt.text!='':
 			config['filtersOn'] = True
 			config['filters'].append({'text':filt.text,'tag':filt.tag})
-	if dashConfig.dataTable.on == 1:
+	if dashConfig.dataTable and dashConfig.dataTable.on == 1:
+		config['table']['data'] = dashConfig.dataTable.dataSource
 		for field in dashConfig.dataTable.tableField.all():
-			config['table'].append({'tag':field.tag,'column':field.columnNum})
+			config['table']['fields'].append({'tag':field.tag,'column':field.columnNum})
 
 	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':iframe})
 
@@ -210,7 +220,7 @@ def edit(request,id):
 		"grid":"",
 		"charts":[],
 		"color":0,
-		"table":[],
+		"table":{'fields':[],'data':''},
 	}
 	
 	config['title'] = dashConfig.title
@@ -240,9 +250,10 @@ def edit(request,id):
 	if len(config['charts'])<5:
 		for i in range(len(config['charts'])-1,5):
 			config['charts'].append({'data':'','chartID':'','title':None,'mapOptions':None})
-	if dashConfig.dataTable.on == 1:
+	if dashConfig.dataTable and dashConfig.dataTable.on == 1:
+		config['table']['data'] = dashConfig.dataTable.dataSource
 		for field in dashConfig.dataTable.tableField.all():
-			config['table'].append({'tag':field.tag,'column':field.columnNum})
+			config['table']['fields'].append({'tag':field.tag,'column':field.columnNum})
 
 	data = {}
 	data['create'] = False
