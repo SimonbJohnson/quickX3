@@ -32,28 +32,47 @@ def create(request,url):
 		"filters":[{"text":"","tag":""},{"text":"","tag":""},{"text":"","tag":""}],
 		"headlinefigures":0,
 		"headlinefigurecharts":[{"data":"",
-		"chartID":""},
+		"chartID":"",
+		'mapOptions':[],
+		'title':None
+		},
 		{"data":"",
-		"chartID":""},
+		"chartID":"",
+		'mapOptions':[],
+		'title':None
+		},
 		{"data":"",
-		"chartID":""}],
+		"chartID":"",
+		'mapOptions':[],
+		'title':None
+		}],
 		"grid":"",
 		"color":0,
 		"charts":[
 			{"data":"",
-			"chartID":[]
+			"chartID":[],
+			'mapOptions':[],
+			'title':None
 			},
 			{"data":"",
-			"chartID":[""]
+			"chartID":[""],
+			'mapOptions':[],
+			'title':None
 			},						
 			{"data":"",
-			"chartID":[""]
+			"chartID":[""],
+			'mapOptions':[],
+			'title':None
 			},						
 			{"data":"",
-			"chartID":[""]
+			"chartID":[""],
+			'mapOptions':[],
+			'title':None
 			},						
 			{"data":"",
-			"chartID":[""]
+			"chartID":[""],
+			'mapOptions':[],
+			'title':None
 			}
 		]
 	}
@@ -83,10 +102,10 @@ def save(request):
 		dashConfig.save()
 		dashID = dashConfig.id
 		for headline in config['headlinefigurecharts']:
-			hl = BiteConfig.objects.create(variety = 'headline', dataSource = headline['data'], biteID = headline['chartID'])
+			hl = BiteConfig.objects.create(variety = 'headline', dataSource = headline['data'], biteID = headline['chartID'], title = headline['title'])
 			dashConfig.bites.add(hl)
 		for chart in config['charts']:
-			ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'])
+			ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'], title = chart['title'])
 			dashConfig.bites.add(ch)
 		for filt in config['filters']:
 			ft = FilterConfig.objects.create(text=filt['text'],tag=filt['tag'])
