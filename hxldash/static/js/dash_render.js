@@ -124,7 +124,7 @@ function createChart(id,bite,sort,title){
         }
     }
     $(id).addClass('chartcontainer');
-    $(id).html('<div class="titlecontainer"><p class="bitetitle">'+title+'</p></div><div id="chartcontainer'+id.substring(1)+'" class="chartelement"></div>');
+    $(id).html('<div class="titlecontainer"><p class="bitetitletext">'+title+'</p><p class="bitetitle"></p></div><div id="chartcontainer'+id.substring(1)+'" class="chartelement"></div>');
     id = id.substring(1);
     $('#chartcontainer'+id).height($('#'+id).height()-55);
     if(subtype=="row" || subtype=="pie"){

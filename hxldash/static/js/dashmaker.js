@@ -120,6 +120,10 @@ function populateCharts(hb){
 				createChart('#dashchart'+i,[bite],true,chart.title);
 				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="edit icon editchartbutton"></i>');
 				$('#dashchart'+i+' .editchartbutton').on('click',function(){
+					chartOptions('chart',i);
+				});
+				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="close icon deletechartbutton"></i>');
+				$('#dashchart'+i+' .deletechartbutton').on('click',function(){
 					chooseChart($(this).attr('data-id'));
 				});
 	        }
@@ -197,10 +201,15 @@ function chooseChart(index){
 			createChart('#dashchart'+index,[chart.bite],true);
 			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
 			$('#dashchart'+index+' .editchartbutton').on('click',function(){
+				chartOptions('chart',index);
+			});
+			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+i+'" class="close icon deletechartbutton"></i>');
+			$('#dashchart'+index+' .deletechartbutton').on('click',function(){
 				chooseChart($(this).attr('data-id'));
 			});
 			config.charts[index].data = chart.data;
 			config.charts[index].chartID = chart.bite.uniqueID;
+			config.charts[index].title = null;
 		});
 	});
 	bites.time.forEach(function(chart,i){
@@ -210,25 +219,51 @@ function chooseChart(index){
 			createChart('#dashchart'+index,[chart.bite],true);
 			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
 			$('#dashchart'+index+' .editchartbutton').on('click',function(){
+				chartOptions('chart',index);
+			});
+			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+i+'" class="close icon deletechartbutton"></i>');
+			$('#dashchart'+index+' .deletechartbutton').on('click',function(){
 				chooseChart($(this).attr('data-id'));
 			});
 			config.charts[index].data = chart.data;
 			config.charts[index].chartID = chart.bite.uniqueID;
+			config.charts[index].title = null;
 		});
 	});
 	bites.maps.forEach(function(mp,i){
 		$("#mapselect"+i).off();
 		$("#mapselect"+i).on('click',function(){
 			$('#chartmodal').modal('hide');
-			createMap('#dashchart'+index,mp.bite,dataSets[0],{'scale':'linear','display':''});
+			createChart('#dashchart'+index,[chart.bite],true);
 			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
 			$('#dashchart'+index+' .editchartbutton').on('click',function(){
+				chartOptions('chart',index);
+			});
+			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+i+'" class="close icon deletechartbutton"></i>');
+			$('#dashchart'+index+' .deletechartbutton').on('click',function(){
 				chooseChart($(this).attr('data-id'));
 			});
 			config.charts[index].data = mp.data;
 			config.charts[index].chartID = mp.bite.uniqueID;
+			config.charts[index].title = null;
 		});
 	});	
+}
+
+function chartOptions(chartType,i){
+	$('#chartoptionsmodal').modal('show');
+	$('#savechartoptions').off();
+	$('#newtitle').val('');
+	$('#savechartoptions').on('click',function(){
+		let newTitle = $('#newtitle').val();
+		if(newTitle!=''){
+			config.charts[i].title == newTitle;
+			$('#dashchart'+i+' .bitetitletext').html(newTitle);
+			config.charts[i].title = newTitle;
+		}
+
+		$('#chartoptionsmodal').modal('hide');
+	});
 }
 
 $('.colorpick').on('click',function(){
