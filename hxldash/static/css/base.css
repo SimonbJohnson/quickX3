@@ -307,6 +307,17 @@ body {
 	padding-left:10px;
 }
 
+.bitetitle {
+	display:inline-block;
+	width:10%;
+	vertical-align: top;
+}
+
+.bitetitletext{
+	display:inline-block;
+	width:90%;
+	vertical-align: top;
+}
 /* saving */
 
 #savecontent {

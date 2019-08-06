@@ -12,7 +12,7 @@ function loadData(dataURL){
                 setColors(0,false);
                 injectLayouts(hb,9);
                 updateStatusForBites(bites,matches);
-
+                tablefields(result);
             },
             error: function(err){
             	console.log(err);
@@ -36,10 +36,6 @@ function updateStatusForBites(bites,matches){
 	$('#status').append('<p>'+bites.headlines.length+' headline figure(s) generated</p>');
 	if(matches>2){
 		$('#status').append('<div class="greencheck"><i class="check icon"></i></div>');
-		/*setTimeout(function(){
-			$('#status').slideUp()
-		},1000)*/
-		
 	}
 }
 
@@ -209,7 +205,6 @@ function insertBiteClick(id,bite,i,index){
 	$(id+i).off();
 	$(id+i).on('click',function(){
 		$('#chartmodal').modal('hide');
-		console.log(bite);
 		if(bite.bite.type=='map'){
 			createMap('#dashchart'+index,bite.bite,dataSets[0],{'scale':'linear','display':''});
 		} else {
@@ -243,6 +238,36 @@ function chartOptions(chartType,i){
 
 		$('#chartoptionsmodal').modal('hide');
 	});
+}
+
+function tablefields(data){
+	data[0].forEach(function(d,i){
+		let check = '';
+		config.table.fields.forEach(function(f){
+			if(i==f.column){
+				check = 'checked';
+			}
+		});
+		$('#tablefields').append('<li><p><input type="checkbox" data-id='+i+' '+check+'> '+d +'  - '+ data[1][i]+'</p></li>')
+	});
+}
+
+function tableToConfig(){
+	if($('.ui.toggle input').is(':checked')){
+		var selected = [];
+		$('#tablefields input:checked').each(function() {
+		    selected.push($(this).attr('data-id'));
+		});
+		let table = {'fields':[],data:dataURL}
+		selected.forEach(function(s){
+			s = parseInt(s);
+			table.fields.push({'column':s,'tag':dataSets[0][1][s]})
+		});
+		config.table = table;		
+	} else {
+		config.table = {'fields':[],data:dataURL};
+	}
+
 }
 
 $('.colorpick').on('click',function(){
@@ -340,6 +365,7 @@ function addFilter(filterNum,val){
 $('#save').on('click',function(){
 	config.title = $('#create-title').val();
 	config.subtext = $('#create-description').val();
+	tableToConfig();
 	$('#formconfig').val(encodeURIComponent(JSON.stringify(config)));
 	$('#savemodal').modal('show');
 });
@@ -365,6 +391,17 @@ if(create=='True'){
 	$('#saveform').remove();
 	$('#form1').attr("action",'/update/'+id);
 }
+
+$('.ui.toggle').checkbox({
+  onChecked: function () { $('#tableselect').show(); },
+  onUnchecked: function () { $('#tableselect').hide(); }
+});
+if(config.table.fields.length==0){
+	$('#tableselect').hide();
+} else {
+	$('#tablecheck').prop('checked', true);
+}
+
 
 let bites = {'charts':[],'maps':[],'crossTables':[],'headlines':[],'time':[]};
 let dataSets = [];

@@ -101,6 +101,12 @@ def save(request):
 		dashConfig.headlinefigures = 0
 		dashConfig.save()
 		dashID = dashConfig.id
+		if len(config['table']['fields'])>0:
+			dt = DataTable.objects.create(on = 1,dataSource = config['table']['data'])
+			dashConfig.dataTable = dt
+			dashConfig.save()
+			for field in config['table']['fields']:
+				TableField.objects.create(dataTable = dt, columnNum = field['column'], tag = field['tag'])
 		for headline in config['headlinefigurecharts']:
 			hl = BiteConfig.objects.create(variety = 'headline', dataSource = headline['data'], biteID = headline['chartID'], title = headline['title'])
 			dashConfig.bites.add(hl)
@@ -135,7 +141,6 @@ def update(request,id):
 		if dashConfig.dataTable:
 			dashConfig.dataTable.delete()
 		if len(config['table']['fields'])>0:
-			print 'createtable'
 			dt = DataTable.objects.create(on = 1,dataSource = config['table']['data'])
 			dashConfig.dataTable = dt
 			dashConfig.save()
