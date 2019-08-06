@@ -74,7 +74,8 @@ def create(request,url):
 			'mapOptions':[],
 			'title':None
 			}
-		]
+		],
+		"table":{'fields':[],'data':''},
 	}
 	data['create'] = True
 	data['config'] = json.dumps(data['config'])
