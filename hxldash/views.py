@@ -168,11 +168,22 @@ def update(request,id):
 		 	dashConfig.filters.add(ft)
 		return render(request, 'hxldash/dashsave.html', {'dashID':id})
 
+@xframe_options_exempt
 def iframe(request,id):
-	return view(request,id,True)
+	config = createConfig(id)
+	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':True})
+
+@xframe_options_exempt
+def printview(request,id):
+	config = createConfig(id)
+	return render(request, 'hxldash/dashprint.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':False})
 
 @xframe_options_exempt
 def view(request,id,iframe=False):
+	config = createConfig(id)
+	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':False})
+
+def createConfig(id):
 	dashConfig = DashboardConfig.objects.get(pk=id)
 	viewpassword = dashConfig.viewpassword
 	if viewpassword != '' and viewpassword != None:
@@ -221,7 +232,7 @@ def view(request,id,iframe=False):
 		for field in dashConfig.dataTable.tableField.all():
 			config['table']['fields'].append({'tag':field.tag,'column':field.columnNum})
 
-	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':iframe})
+	return config
 
 def edit(request,id):
 	dashConfig = DashboardConfig.objects.get(pk=id)

@@ -2,7 +2,8 @@
 {% load staticfiles %}
 
 {% block content %}
-            <link rel="stylesheet" href="{% static 'css/dash.css' %}"> 
+            <link rel="stylesheet" href="{% static 'css/dash.css' %}">
+            <link rel="stylesheet" href="{% static 'css/print.css' %}">
             <style id="colourstyle"></style>
             <div class="row">
                 <div id="title" class="col-md-12">
@@ -33,13 +34,8 @@
     <div class="sp sp-circle"></div>
     <div class="footer container-fluid">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p>Made with <a href="{% url 'index' %}">HXLDash</a> - Powered By <a href="http://hxlstandard.org/" target="_blank">#HXL</a></p>
-                </div>
-                <div class="col-md-6 right">
-                    <p id="printlink"><a href="{% url 'print' id %}" target="_blank">Print Friendly Format</a></p> <p id="editlink"><a href="{% url 'edit' id %}" target="_blank">Edit</a></p>
-                </div>
+            <div id="footercontent" class="row">
+                <div class="col-md-12"><p>Made with HXLDash</p></div>
             </div>
         </div>
     </div>
@@ -52,5 +48,4 @@
     </script>
     <script src="{% static 'js/dash_render.js' %}"></script> 
     <script src="{% static 'js/dashview.js' %}"></script>
-    
 {% endblock %}
