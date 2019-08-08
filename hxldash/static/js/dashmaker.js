@@ -204,9 +204,11 @@ function chooseChart(index){
 function insertBiteClick(id,bite,i,index){
 	$(id+i).off();
 	$(id+i).on('click',function(){
+		let mapOptions = [];
 		$('#chartmodal').modal('hide');
 		if(bite.bite.type=='map'){
-			createMap('#dashchart'+index,bite.bite,dataSets[0],{'scale':'linear','display':''});
+			mapOptions = [{'scale':'linear','display':''}]
+			createMap('#dashchart'+index,bite.bite,dataSets[0],mapOptions[0]);
 		} else {
 			createChart('#dashchart'+index,[bite.bite],true);
 		}
@@ -221,6 +223,7 @@ function insertBiteClick(id,bite,i,index){
 		config.charts[index].data = bite.data;
 		config.charts[index].chartID = bite.bite.uniqueID;
 		config.charts[index].title = null;
+		config.charts[index].mapOptions = mapOptions;
 	});
 }
 

@@ -31,21 +31,23 @@ def create(request,url):
 		"filtersOn":False,
 		"filters":[{"text":"","tag":""},{"text":"","tag":""},{"text":"","tag":""}],
 		"headlinefigures":0,
-		"headlinefigurecharts":[{"data":"",
-		"chartID":"",
-		'mapOptions':[],
-		'title':None
-		},
-		{"data":"",
-		"chartID":"",
-		'mapOptions':[],
-		'title':None
-		},
-		{"data":"",
-		"chartID":"",
-		'mapOptions':[],
-		'title':None
-		}],
+		"headlinefigurecharts":[
+			{"data":"",
+			"chartID":"",
+			'mapOptions':[],
+			'title':None
+			},
+			{"data":"",
+			"chartID":"",
+			'mapOptions':[],
+			'title':None
+			},
+			{"data":"",
+			"chartID":"",
+			'mapOptions':[],
+			'title':None
+			}
+		],
 		"grid":"",
 		"color":0,
 		"charts":[
@@ -113,6 +115,11 @@ def save(request):
 			dashConfig.bites.add(hl)
 		for chart in config['charts']:
 			ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'], title = chart['title'])
+			if chart['mapOptions']!=None and len(chart['mapOptions'])>0:
+		 		mb = MapBite.objects.create(displayField = chart['mapOptions'][0]['display'], scale = chart['mapOptions'][0]['scale'] )
+		 		ch.mapOptions = mb
+		 		ch.save()
+		 	dashConfig.bites.add(ch)
 			dashConfig.bites.add(ch)
 		for filt in config['filters']:
 			ft = FilterConfig.objects.create(text=filt['text'],tag=filt['tag'])
@@ -176,7 +183,7 @@ def iframe(request,id):
 @xframe_options_exempt
 def printview(request,id):
 	config = createConfig(id)
-	return render(request, 'hxldash/dashprint.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':False})
+	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':False})
 
 @xframe_options_exempt
 def view(request,id,iframe=False):
@@ -219,7 +226,7 @@ def createConfig(id):
 				config['headlinefigures'] = config['headlinefigures'] +1
 			else:
 				try:
-					mapOptions = [{'display':bite.mapOptions.displayField,'scale':bite.mapOptions.scale}]
+					mapOptions = [{'display':bite.mapOptions.displayField,'scale':bite.mapOptions.scale,'size':bite.mapOptions.size}]
 				except:
 					mapOptions = []
 				config['charts'].append({'data':bite.dataSource,'chartID':bite.biteID,'mapOptions':mapOptions,'title':bite.title})

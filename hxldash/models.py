@@ -15,10 +15,11 @@ class TableField(models.Model):
 	columnNum = models.IntegerField()
 	tag = models.CharField(max_length=200)
 
-
 class MapBite(models.Model):
-	displayField = models.CharField(max_length=200)
+	displayField = models.CharField(max_length=200, null=True, blank=True)
 	scale = models.CharField(max_length=20)
+	size = models.CharField(max_length=200, null=True, blank=True)
+	colour = models.CharField(max_length=200, null=True, blank=True)
 
 	def __str__(self):
 		return str(self.id) + str(' - ') + str(self.bite)

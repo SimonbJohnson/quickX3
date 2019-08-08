@@ -268,20 +268,6 @@ function createMap(id,bite,data,mapOptions,title){
 
     var map = L.map(id+'map', { fadeAnimation: false }).setView([0, 0], 2);
 
-    var maxValue = bite.bite[1][1];
-    var minValue = bite.bite[1][1]-1;
-
-    bite['lookup'] = {}
-
-    bite.bite.forEach(function(d){
-        if(d[1]>maxValue){
-            maxValue = d[1];
-        }
-        if(d[1]-1<minValue){
-            minValue = d[1]-1;
-        }
-        bite.lookup[d[0]] = d[1];
-    });
 
     L.tileLayer.grayscale('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org/">OpenStreetMap</a> contributors',
@@ -289,6 +275,150 @@ function createMap(id,bite,data,mapOptions,title){
     }).addTo(map);
 
     if(bite.subtype=='choropleth'){
+        createChoroplethMap();
+    }
+
+    if(bite.subtype == 'point'){
+        createPointMap();
+    }
+
+    function createPointMap(){
+
+        let sizeColumn = 0
+
+        let discreteColors = ['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928'];
+
+        if(mapOptions.size!='' && mapOptions.size!=null){
+            data[1].forEach(function(d,i){
+                if(d == mapOptions.size){
+                   sizeColumn = i;
+                }
+            });
+        }
+
+        var maxValue = data[2][sizeColumn];
+        var minValue = data[2][sizeColumn];
+        if(scale=='log'){
+            if(isNaN(Math.log(data[2][sizeColumn]))|| Math.log(data[2][sizeColumn])<0){
+                maxValue = 0;
+                minValue = 0;
+            } else {
+                maxValue = Math.log(data[2][sizeColumn]);
+                minValue = Math.log(data[2][sizeColumn]);
+            }
+        }
+
+        data.forEach(function(d,i){
+            if(i>1){
+                if(scale == 'log'){
+                    let logValue = Math.log(d[sizeColumn]);
+                    if(isNaN(logValue) || logValue<0){
+                        logValue=0;
+                    }   
+                    if(logValue>maxValue){
+                        maxValue = logValue;
+                    }
+                    if(logValue<minValue){
+                        minValue = logValue;
+                    }                    
+                } else {
+                    if(d[sizeColumn]>maxValue){
+                        maxValue = d[sizeColumn];
+                    }
+                    if(d[sizeColumn]<minValue){
+                        minValue = d[sizeColumn];
+                    }                         
+                }
+          
+            }
+
+        });
+
+        let range = maxValue-minValue
+
+        var circles = [];
+
+        var info = L.control();
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info infohover');
+            L.DomEvent.disableClickPropagation(this._div);
+            return this._div;
+        };
+
+        info.update = function (info) { 
+            this._div.innerHTML = (info ?
+                info
+                : 'Hover for value');
+        };
+
+        info.addTo(map);
+
+        bite.bite[0].forEach(function(d,i){
+            if(i>0){
+                if(!isNaN(d) && !isNaN(bite.bite[1][i])){
+
+
+                    let radius = 5;
+                    if(mapOptions.size!='' && mapOptions.size!=null){
+                        if(scale == 'log'){
+                            let logValue = Math.log(data[i+1][sizeColumn]);
+                            if(isNaN(logValue) || logValue<0){
+                                logValue=0;
+                            }
+                            radius = (logValue-minValue)/range*10+2;
+                        } else {
+                            radius = (data[i+1][sizeColumn]-minValue)/range*10+2;
+                        }
+                        
+                    }
+
+
+                    var circle = L.circleMarker([d, bite.bite[1][i]], {
+                            className: 'circlepoint',
+                            fillOpacity: 0.5,
+                            radius: radius,
+                        }).addTo(map);
+
+                    circle.on('mouseover',function(){
+                        var text = '';
+                        data[0].forEach(function(d,j){
+                            if(j<8){
+                                text += '<p>'+data[0][j]+': '+data[i+1][j]+'</p>';
+                            }
+                        });
+                        info.update(text);
+                    });
+                    circle.on('mouseout',function(){
+                        setTimeout(function(){info.update()},1000);
+                    });
+                    circles.push(circle);
+                } else {
+                    console.log('Skipping badly formed lat/lon: ' +d+','+bite.bite[1][i])
+                }
+            }
+        });
+        var group = new L.featureGroup(circles);
+        map.fitBounds(group.getBounds().pad(0.1));        
+    }
+
+    function createChoroplethMap(){
+
+        var maxValue = bite.bite[1][1];
+        var minValue = bite.bite[1][1]-1;
+
+        bite['lookup'] = {}
+
+        bite.bite.forEach(function(d){
+            if(d[1]>maxValue){
+                maxValue = d[1];
+            }
+            if(d[1]-1<minValue){
+                minValue = d[1]-1;
+            }
+            bite.lookup[d[0]] = d[1];
+        });
+
         var info = L.control();
 
         info.onAdd = function (map) {
@@ -352,119 +482,147 @@ function createMap(id,bite,data,mapOptions,title){
         legend.addTo(map);
 
         loadGeoms(bite.geom_url,bite.geom_attribute,bite.name_attribute,display);
-    }
 
-    if(bite.subtype == 'point'){
-        var circles = [];
+        function getScale(scale){
+            var grades = ['No Data', Number(minValue.toPrecision(3)), Number(((maxValue-minValue)/4+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*2+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*3+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*4+minValue).toPrecision(3))]
+            if(scale=='log'){
+                grades.forEach(function(g,i){
+                    if(i>0){
+                        grades[i] = Number((Math.exp(((i-1)/4)*Math.log(maxValue - minValue))+minValue).toPrecision(3));
+                    }
+                });
+            }
+            if(scale=='binary'){
+                grades = ['No Data',0,1];
+            }
+            return grades;
+        }
 
-        var info = L.control();
+        function createLegend(div,scale,grades,classes){
+            if(scale=='binary'){
+                div.innerHTML += '<i class="'+classes[0]+'"></i> No<br />';
+                div.innerHTML += '<i class="'+classes[5]+'"></i> Yes<br />';
+            } else {
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML += '<i class="'+classes[i]+'"></i> ';
+                    div.innerHTML += isNaN(Number(grades[i])) ? grades[i] : Math.ceil(grades[i]);
+                    div.innerHTML += ((i + 1)<grades.length ? i==0 ? '<br>' : ' &ndash; ' + Math.floor(grades[i + 1]) + '<br>' : '+');
+                }    
+            }
+            return div;
+        }
 
-        info.onAdd = function (map) {
-            this._div = L.DomUtil.create('div', 'info infohover');
-            L.DomEvent.disableClickPropagation(this._div);
-            return this._div;
-        };
+        function loadGeoms(urls,geom_attributes,name_attributes){
+            var total = urls.length;
+            $('.infohover').html('Loading Geoms: '+total + ' to go');
+            $.ajax({
+                url: urls[0],
+                dataType: 'json',
+                success: function(result){
+                    var geom = {};
+                    if(result.type=='Topology'){
+                      geom = topojson.feature(result,result.objects.geom);
+                    } else {
+                      geom = result;
+                    }              
+                    var layer = L.geoJson(geom,
+                        {
+                            style: styleClosure(geom_attributes[0]),
+                            onEachFeature: onEachFeatureClosure(geom_attributes[0],name_attributes[0])
+                        }
+                    ).addTo(map);
+                    if(urls.length>1){
+                        loadGeoms(urls.slice(1),geom_attributes.slice(1),name_attributes.slice(1));
+                    } else {
+                        $('.infohover').html('Hover for value');
+                        fitBounds();
+                    }
 
-        // method that we will use to update the control based on feature properties passed
-        info.update = function (info) { 
-            this._div.innerHTML = (info ?
-                info
-                : 'Hover for value');
-        };
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            });          
+        }
 
-        info.addTo(map);
+        function onEachFeatureClosure(geom_attribute,name_attribute){
+            return function onEachFeature(feature, layer) {
+                var featureCode = feature.properties[geom_attribute];
+                if(!isNaN(bite.lookup[featureCode])){
+                  bounds.push(layer.getBounds());
+                }
+                layer.on({
+                    mouseover: highlightFeature,
+                    mouseout: resetHighlight,
+                    click: clickFeature,
+                });
+            }
 
-        bite.bite[0].forEach(function(d,i){
-            if(i>0){
-                if(!isNaN(d) && !isNaN(bite.bite[1][i])){
-                    var circle = L.circleMarker([d, bite.bite[1][i]], {
-                            className: 'circlepoint',
-                            fillOpacity: 0.5,
-                            radius: 5,
-                        }).addTo(map);
-
-                    circle.on('mouseover',function(){
-                        var text = '';
-                        data[0].forEach(function(d,j){
-                            if(j<8){
-                                text += '<p>'+data[0][j]+': '+data[i+1][j]+'</p>';
-                            }
-                        });
-                        info.update(text);
-                    });
-                    circle.on('mouseout',function(){
-                        setTimeout(function(){info.update()},1000);
-                    });
-                    circles.push(circle);
-                } else {
-                    console.log('Skipping badly formed lat/lon: ' +d+','+bite.bite[1][i])
+            function highlightFeature(e) {
+                if(clickOn===null){
+                    info.update(e.target.feature.properties[name_attribute],e.target.feature.properties[geom_attribute]);
                 }
             }
-        });
-        var group = new L.featureGroup(circles);
-        map.fitBounds(group.getBounds().pad(0.1));
-    }
 
-    function getScale(scale,minValue,maxValue){
-        var grades = ['No Data', Number(minValue.toPrecision(3)), Number(((maxValue-minValue)/4+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*2+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*3+minValue).toPrecision(3)), Number(((maxValue-minValue)/4*4+minValue).toPrecision(3))]
-        if(scale=='log'){
-            grades.forEach(function(g,i){
-                if(i>0){
-                    grades[i] = Number((Math.exp(((i-1)/4)*Math.log(maxValue - minValue))+minValue).toPrecision(3));
+            function clickFeature(e) {
+                info.update(e.target.feature.properties[name_attribute],e.target.feature.properties[geom_attribute]);
+                if(clickOn == e.target.feature.properties[geom_attribute]){
+                    clickOn=null;
+                } else {
+                    clickOn = e.target.feature.properties[geom_attribute];
+                }
+            }
+
+            function resetHighlight(e) {
+                if(clickOn===null){
+                    info.update();
+                }
+            }   
+
+        }
+
+        function styleClosure(geom_attribute){
+            return function style(feature) {
+                return {
+                    className: getClass(feature.properties[geom_attribute]),
+                    weight: 1,
+                    opacity: 1,
+                    color: '#cccccc',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+            }
+        } 
+
+        function getClass(id){
+            var value = 0;
+            var found = false;
+            bite.bite.forEach(function(d){
+                if(d[0]==id){
+                    value=d[1];
+                    found = true;
                 }
             });
-        }
-        if(scale=='binary'){
-            grades = ['No Data',0,1];
-        }
-        return grades;
-    }
-
-    function createLegend(div,scale,grades,classes){
-        if(scale=='binary'){
-            div.innerHTML += '<i class="'+classes[0]+'"></i> No<br />';
-            div.innerHTML += '<i class="'+classes[5]+'"></i> Yes<br />';
-        } else {
-            for (var i = 0; i < grades.length; i++) {
-                div.innerHTML += '<i class="'+classes[i]+'"></i> ';
-                div.innerHTML += isNaN(Number(grades[i])) ? grades[i] : Math.ceil(grades[i]);
-                div.innerHTML += ((i + 1)<grades.length ? i==0 ? '<br>' : ' &ndash; ' + Math.floor(grades[i + 1]) + '<br>' : '+');
-            }    
-        }
-        return div;
-    }
-
-    function loadGeoms(urls,geom_attributes,name_attributes){
-        var total = urls.length;
-        $('.infohover').html('Loading Geoms: '+total + ' to go');
-        $.ajax({
-            url: urls[0],
-            dataType: 'json',
-            success: function(result){
-                var geom = {};
-                if(result.type=='Topology'){
-                  geom = topojson.feature(result,result.objects.geom);
-                } else {
-                  geom = result;
-                }              
-                var layer = L.geoJson(geom,
-                    {
-                        style: styleClosure(geom_attributes[0]),
-                        onEachFeature: onEachFeatureClosure(geom_attributes[0],name_attributes[0])
+            if(found){
+                //in future this should take the values calculated in grades/legend
+                if(scale=='log'){
+                    var maxDivide = Math.log(maxValue-minValue)
+                    if(maxDivide ==0){return 'mapcolor'+4}
+                    return 'mapcolor'+Math.floor(Math.log(value-minValue)/Math.log(maxValue-minValue)*4);
+                } else if(scale=='binary'){
+                    if(value>0){
+                        return 'mapcolor4';
+                    } else {
+                        return 'mapcolor0';
                     }
-                ).addTo(map);
-                if(urls.length>1){
-                    loadGeoms(urls.slice(1),geom_attributes.slice(1),name_attributes.slice(1));
-                } else {
-                    $('.infohover').html('Hover for value');
-                    fitBounds();
                 }
-
-            },
-            error: function(err){
-                console.log(err);
+                else {
+                    return 'mapcolor'+Math.floor((value-minValue)/(maxValue-minValue)*4);
+                }
+            } else {
+                return 'mapcolornone';
             }
-        });          
+        }        
     }
 
     function fitBounds(){
@@ -486,85 +644,6 @@ function createMap(id,bite,data,mapOptions,title){
             });
             fitBound._northEast.lng=fitBound._northEast.lng+(fitBound._northEast.lng-fitBound._southWest.lng)*0.2;
             map.fitBounds(fitBound);
-        }
-    }
-
-    function onEachFeatureClosure(geom_attribute,name_attribute){
-        return function onEachFeature(feature, layer) {
-            var featureCode = feature.properties[geom_attribute];
-            if(!isNaN(bite.lookup[featureCode])){
-              bounds.push(layer.getBounds());
-            }
-            layer.on({
-                mouseover: highlightFeature,
-                mouseout: resetHighlight,
-                click: clickFeature,
-            });
-        }
-
-        function highlightFeature(e) {
-            if(clickOn===null){
-                info.update(e.target.feature.properties[name_attribute],e.target.feature.properties[geom_attribute]);
-            }
-        }
-
-        function clickFeature(e) {
-            info.update(e.target.feature.properties[name_attribute],e.target.feature.properties[geom_attribute]);
-            if(clickOn == e.target.feature.properties[geom_attribute]){
-                clickOn=null;
-            } else {
-                clickOn = e.target.feature.properties[geom_attribute];
-            }
-        }
-
-        function resetHighlight(e) {
-            if(clickOn===null){
-                info.update();
-            }
-        }   
-
-    }
-
-    function styleClosure(geom_attribute){
-        return function style(feature) {
-            return {
-                className: getClass(feature.properties[geom_attribute]),
-                weight: 1,
-                opacity: 1,
-                color: '#cccccc',
-                dashArray: '3',
-                fillOpacity: 0.7
-            };
-        }
-    } 
-
-    function getClass(id){
-        var value = 0;
-        var found = false;
-        bite.bite.forEach(function(d){
-            if(d[0]==id){
-                value=d[1];
-                found = true;
-            }
-        });
-        if(found){
-            //in future this should take the values calculated in grades/legend
-            if(scale=='log'){
-                var maxDivide = Math.log(maxValue-minValue)
-                if(maxDivide ==0){return 'mapcolor'+4}
-                return 'mapcolor'+Math.floor(Math.log(value-minValue)/Math.log(maxValue-minValue)*4);
-            } else if(scale=='binary'){
-                if(value>0){
-                    return 'mapcolor4';
-                } else {
-                    return 'mapcolor0';
-                }
-            }
-            else {
-                return 'mapcolor'+Math.floor((value-minValue)/(maxValue-minValue)*4);
-            }
-        } else {
-            return 'mapcolornone';
         }
     }        
 
