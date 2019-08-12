@@ -183,7 +183,7 @@ def iframe(request,id):
 @xframe_options_exempt
 def printview(request,id):
 	config = createConfig(id)
-	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':False})
+	return render(request, 'hxldash/dashprint.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':False})
 
 @xframe_options_exempt
 def view(request,id,iframe=False):
