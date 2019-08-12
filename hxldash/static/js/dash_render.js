@@ -284,57 +284,79 @@ function createMap(id,bite,data,mapOptions,title){
 
     function createPointMap(){
 
-        let sizeColumn = 0
+        let sizeColumn = null;
+        let colourColumn = null;
+        let maxValue;
+        let minValue;
+        let range;
 
-        let discreteColors = ['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928'];
+        let discreteColors = ['#F44336','#2196F3','#4CAF50','#FFEB3B','#795548','#9E9E9E','#9C27B0','#FFA726'];
+        let categories = [];
 
         if(mapOptions.size!='' && mapOptions.size!=null){
-            data[1].forEach(function(d,i){
-                if(d == mapOptions.size){
-                   sizeColumn = i;
-                }
-            });
-        }
+            sizeColumn = getColumn(data,mapOptions.size);
 
-        var maxValue = data[2][sizeColumn];
-        var minValue = data[2][sizeColumn];
-        if(scale=='log'){
-            if(isNaN(Math.log(data[2][sizeColumn]))|| Math.log(data[2][sizeColumn])<0){
-                maxValue = 0;
-                minValue = 0;
+            if (sizeColumn != null) {
+                maxValue = data[2][sizeColumn];
+                minValue = data[2][sizeColumn];
+                if(scale=='log'){
+                    if(isNaN(Math.log(data[2][sizeColumn]))|| Math.log(data[2][sizeColumn])<0){
+                        maxValue = 0;
+                        minValue = 0;
+                    } else {
+                        maxValue = Math.log(data[2][sizeColumn]);
+                        minValue = Math.log(data[2][sizeColumn]);
+                    }
+                }
+
+                data.forEach(function(d,i){
+                    if(i>1){
+                        if(scale == 'log'){
+                            let logValue = Math.log(d[sizeColumn]);
+                            if(isNaN(logValue) || logValue<0){
+                                logValue=0;
+                            }   
+                            if(logValue>maxValue){
+                                maxValue = logValue;
+                            }
+                            if(logValue<minValue){
+                                minValue = logValue;
+                            }                    
+                        } else {
+                            if(d[sizeColumn]>maxValue){
+                                maxValue = d[sizeColumn];
+                            }
+                            if(d[sizeColumn]<minValue){
+                                minValue = d[sizeColumn];
+                            }                         
+                        }
+                  
+                    }
+
+                });
+
+                range = maxValue-minValue
             } else {
-                maxValue = Math.log(data[2][sizeColumn]);
-                minValue = Math.log(data[2][sizeColumn]);
+                mapOptions.size = null;
             }
         }
-
-        data.forEach(function(d,i){
-            if(i>1){
-                if(scale == 'log'){
-                    let logValue = Math.log(d[sizeColumn]);
-                    if(isNaN(logValue) || logValue<0){
-                        logValue=0;
-                    }   
-                    if(logValue>maxValue){
-                        maxValue = logValue;
-                    }
-                    if(logValue<minValue){
-                        minValue = logValue;
+        if(mapOptions.colour!='' && mapOptions.colour!=null){
+            colourColumn = getColumn(data,mapOptions.colour);
+            if(colourColumn!=null){
+                console.log('here');
+                data.forEach(function(d,i){
+                    if(i>1){
+                        if(categories.length<discreteColors.length-1){
+                            let value = d[colourColumn];
+                            if(categories.indexOf(value)==-1){
+                                categories.push(value);
+                            }
+                        }
                     }                    
-                } else {
-                    if(d[sizeColumn]>maxValue){
-                        maxValue = d[sizeColumn];
-                    }
-                    if(d[sizeColumn]<minValue){
-                        minValue = d[sizeColumn];
-                    }                         
-                }
-          
+                });
             }
-
-        });
-
-        let range = maxValue-minValue
+            console.log(categories);
+        }
 
         var circles = [];
 
@@ -373,12 +395,27 @@ function createMap(id,bite,data,mapOptions,title){
                         
                     }
 
-
-                    var circle = L.circleMarker([d, bite.bite[1][i]], {
+                    let style = {
                             className: 'circlepoint',
-                            fillOpacity: 0.5,
+                            fillOpacity: 0.75,
                             radius: radius,
-                        }).addTo(map);
+                        }
+
+                    if(mapOptions.colour!='' && mapOptions.colour!=null){
+                        let value = data[i+1][colourColumn];
+                        let cat = categories.indexOf(value);
+                        let colour;
+                        if(cat>-1){
+                            colour = discreteColors[cat];
+                        } else {
+                            colour = discreteColors[discreteColors.length-1];
+                        }
+                        style['fillColor'] = colour;
+                        style['color'] = colour;
+                        style['className']  = '';
+                    }
+                    console.log(style);
+                    var circle = L.circleMarker([d, bite.bite[1][i]], style).addTo(map);
 
                     circle.on('mouseover',function(){
                         var text = '';
@@ -647,4 +684,14 @@ function createMap(id,bite,data,mapOptions,title){
         }
     }        
 
+}
+
+function getColumn(data,tag){
+    let column = null;
+    data[1].forEach(function(d,i){
+        if(d == tag){
+            column = i;
+        }
+    });
+    return column;
 }

@@ -226,7 +226,7 @@ def createConfig(id):
 				config['headlinefigures'] = config['headlinefigures'] +1
 			else:
 				try:
-					mapOptions = [{'display':bite.mapOptions.displayField,'scale':bite.mapOptions.scale,'size':bite.mapOptions.size}]
+					mapOptions = [{'display':bite.mapOptions.displayField,'scale':bite.mapOptions.scale,'size':bite.mapOptions.size,'colour':bite.mapOptions.colour}]
 				except:
 					mapOptions = []
 				config['charts'].append({'data':bite.dataSource,'chartID':bite.biteID,'mapOptions':mapOptions,'title':bite.title})
