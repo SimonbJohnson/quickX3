@@ -384,7 +384,7 @@ function createMap(id,bite,data,mapOptions,title){
         info.addTo(map);
 
         $('.info').on('mouseover',function(){infoBox = true});
-        $('.info').on('mouseout',function(){infoBox = false});
+        $('.info').on('mouseout',function(){infoBox = false;info.update();});
 
         console.log(bite);
         bite.bite[0].forEach(function(d,i){
