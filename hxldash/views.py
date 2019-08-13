@@ -166,7 +166,7 @@ def update(request,id):
 		for chart in config['charts']:
 		 	ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'], title = chart['title'])
 		 	if chart['mapOptions']!=None and len(chart['mapOptions'])>0:
-		 		mb = MapBite.objects.create(displayField = chart['mapOptions'][0]['display'], scale = chart['mapOptions'][0]['scale'] )
+		 		mb = MapBite.objects.create(displayField = chart['mapOptions'][0]['display'], scale = chart['mapOptions'][0]['scale'], size = chart['mapOptions'][0]['size'], colour = chart['mapOptions'][0]['colour'] )
 		 		ch.mapOptions = mb
 		 		ch.save()
 		 	dashConfig.bites.add(ch)
@@ -177,20 +177,7 @@ def update(request,id):
 
 @xframe_options_exempt
 def iframe(request,id):
-	config = createConfig(id)
-	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':True})
 
-@xframe_options_exempt
-def printview(request,id):
-	config = createConfig(id)
-	return render(request, 'hxldash/dashprint.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':False})
-
-@xframe_options_exempt
-def view(request,id,iframe=False):
-	config = createConfig(id)
-	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':False})
-
-def createConfig(id):
 	dashConfig = DashboardConfig.objects.get(pk=id)
 	viewpassword = dashConfig.viewpassword
 	if viewpassword != '' and viewpassword != None:
@@ -199,6 +186,39 @@ def createConfig(id):
 			user = request.session['user']
 		if check_password(user,viewpassword)==False:
 			return password(request,'view',id)
+	config = createConfig(id)
+	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':True})
+
+@xframe_options_exempt
+def printview(request,id):
+	dashConfig = DashboardConfig.objects.get(pk=id)
+
+	viewpassword = dashConfig.viewpassword
+	if viewpassword != '' and viewpassword != None:
+		user = '';
+		if 'user' in request.session:
+			user = request.session['user']
+		if check_password(user,viewpassword)==False:
+			return password(request,'view',id)
+	config = createConfig(id)
+	return render(request, 'hxldash/dashprint.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':False})
+
+@xframe_options_exempt
+def view(request,id,iframe=False):
+
+	dashConfig = DashboardConfig.objects.get(pk=id)
+	viewpassword = dashConfig.viewpassword
+	if viewpassword != '' and viewpassword != None:
+		user = '';
+		if 'user' in request.session:
+			user = request.session['user']
+		if check_password(user,viewpassword)==False:
+			return password(request,'view',id)
+	config = createConfig(id)
+	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':False})
+
+def createConfig(id):
+	dashConfig = DashboardConfig.objects.get(pk=id)
 	config = {
 		"title":"",
 		"subtext":"",
@@ -250,51 +270,51 @@ def edit(request,id):
 			user = request.session['user']
 		if check_password(user,editpassword)==False:
 			return password(request,'edit',id)
-
-	config = {
-		"title":"",
-		"subtext":"",
-		"filtersOn":False,
-		"filters":[],
-		"headlinefigures":0,
-		"headlinefigurecharts":[],
-		"grid":"",
-		"charts":[],
-		"color":0,
-		"table":{'fields':[],'data':''},
-	}
+	config = createConfig(id)
+	# config = {
+	# 	"title":"",
+	# 	"subtext":"",
+	# 	"filtersOn":False,
+	# 	"filters":[],
+	# 	"headlinefigures":0,
+	# 	"headlinefigurecharts":[],
+	# 	"grid":"",
+	# 	"charts":[],
+	# 	"color":0,
+	# 	"table":{'fields':[],'data':''},
+	# }
 	
-	config['title'] = dashConfig.title
-	config['subtext'] = dashConfig.subtext
-	config['grid'] = dashConfig.grid
-	config['color'] = dashConfig.color
-	for bite in dashConfig.bites.all().order_by('id'):
-		if bite.biteID!="[u'']" and len(bite.dataSource)>1:
-			if bite.variety=='headline' :
-				config['headlinefigurecharts'].append({'data':bite.dataSource,'chartID':bite.biteID,'title':bite.title})
-				config['headlinefigures'] = config['headlinefigures'] +1
-			else:
-				chartData = {'data':bite.dataSource,'chartID':bite.biteID,'title':bite.title,'mapOptions':[]}
-				if bite.mapOptions!=None:
-					chartData['mapOptions'].append({'scale':bite.mapOptions.scale,'display':bite.mapOptions.displayField})
-				config['charts'].append(chartData)	
-	for filt in dashConfig.filters.all().order_by('id'):
-		if filt.text!='':
-			config['filtersOn'] = True
-			config['filters'].append({'text':filt.text,'tag':filt.tag})
-	if len(config['filters'])<3:
-		for i in range(len(config['filters'])-1,3):
-			config['filters'].append({'text':'','tag':''})
-	if len(config['headlinefigurecharts'])<3:
-		for i in range(len(config['headlinefigurecharts'])-1,3):
-			config['headlinefigurecharts'].append({'data':'','chartID':'','title':None})
-	if len(config['charts'])<5:
-		for i in range(len(config['charts'])-1,5):
-			config['charts'].append({'data':'','chartID':'','title':None,'mapOptions':None})
-	if dashConfig.dataTable and dashConfig.dataTable.on == 1:
-		config['table']['data'] = dashConfig.dataTable.dataSource
-		for field in dashConfig.dataTable.tableField.all():
-			config['table']['fields'].append({'tag':field.tag,'column':field.columnNum})
+	# config['title'] = dashConfig.title
+	# config['subtext'] = dashConfig.subtext
+	# config['grid'] = dashConfig.grid
+	# config['color'] = dashConfig.color
+	# for bite in dashConfig.bites.all().order_by('id'):
+	# 	if bite.biteID!="[u'']" and len(bite.dataSource)>1:
+	# 		if bite.variety=='headline' :
+	# 			config['headlinefigurecharts'].append({'data':bite.dataSource,'chartID':bite.biteID,'title':bite.title})
+	# 			config['headlinefigures'] = config['headlinefigures'] +1
+	# 		else:
+	# 			chartData = {'data':bite.dataSource,'chartID':bite.biteID,'title':bite.title,'mapOptions':[]}
+	# 			if bite.mapOptions!=None:
+	# 				chartData['mapOptions'].append({'scale':bite.mapOptions.scale,'display':bite.mapOptions.displayField})
+	# 			config['charts'].append(chartData)	
+	# for filt in dashConfig.filters.all().order_by('id'):
+	# 	if filt.text!='':
+	# 		config['filtersOn'] = True
+	# 		config['filters'].append({'text':filt.text,'tag':filt.tag})
+	# if len(config['filters'])<3:
+	# 	for i in range(len(config['filters'])-1,3):
+	# 		config['filters'].append({'text':'','tag':''})
+	# if len(config['headlinefigurecharts'])<3:
+	# 	for i in range(len(config['headlinefigurecharts'])-1,3):
+	# 		config['headlinefigurecharts'].append({'data':'','chartID':'','title':None})
+	# if len(config['charts'])<5:
+	# 	for i in range(len(config['charts'])-1,5):
+	# 		config['charts'].append({'data':'','chartID':'','title':None,'mapOptions':None})
+	# if dashConfig.dataTable and dashConfig.dataTable.on == 1:
+	# 	config['table']['data'] = dashConfig.dataTable.dataSource
+	# 	for field in dashConfig.dataTable.tableField.all():
+	# 		config['table']['fields'].append({'tag':field.tag,'column':field.columnNum})
 
 	data = {}
 	data['create'] = False
