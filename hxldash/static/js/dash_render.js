@@ -292,6 +292,9 @@ function createMap(id,bite,data,mapOptions,title){
 
         let discreteColors = ['#F44336','#2196F3','#4CAF50','#FFEB3B','#795548','#9E9E9E','#9C27B0','#FFA726'];
         let categories = [];
+        let addOther = false;
+
+        let infoBox = false;
 
         if(mapOptions.size!='' && mapOptions.size!=null){
             sizeColumn = getColumn(data,mapOptions.size);
@@ -343,7 +346,6 @@ function createMap(id,bite,data,mapOptions,title){
         if(mapOptions.colour!='' && mapOptions.colour!=null){
             colourColumn = getColumn(data,mapOptions.colour);
             if(colourColumn!=null){
-                console.log('here');
                 data.forEach(function(d,i){
                     if(i>1){
                         if(categories.length<discreteColors.length-1){
@@ -351,11 +353,16 @@ function createMap(id,bite,data,mapOptions,title){
                             if(categories.indexOf(value)==-1){
                                 categories.push(value);
                             }
+                        } else {
+                            addOther = true;
                         }
                     }                    
                 });
             }
-            console.log(categories);
+        }
+
+        if(addOther){
+            categories.push('Other');
         }
 
         var circles = [];
@@ -376,10 +383,13 @@ function createMap(id,bite,data,mapOptions,title){
 
         info.addTo(map);
 
+        $('.info').on('mouseover',function(){infoBox = true});
+        $('.info').on('mouseout',function(){infoBox = false});
+
+        console.log(bite);
         bite.bite[0].forEach(function(d,i){
             if(i>0){
                 if(!isNaN(d) && !isNaN(bite.bite[1][i])){
-
 
                     let radius = 5;
                     if(mapOptions.size!='' && mapOptions.size!=null){
@@ -413,8 +423,9 @@ function createMap(id,bite,data,mapOptions,title){
                         style['fillColor'] = colour;
                         style['color'] = colour;
                         style['className']  = '';
+
                     }
-                    console.log(style);
+
                     var circle = L.circleMarker([d, bite.bite[1][i]], style).addTo(map);
 
                     circle.on('mouseover',function(){
@@ -427,7 +438,10 @@ function createMap(id,bite,data,mapOptions,title){
                         info.update(text);
                     });
                     circle.on('mouseout',function(){
-                        setTimeout(function(){info.update()},1000);
+                        if(!infobox){
+                            info.update();
+                        }
+                        
                     });
                     circles.push(circle);
                 } else {
@@ -435,6 +449,21 @@ function createMap(id,bite,data,mapOptions,title){
                 }
             }
         });
+        if(mapOptions.size!='' && mapOptions.size!=null){
+            var legend = L.control({position: 'bottomright'});
+            legend.onAdd = function (map) {
+
+                var div = L.DomUtil.create('div', 'info legend')
+
+                categories.forEach(function(c,i){
+                    div.innerHTML += '<i style="background-color:'+discreteColors[i]+';"></i> ';
+                    div.innerHTML += categories[i]+'<br />';
+                })
+                return div;
+            };
+
+            legend.addTo(map);
+        }
         var group = new L.featureGroup(circles);
         map.fitBounds(group.getBounds().pad(0.1));        
     }
