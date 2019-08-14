@@ -295,6 +295,7 @@ function createMap(id,bite,data,mapOptions,title){
         let addOther = false;
 
         let infoBox = false;
+        let circleOver = false;
 
         if(mapOptions.size!='' && mapOptions.size!=null){
             sizeColumn = getColumn(data,mapOptions.size);
@@ -429,6 +430,7 @@ function createMap(id,bite,data,mapOptions,title){
                     var circle = L.circleMarker([d, bite.bite[1][i]], style).addTo(map);
 
                     circle.on('mouseover',function(){
+                        circleOver = true;
                         var text = '';
                         data[0].forEach(function(d,j){
                             if(j<8){
@@ -438,11 +440,12 @@ function createMap(id,bite,data,mapOptions,title){
                         info.update(text);
                     });
                     circle.on('mouseout',function(){
+                        circleOver = false;
                         setTimeout(function(){
-                            if(!infoBox){
-                                info.update();
-                            }
-                        },100)
+                            if(infoBox==false && circleOver==false){
+                            info.update();
+                             }
+                        },100);
                     });
                     circles.push(circle);
                 } else {
