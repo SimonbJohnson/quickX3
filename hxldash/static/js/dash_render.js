@@ -383,7 +383,7 @@ function createMap(id,bite,data,mapOptions,title){
 
         info.addTo(map);
 
-        $('.info').on('mouseover',function(){infoBox = true});
+        $('.info').on('mouseover',function(){infoBox = true;console.log('infoover');});
         $('.info').on('mouseout',function(){infoBox = false;info.update();});
 
         console.log(bite);
@@ -438,10 +438,11 @@ function createMap(id,bite,data,mapOptions,title){
                         info.update(text);
                     });
                     circle.on('mouseout',function(){
-                        if(!infobox){
-                            info.update();
-                        }
-                        
+                        setTimeout(function(){
+                            if(!infoBox){
+                                info.update();
+                            }
+                        },100)
                     });
                     circles.push(circle);
                 } else {
