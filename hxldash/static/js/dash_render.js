@@ -245,6 +245,7 @@ function createMap(id,bite,data,mapOptions,title){
     let display = mapOptions.display;
     let scale = mapOptions.scale;
     let displayColumn = 0;
+    console.log(bite);
     let idTag = bite.uniqueID.split('/')[1];
     let idColumn = '';
     if(display!=''){
