@@ -116,7 +116,7 @@ def save(request):
 		for chart in config['charts']:
 			ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'], title = chart['title'])
 			if chart['mapOptions']!=None and len(chart['mapOptions'])>0:
-		 		mb = MapBite.objects.create(displayField = chart['mapOptions'][0]['display'], scale = chart['mapOptions'][0]['scale'] )
+		 		mb = MapBite.objects.create(displayField = chart['mapOptions'][0]['display'], scale = chart['mapOptions'][0]['scale'], size = chart['mapOptions'][0]['size'], colour = chart['mapOptions'][0]['colour'])
 		 		ch.mapOptions = mb
 		 		ch.save()
 		 	dashConfig.bites.add(ch)
