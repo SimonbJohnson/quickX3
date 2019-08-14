@@ -453,7 +453,7 @@ function createMap(id,bite,data,mapOptions,title){
                 }
             }
         });
-        if(mapOptions.size!='' && mapOptions.size!=null){
+        if(mapOptions.colour!='' && mapOptions.colour!=null){
             var legend = L.control({position: 'bottomright'});
             legend.onAdd = function (map) {
 
