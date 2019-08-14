@@ -493,12 +493,12 @@ function createMap(id,bite,data,mapOptions,title){
         var info = L.control();
 
         info.onAdd = function (map) {
-            this._div = L.DomUtil.create('div', 'info infohover'); // create a div with a class "info"
+            this._div = L.DomUtil.create('div', 'info infohover');
+            L.DomEvent.disableClickPropagation(this._div);
             this.update();
             return this._div;
         };
 
-        // method that we will use to update the control based on feature properties passed
         info.update = function (name,id) {
             value = 'No Data';
             let displayValue = [];
