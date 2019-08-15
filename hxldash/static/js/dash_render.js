@@ -328,11 +328,15 @@ function createMap(id,bite,data,mapOptions,title){
                                 minValue = logValue;
                             }                    
                         } else {
-                            if(d[sizeColumn]>maxValue){
-                                maxValue = d[sizeColumn];
+                            let value = parseFloat(d[sizeColumn]);
+                            if(isNaN(value)){
+                                value = 0;
                             }
-                            if(d[sizeColumn]<minValue){
-                                minValue = d[sizeColumn];
+                            if(value>maxValue){
+                                maxValue = value;
+                            }
+                            if(value<minValue){
+                                minValue = value;
                             }                         
                         }
                   
@@ -345,6 +349,9 @@ function createMap(id,bite,data,mapOptions,title){
                 mapOptions.size = null;
             }
         }
+        console.log(minValue);
+        console.log(maxValue);
+        console.log(range);
         if(mapOptions.colour!='' && mapOptions.colour!=null){
             colourColumn = getColumn(data,mapOptions.colour);
             if(colourColumn!=null){
@@ -404,7 +411,9 @@ function createMap(id,bite,data,mapOptions,title){
                         } else {
                             radius = (data[i+1][sizeColumn]-minValue)/range*10+2;
                         }
-                        
+                        if(isNaN(radius)){
+                            radius = 5;
+                        };                       
                     }
 
                     let style = {
