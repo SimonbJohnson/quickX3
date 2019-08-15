@@ -85,8 +85,8 @@ function generateBites(hb,data,dataURL){
 	for(let i = 0;i<data[0].length;i++){
 		filters.push({'header':data[0][i],'tag':data[1][i]});
 		$('#filterselect').append('<option value="'+data[0][i]+'('+data[1][i]+'">'+data[0][i]+'('+data[1][i]+')</option>');
-		$('#colourselect').append('<option value="'+data[0][i]+'('+data[1][i]+'">'+data[0][i]+'('+data[1][i]+')</option>');
-		$('#sizeselect').append('<option value="'+data[0][i]+'('+data[1][i]+'">'+data[0][i]+'('+data[1][i]+')</option>');
+		$('#colourselect').append('<option value="'+data[1][i]+'">'+data[0][i]+'('+data[1][i]+')</option>');
+		$('#sizeselect').append('<option value="'+data[1][i]+'">'+data[0][i]+'('+data[1][i]+')</option>');
 	}
 	return matches;
 }
@@ -130,16 +130,15 @@ function populateCharts(hb){
 	        }
 	        if(bite.type=='map'){
 	            if(chart.mapOptions == null){
-	                chart.mapOptions=[{'scale':'linear','display':''}];
+	                chart.mapOptions=[{'scale':'linear','display':'','size':null,'colour':null}];
 	            }
 	            if(chart.mapOptions[0]==undefined){
-	                chart.mapOptions.push({'scale':'linear','display':''});
+	                chart.mapOptions.push({'scale':'linear','display':'','size':null,'colour':null});
 	            }
 	            createMap('#dashchart'+i,bite,dataSets[0],chart.mapOptions[0],chart.title);
 				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="edit icon editchartbutton"></i>');
 				$('#dashchart'+i+' .editchartbutton').on('click',function(){
-					changeMapOptions(bite,bite.bite.subtype,i);
-
+					changeMapOptions(bite,bite.subtype,i);
 				});
 				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="close icon deletechartbutton"></i>');
 				$('#dashchart'+i+' .deletechartbutton').on('click',function(){
@@ -237,11 +236,11 @@ function insertBiteClick(id,bite,i,index){
 	});
 }
 
-function insertMap(bite,index,mapOptions){
-	createMap('#dashchart'+index,bite,dataSets[0],mapOptions[0]);
+function insertMap(bite,index,mapOptions,title=null){
+	createMap('#dashchart'+index,bite,dataSets[0],mapOptions[0],title);
 	$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
 	$('#dashchart'+index+' .editchartbutton').on('click',function(){
-		changeMapOptions(bite,bite.bite.subtype,index);
+		changeMapOptions(bite,bite.subtype,index);
 	});
 	$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="close icon deletechartbutton"></i>');
 	$('#dashchart'+index+' .deletechartbutton').on('click',function(){
@@ -267,24 +266,41 @@ function chartOptions(chartType,i){
 
 function changeMapOptions(bite,mapType,i){
 	$('#mapoptionsmodal').modal('show');
+	$('#scaleselect').val(config.charts[i].mapOptions[0]['scale']);
 	if(mapType!='point'){
 		$('#mapoptionspoint').hide();
+	} else {
+		$("#sizeselect").val(config.charts[i].mapOptions[0]['size']);
+		$("#colourselect").val(config.charts[i].mapOptions[0]['colour']);
 	}
 	$('#savemapoptions').off();
 	$('#savemapoptions').on('click',function(){
+		let newTitle = $('#newtitlemap').val();
+		if(newTitle!=''){
+			config.charts[i].title == newTitle;
+			$('#dashchart'+i+' .bitetitletext').html(newTitle);
+			config.charts[i].title = newTitle;
+		} else {
+			newTitle = null;
+		}
+		let scale = $('#scaleselect').val();
+		config.charts[i].mapOptions[0]['scale'] = scale;
 		if(mapType=='point'){
 			let size = $('#sizeselect').val();
 			if(size!='none'){
-				config.charts[i].mapOptions[0]['size']= size.split('(')[1].split(')')[0];
+				config.charts[i].mapOptions[0]['size']= size;
+			} else {
+				config.charts[i].mapOptions[0]['size']= null;
 			}
 			let colour = $('#colourselect').val();
 			if(colour!='none'){
-				config.charts[i].mapOptions[0]['colour']= colour.split('(')[1].split(')')[0];
+				config.charts[i].mapOptions[0]['colour']= colour;
+			} else {
+				config.charts[i].mapOptions[0]['colour']= null;
 			}
 		}
 		$('#mapoptionsmodal').modal('hide');
-		console.log(bite);
-		insertMap(bite,i,config.charts[i].mapOptions);
+		insertMap(bite,i,config.charts[i].mapOptions,newTitle);
 	});
 }
 
