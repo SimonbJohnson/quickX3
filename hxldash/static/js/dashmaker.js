@@ -270,8 +270,12 @@ function changeMapOptions(bite,mapType,i){
 	if(mapType!='point'){
 		$('#mapoptionspoint').hide();
 	} else {
-		$("#sizeselect").val(config.charts[i].mapOptions[0]['size']);
-		$("#colourselect").val(config.charts[i].mapOptions[0]['colour']);
+		if(config.charts[i].mapOptions[0]['size']!=null){
+			$("#sizeselect").val(config.charts[i].mapOptions[0]['size']);
+		}
+		if(config.charts[i].mapOptions[0]['colour']!=null){
+			$("#colourselect").val(config.charts[i].mapOptions[0]['colour']);
+		}
 	}
 	$('#savemapoptions').off();
 	$('#savemapoptions').on('click',function(){
