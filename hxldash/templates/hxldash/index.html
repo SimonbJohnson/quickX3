@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script> 
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/icon.min.css' />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" /> 
+    <div class="row">
+        <div id="datachooser" class="col-md-10 col-md-offset-1 center">
+            <h1>HXLDash (Alpha)</h1>
+            <p class="tagline">Dashboards optimised for humanitarians</p>
+            <img id="dashboard_examples" src="{% static 'images/Macbook__ipad__iphone.png' %}" />
+            <div class="frontpagebuttons">
+                <button class="btn btn-default hxlbutton">Getting started</button>
+                <button class="btn btn-default hxlbutton">Create Dashboard</button>
+            </div>
+            <h1>Features</h1>
+            <div class="row">
+                <div class="col-md-4 salespoint">
+                    <p class="highlighttitle">Quick Mapping</p>
+                    <img src="{% static 'images/noun_map_location_2811296.svg' %}" />
+                    <p class="subtext">Linked to the common operational datasets to automatically generate maps. Just include PCodes.</p>
+                </div>
+                <div class="col-md-4 salespoint">
+                    <p class="highlighttitle">Intelligent Suggestions</p>
+                    <img src="{% static 'images/noun_Brain_2697443.svg' %}" />
+                    <p class="subtext">HXLDash uses HXL to give intelligent suggestions which allows dashboards to be built in 2 minutes.</p>
+                </div>
+                <div class="col-md-4 salespoint">
+                    <p class="highlighttitle">Print Friendly</p>
+                    <img src="{% static 'images/noun_print_2043763.svg' %}" />
+                    <p class="subtext">50% of data products are printed hard copies in the field. HXLDash provides easy print formats for all dashboards.</p>
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col-md-4 salespoint">
+                    <p class="highlighttitle">Low Bandwidth</p>
+                    <img src="{% static 'images/noun_small_802435.svg' %}" />
+                    <p class="subtext">HXLDash aims to make dashboards 10% the filesize as other popular providers so they work in low bandwidth areas</p>
+                </div>                
+                <div class="col-md-4 salespoint">
+                    <p class="highlighttitle">Free and Open Source</p>
+                    <img src="{% static 'images/noun_Free_1907751.svg' %}" />
+                    <p class="subtext">HXLDash is free to use with no sign up required and the code is open source for everybody to access.</p>
+                </div>
+                <div class="col-md-4 salespoint">
+                    <p class="highlighttitle">Integrates with the HXL ecosystem</p>
+                    <img src="{% static 'images/noun_Network_2808900.svg' %}" />
+                    <p class="subtext">HXLDash integrates seamlessly with the HXL ecosystem such as the HXL Proxy to create fast automated workflows</p>
+                </div>
+            </div>
+            <div class="frontpagebuttons">
+                <button class="btn btn-default hxlbutton">Find out more</button>
+            </div>
+            <h1>Watch HXLDash in action</h1>
+            <p>Create an online sharable dashboard in less than 2 minutes. Watch the example video below to see how easy it is.</p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/5ZmRjLfoS3k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <h1>Data Security</h1>
+            <p>For the Alpha test of this product the team has decided to host no data on the HXLDash server. To find out more about this approach, it's limitations and plans for the future read more <a href="">here</a>.</p>
+            <h1>Contact</h1>
+            <h1>Who</h1>
+            <p>HXL Dash is project developed and hosted by the <a href="">British Red Cross</a>. Initial development was sponsered by the <a href="">Centre for Humanitarian Data</a>. The principle developer is <a href="">Simon Johnson</a></p>
+        </div>
+    </div>
+{% endblock %}

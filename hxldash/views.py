@@ -11,6 +11,9 @@ import urllib
 import json
 
 def index(request):
+	return render(request, 'hxldash/index.html')
+
+def load(request):
 	return render(request, 'hxldash/datachooser.html')
 
 def create(request,url):
