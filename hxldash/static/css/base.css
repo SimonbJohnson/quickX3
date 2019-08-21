@@ -77,6 +77,8 @@ body {
 
 p.highlighttitle{
 	margin-top:20px;
+	color:#f26459;
+	font-weight:800;
 }
 
 #dashboard_examples {

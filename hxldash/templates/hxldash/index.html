@@ -13,7 +13,7 @@
             <img id="dashboard_examples" src="{% static 'images/Macbook__ipad__iphone.png' %}" />
             <div class="frontpagebuttons">
                 <button class="btn btn-default hxlbutton">Getting started</button>
-                <button class="btn btn-default hxlbutton">Create Dashboard</button>
+                <a href="{% url 'load' %}"><button class="btn btn-default hxlbutton">Create Dashboard</button></a>
             </div>
             <h1>Features</h1>
             <div class="row">
@@ -41,7 +41,7 @@
                 </div>                
                 <div class="col-md-4 salespoint">
                     <p class="highlighttitle">Free and Open Source</p>
-                    <img src="{% static 'images/noun_Free_1907751.svg' %}" />
+                    <img src="{% static 'images/open_source.svg' %}" width="100" />
                     <p class="subtext">HXLDash is free to use with no sign up required and the code is open source for everybody to access.</p>
                 </div>
                 <div class="col-md-4 salespoint">
@@ -59,8 +59,9 @@
             <h1>Data Security</h1>
             <p>For the Alpha test of this product the team has decided to host no data on the HXLDash server. To find out more about this approach, it's limitations and plans for the future read more <a href="">here</a>.</p>
             <h1>Contact</h1>
+            <p>Please complete this <a href="https://docs.google.com/forms/d/e/1FAIpQLSfbjry79e9GfsAPwY-9s_08O9pII3suArn2gakAWkS9_t4KZw/viewform?usp=sf_link">Google form</a> with you question or reach out to Simon Johnson on <a href="https://twitter.com/Simon_B_Johnson">Twitter</a>. Your query will be answered as soon as possible.</p>
             <h1>Who</h1>
-            <p>HXL Dash is project developed and hosted by the <a href="">British Red Cross</a>. Initial development was sponsered by the <a href="">Centre for Humanitarian Data</a>. The principle developer is <a href="">Simon Johnson</a></p>
+            <p>HXL Dash is project developed and hosted by the <a href="https://www.redcross.org.uk/">British Red Cross</a>. Initial development was sponsered by the <a href="https://centre.humdata.org/">Centre for Humanitarian Data</a>. The principle developer is <a href="https://twitter.com/Simon_B_Johnson">Simon Johnson</a>.</p>
         </div>
     </div>
 {% endblock %}
