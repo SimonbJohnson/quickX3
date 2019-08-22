@@ -83,7 +83,6 @@ def create(request,url):
 	data['config'] = json.dumps(data['config'])
 	return render(request, 'hxldash/dashmaker.html', data)
 
-#need to add mapoptions, table, title overrides
 def save(request):
 	if request.method == 'POST':
 		jsonstring = urllib.unquote(request.POST['formconfig'])
