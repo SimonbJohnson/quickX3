@@ -170,6 +170,12 @@ body {
 	padding-right:5px;
 }
 
+/* content picker */
+
+.pickrow {
+	margin-bottom:50px;
+}
+
 /* create */
 
 .create-text {
@@ -289,9 +295,22 @@ body {
 	height:300px;
 }
 
+.chartedit p {
+	min-height:50px;
+}
+
 .timeedit {
 	height:300px;
 }
+
+.timeedit p {
+	min-height:50px;
+}
+
+.mapedit p {
+	min-height:50px;
+}
+
 
 .chartelement {
 	height:100%;

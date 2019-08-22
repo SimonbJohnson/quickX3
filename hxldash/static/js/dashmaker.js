@@ -47,6 +47,12 @@ function generateBites(hb,data,dataURL){
 	let line = 0;
 	let map = 0;
 	hb.getChartBites().forEach(function(bite){
+		if(row==3){
+			$('#chartcontent').append('<div class="row pickrow">');
+		}
+		if(row>3 && row % 3 ==0){
+			$('#chartcontent').append('</div><div class="row pickrow">');
+		}
 		matches++;
 		bites.charts.push({'data':dataURL,'bite':bite});
 		$('#chartcontent').append('<div class="col-md-4"><div id="chartselect'+row+'" class="chartedit"></div></div>');
@@ -54,12 +60,24 @@ function generateBites(hb,data,dataURL){
 		row++;
 	});
 	hb.getTimeSeriesBites().forEach(function(bite){
+		if(line==3){
+			$('#timecontent').append('<div class="row pickrow">');
+		}
+		if(line>3 && line % 3 ==0){
+			$('#timecontent').append('</div><div class="row pickrow">');
+		}
 		bites.time.push({'data':dataURL,'bite':bite});
 		$('#timecontent').append('<div class="col-md-4"><div id="timeselect'+line+'" class="timeedit"></div></div>');
 		charts.push(createChart('#timeselect'+line,[bite],true));
 		line++;
 	});
 	hb.getMapBites().forEach(function(bite){
+		if(map==3){
+			$('#mapcontent').append('<div class="row pickrow">');
+		}
+		if(map>3 && map % 3 ==0){
+			$('#mapcontent').append('</div><div class="row pickrow">');
+		}		
 		bites.maps.push({'data':dataURL,'bite':bite});
 		$('#mapcontent').append('<div class="col-md-4"><div id="mapselect'+map+'" class="mapedit"><p>'+bite.title+'</p><img class="mappreview" src="'+mapPreviewURL+'"></div></div>');
 		matches++;
@@ -71,6 +89,12 @@ function generateBites(hb,data,dataURL){
 	});
 	hb.getTextBites().forEach(function(bite){
 		if(bite.subtype == 'topline figure'){
+			if(headline==3){
+				$('#headlinecontent').append('<div class="row pickrow">');
+			}
+			if(headline>3 && headline % 3 ==0){
+				$('#headlinecontent').append('</div><div class="row pickrow">');
+			}			
 			bites.headlines.push({'data':dataURL,'bite':bite});
 			$('#headlinecontent').append('<div class="col-md-4"><div id="headlineselect'+headline+'" class="headlinefigure headlinefigureedit"></div></div>');
 			createHeadLineFigure('#headlineselect'+headline,bite,null);
@@ -79,6 +103,7 @@ function generateBites(hb,data,dataURL){
 		}
 		
 	});
+	$('#chartcontent').append('</div>');
 	let filters = [];
 	$('#colourselect').append('<option value="none">None</option>');
 	$('#sizeselect').append('<option value="none">None</option>');
