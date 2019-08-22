@@ -16,6 +16,9 @@ def index(request):
 def load(request):
 	return render(request, 'hxldash/datachooser.html')
 
+def info(request):
+	return render(request, 'hxldash/info.html')
+
 def create(request,url):
 	data = {}
 	if url[0:7]=="https:/" and url[7]!="/":

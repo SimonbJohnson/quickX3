@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^update/(?P<id>.*)$', views.update, name='update'),
     url(r'^catalogue$', views.catalogue, name='catalogue'),
     url(r'^load$', views.load, name='load'),
+    url(r'^info$', views.info, name='info'),
 ]

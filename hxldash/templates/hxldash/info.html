@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script> 
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/icon.min.css' />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" /> 
+    <div id="infopage" class="row">
+        <div id="menu" class="col-md-2">
+            <ul id="menulist">
+                <li>Overview</li>
+                <li>Quickstart</li>
+                <li>Features</li>
+                <li>Intelligent Suggestions</li>
+                <li>Mapping</li>
+                <li>HXL Ecosystem</li>
+                <li>Print Friendly</li>
+                <li>Examples</li>
+                <li>Open Source</li>
+                <li>Data Security</li>
+                <li>Contact</li>
+            </ul>
+        </div>
+        <div id="text" class="col-md-10">
+        </div>
+    </div>
+{% endblock %}

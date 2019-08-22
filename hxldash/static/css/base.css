@@ -52,6 +52,19 @@ body {
 	font-size:2.5em;
 }
 
+/* info */
+
+#infopage {
+	background-color:#fff;
+	margin-top:60px;
+	border-radius:10px;
+	padding:20px;
+}
+
+#menulist {
+	
+}
+
 /* front page */
 
 #datachooser {
