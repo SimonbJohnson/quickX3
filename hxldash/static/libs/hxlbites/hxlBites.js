@@ -280,6 +280,7 @@ let hxlBites = {
 	getMapBites: function(){
 		let self = this;
 		let bites = [];
+		console.log('maps');
 		this._mapBites.forEach(function(bite,i){
 			let distinctOptions = {};
 			bite.ingredients.forEach(function(ingredient){
@@ -760,6 +761,7 @@ let hxlBites = {
 				} else {
 					countryCode = d.substring(0,2);
 				}
+				console.log(countryCode);
 				if(parsed.indexOf(countryCode)==-1){
 					parsed.push(countryCode);
 					if(iso3){
@@ -921,7 +923,8 @@ let hxlBites = {
 			}
 			if(tag=='#adm3+code'){
 				level = 3;
-			}							
+			}
+						
 			if(level>-1){
 				values = v.table[0].slice(1, v.table[0].length);
 				let mapCheck = self._checkMapCodes(level,values);

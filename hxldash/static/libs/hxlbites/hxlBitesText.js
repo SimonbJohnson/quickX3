@@ -113,7 +113,7 @@ hxlBites._textBites = [
 'id':'text0012',	
 'type':'text',
 'subType':'topline figure',
-'ingredients':[{'name':'value','tags':['#affected','#population','#reached','#value','#capacity']}],
+'ingredients':[{'name':'value','tags':['#affected','#population','#reached','#targeted-type','#inneed','#value','#capacity']}],
 'criteria':['value > 0'],
 'variables': ['sum(value)','header(value)'],
 'phrase': '{2}:{1}',
