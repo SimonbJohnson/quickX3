@@ -65,6 +65,12 @@ body {
 	
 }
 
+
+.info_image{
+	max-width:100%;
+}
+
+
 /* front page */
 
 #datachooser {
@@ -116,6 +122,8 @@ p.highlighttitle{
 		width:100%;
 	}
 }
+
+/* */
 /* maker */
 
 

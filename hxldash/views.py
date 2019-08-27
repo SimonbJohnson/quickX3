@@ -17,8 +17,7 @@ def load(request):
 	return render(request, 'hxldash/datachooser.html')
 
 def info(request,section='overview'):
-	print section
-	return render(request, 'hxldash/info.html')
+	return render(request, 'info/'+section+'.html')
 
 def create(request,url):
 	data = {}

@@ -5,17 +5,15 @@
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script> 
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/icon.min.css' />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css" />
-    <link rel="stylesheet" href="{% static 'css/base.css' %}" /> 
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <div id="infopage" class="row">
         <div id="menu" class="col-md-3">
+            <h1><a href="{% url 'index' %}">HXLDash</a></h1>
             <ul id="menulist">
                 <li><p><a href="{% url 'info' %}">Overview</a></p></li>
                 <li><p><a href="{% url 'info' 'quickstart' %}">Quickstart</a></p></li>
                 <li><p><a href="{% url 'info' 'features' %}">Features</a></p></li>
-                <li><p><a href="{% url 'info' 'intelligent' %}">Intelligent Suggestions</a></p></li>
-                <li><p><a href="{% url 'info' 'mapping' %}">Mapping</a></p></li>
-                <li><p><a href="{% url 'info' 'hxl' %}">HXL Ecosystem</a></p></li>
-                <li><p><a href="{% url 'info' 'print' %}">Print Friendly</a></p></li>
+                <li><p><a href="{% url 'info' 'features' %}">FAQ/Troubleshooting</a></p></li>
                 <li><p><a href="{% url 'info' 'examples' %}">Examples</a></p></li>
                 <li><p><a href="{% url 'info' 'opensource' %}">Open Source</a></p></li>
                 <li><p><a href="{% url 'info' 'datasecurity' %}">Data Security</a></p></li>
@@ -23,6 +21,8 @@
             </ul>
         </div>
         <div id="text" class="col-md-9">
+            {% block info %}
+            {% endblock %}
         </div>
     </div>
 {% endblock %}
