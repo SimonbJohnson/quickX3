@@ -271,7 +271,7 @@ function createMap(id,bite,data,mapOptions,title){
         title = bite.title;
     }
 
-    $('#'+id).html('<div class="titlecontainer"><p class="bitetitletext">'+title+'</p></div><div id="'+id+'map" class="map"></div>');
+    $('#'+id).html('<div class="titlecontainer"><p class="bitetitletext">'+title+'</p><p class="bitetitle"></p></div><div id="'+id+'map" class="map"></div>');
 
     var map = L.map(id+'map', { fadeAnimation: false }).setView([0, 0], 2);
 

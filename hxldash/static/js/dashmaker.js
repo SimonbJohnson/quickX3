@@ -10,7 +10,7 @@ function loadData(dataURL){
                 let hb = hxlBites.data(result);
                 let matches = generateBites(hb,result,dataURL);
                 setColors(0,false);
-                injectLayouts(hb,9);
+                injectLayouts(hb,10);
                 updateStatusForBites(bites,matches);
                 tablefields(result);
             },
@@ -215,6 +215,7 @@ function insertLayout(html){
 }
 
 function chooseChart(index){
+	console.log(index);
 	$('#chartmodal').modal({
 		duration:0,
 	    onVisible: function () {
@@ -249,7 +250,7 @@ function insertBiteClick(id,bite,i,index){
 			$('#dashchart'+index+' .editchartbutton').on('click',function(){
 				chartOptions('chart',index);
 			});
-			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+i+'" class="close icon deletechartbutton"></i>');
+			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="close icon deletechartbutton"></i>');
 			$('#dashchart'+index+' .deletechartbutton').on('click',function(){
 				chooseChart($(this).attr('data-id'));
 			});			
@@ -262,6 +263,7 @@ function insertBiteClick(id,bite,i,index){
 }
 
 function insertMap(bite,index,mapOptions,title=null){
+	console.log(index);
 	createMap('#dashchart'+index,bite,dataSets[0],mapOptions[0],title);
 	$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
 	$('#dashchart'+index+' .editchartbutton').on('click',function(){
@@ -269,11 +271,12 @@ function insertMap(bite,index,mapOptions,title=null){
 	});
 	$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="close icon deletechartbutton"></i>');
 	$('#dashchart'+index+' .deletechartbutton').on('click',function(){
-		chooseChart($(this).attr('data-id'));
+		chooseChart(index);
 	});		
 }
 
 function chartOptions(chartType,i){
+	console.log();
 	$('#chartoptionsmodal').modal('show');
 	$('#savechartoptions').off();
 	$('#newtitle').val('');
