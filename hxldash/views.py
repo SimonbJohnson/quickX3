@@ -75,6 +75,11 @@ def create(request,url):
 			"chartID":[""],
 			'mapOptions':[],
 			'title':None
+			},						
+			{"data":"",
+			"chartID":[""],
+			'mapOptions':[],
+			'title':None
 			}
 		],
 		"table":{'fields':[],'data':''},
@@ -315,11 +320,17 @@ def edit(request,id):
 	# 	for field in dashConfig.dataTable.tableField.all():
 	# 		config['table']['fields'].append({'tag':field.tag,'column':field.columnNum})
 
+
+	if len(config['charts'])<6:
+	 	for i in range(len(config['charts'])-1,5):
+	 		config['charts'].append({'data':'','chartID':'','title':None,'mapOptions':None})
+	
 	data = {}
 	data['create'] = False
 	data['dataURL'] = config['charts'][0]['data']
 	data['config'] = json.dumps(config)
 	data['id'] = id
+	
 	return render(request, 'hxldash/dashmaker.html', data)
 
 def password(request,page,id):
