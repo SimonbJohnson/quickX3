@@ -56,7 +56,7 @@ function generateBites(hb,data,dataURL){
 		matches++;
 		bites.charts.push({'data':dataURL,'bite':bite});
 		$('#chartcontent').append('<div class="col-md-4"><div id="chartselect'+row+'" class="chartedit"></div></div>');
-		charts.push(createChart('#chartselect'+row,[bite],true));
+		charts.push(createChart('#chartselect'+row,[bite],'descending'));
 		row++;
 	});
 	hb.getTimeSeriesBites().forEach(function(bite){
@@ -68,7 +68,7 @@ function generateBites(hb,data,dataURL){
 		}
 		bites.time.push({'data':dataURL,'bite':bite});
 		$('#timecontent').append('<div class="col-md-4"><div id="timeselect'+line+'" class="timeedit"></div></div>');
-		charts.push(createChart('#timeselect'+line,[bite],true));
+		charts.push(createChart('#timeselect'+line,[bite],'descending'));
 		line++;
 	});
 	hb.getMapBites().forEach(function(bite){
@@ -143,7 +143,7 @@ function populateCharts(hb){
 		if(chart.chartID!=''){
 			let bite = hb.reverse(chart.chartID);
 			if(bite.type=='chart'){
-				createChart('#dashchart'+i,[bite],true,chart.title);
+				createChart('#dashchart'+i,[bite],'descending',chart.title);
 				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="edit icon editchartbutton"></i>');
 				$('#dashchart'+i+' .editchartbutton').on('click',function(){
 					chartOptions('chart',i);
@@ -244,7 +244,7 @@ function insertBiteClick(id,bite,i,index){
 			insertMap(bite.bite,index,config.charts[index].mapOptions);
 		} else {
 			config.charts[index].mapOptions = []
-			createChart('#dashchart'+index,[bite.bite],true);
+			createChart('#dashchart'+index,[bite.bite],'descending');
 			$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
 			$('#dashchart'+index+' .editchartbutton').on('click',function(){
 				chartOptions('chart',index);

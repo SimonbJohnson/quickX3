@@ -22,7 +22,7 @@ class MapBite(models.Model):
 	colour = models.CharField(max_length=200, null=True, blank=True)
 
 	def __str__(self):
-		return str(self.id) + str(' - ') + str(self.bite)
+		return str(self.id)
 
 class BiteConfig(models.Model):
 	variety = models.CharField(max_length=200)
