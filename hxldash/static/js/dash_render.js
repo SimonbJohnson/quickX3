@@ -36,6 +36,7 @@ function createDataTable(id,data,fields,start=0,tableLength=10){
         if(data[1][f.column]==f.tag){
             fieldNums.push(f.column);
         }
+        //insert better matching here.
         //} else {
         //    console.log(f);
         //    let hxlData = hxl.wrap(data);

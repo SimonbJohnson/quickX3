@@ -114,7 +114,8 @@ function createDashboard(dataSets,filterDataSets,config){
                 });
                 if(bites[0].type=='chart'){
                     if(chart.sort==undefined){
-                        chart.sort = 'unsorted';
+                        //chart.sort = 'unsorted';
+                        chart.sort = 'descending';
                     }
                     createChart(id,bites,chart.sort,chart.title);
                 }
