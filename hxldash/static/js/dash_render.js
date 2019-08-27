@@ -181,8 +181,13 @@ function createChart(id,bite,sort,title){
                     return {'x':d[0].getTime(),'y':d[1]}
                 }
             }).splice(1);
+
+            data.sort(function(a, b){
+                return b.x-a.x;
+            });
+
             dataSetsLines.push({name:variables[j],data:data});            
-        });
+        }); 
 
         chart = new Chartist.Line('#chartcontainer'+id, {
             series: dataSetsLines
