@@ -181,8 +181,13 @@ function createChart(id,bite,sort,title){
                     return {'x':d[0].getTime(),'y':d[1]}
                 }
             }).splice(1);
+
+            data.sort(function(a, b){
+                return b.x-a.x;
+            });
+
             dataSetsLines.push({name:variables[j],data:data});            
-        });
+        }); 
 
         chart = new Chartist.Line('#chartcontainer'+id, {
             series: dataSetsLines
@@ -266,7 +271,7 @@ function createMap(id,bite,data,mapOptions,title){
         title = bite.title;
     }
 
-    $('#'+id).html('<div class="titlecontainer"><p class="bitetitletext">'+title+'</p></div><div id="'+id+'map" class="map"></div>');
+    $('#'+id).html('<div class="titlecontainer"><p class="bitetitletext">'+title+'</p><p class="bitetitle"></p></div><div id="'+id+'map" class="map"></div>');
 
     var map = L.map(id+'map', { fadeAnimation: false }).setView([0, 0], 2);
 
