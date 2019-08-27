@@ -139,7 +139,7 @@ td {
 }
 
 .map {
-	height:90%;
+	height: calc(100% - 60px);
 }
 
 .headlinetext {
@@ -186,10 +186,6 @@ td {
 
 .bitetitletext{
 	font-size:20px;
-}
-
-.map {
-	margin-top:25px;
 }
 
 .titlecontainer {
