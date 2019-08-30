@@ -12,7 +12,7 @@
             <p class="tagline">Dashboards optimised for humanitarians</p>
             <img id="dashboard_examples" src="{% static 'images/Macbook__ipad__iphone.png' %}" />
             <div class="frontpagebuttons">
-                <button class="btn btn-default hxlbutton">Getting started</button>
+                <a href="{% url 'info' %}"><button class="btn btn-default hxlbutton">Getting started</button></a>
                 <a href="{% url 'load' %}"><button class="btn btn-default hxlbutton">Create Dashboard</button></a>
             </div>
             <h1>Features</h1>
@@ -51,11 +51,12 @@
                 </div>
             </div>
             <div class="frontpagebuttons">
-                <button class="btn btn-default hxlbutton">Find out more</button>
+                <a href="{% url 'info' 'features' %}"><button class="btn btn-default hxlbutton">Find out more</button></a>
             </div>
             <h1>Watch HXLDash in action</h1>
             <p>Create an online sharable dashboard in less than 2 minutes. Watch the example video below to see how easy it is.</p>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/5ZmRjLfoS3k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <p>Please refer to our <a href="{% url 'info' %}" target="_blank">help section</a> to get started.</p>
             <h1>Data Security</h1>
             <p>For the Alpha test of this product the team has decided to host no data on the HXLDash server. To find out more about this approach, it's limitations and plans for the future read more <a href="">here</a>.</p>
             <h1>Contact</h1>

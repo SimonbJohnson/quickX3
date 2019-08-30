@@ -1,0 +1,22 @@
+{% extends 'hxldash/info.html' %}
+{% load staticfiles %}
+
+{% block info %}
+<div class="row">
+	<div class="col-md-12">
+		<h2>Frequently asked questions</h2>
+		<h2>Why are no maps appearing for my data set?</h2>
+		<p>For maps to show the data set must either have longitude and latitude labeled with #geo+lon and #geo+lat or for area maps the data must contain place codes (PCodes). Please check the <a href="{% url 'info' 'mapping' %}">mapping page</a> to see which countries are supported.</p>
+		<h2>Why are no timelines appearing for my data set?</h2>
+		<p>For a timeline to be activated it most have the tag #date (without attributes -report, -update) and  have at least 5 different dates at reasonably regular intervals.</p>
+		<h2>Why is the chart or map I want not appearing?</h2>
+		<p>HXLDash has a suggestion engine with selects which charts to appear. If you expect a chart that is not showing please contact us and we will add it to the algorithm.</p>
+		<h2>Is it possible to have two data sets in one dashboard?</h2>
+		<p>It is possible to have two data sets in one dashboard via the HXL Proxy. In the future we will add this ability explicitly into HXLDash. To learn more about the HXL Proxy please contact us.</p>
+		<h2>Are other chart types possible?</h2>
+		<p>Only row charts, line charts and maps are possible. Currently there are no plans to add further charts as we want to keep the dashboard making process as simple as possible.
+		<h2>Question not answered?</h2>
+		<p>If you questions is not answered please contact us via this <a href="https://docs.google.com/forms/d/e/1FAIpQLSfbjry79e9GfsAPwY-9s_08O9pII3suArn2gakAWkS9_t4KZw/viewform?usp=sf_link">Google form</a> or reach out to Simon Johnson on <a href="https://twitter.com/Simon_B_Johnson">Twitter</a>. Your query will be answered as soon as possible.</p>
+	</div>
+</div>
+{% endblock %}

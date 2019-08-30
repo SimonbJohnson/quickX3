@@ -5,7 +5,86 @@
 <div class="row">
 	<div class="col-md-12">
 		<h2>Quickstart</h2>
-		<p>Info about quickstarting</p>
+		<p>A 5 minute guide to creating dashboards with HXLDash. In this guide we will visualise a dataset of ebola treatment centres from the 2014 West Africa outbreak. Feel free to replace it with your own data and follow along.</p>
+		<p>HXLDash uses the HXL Humanitarian Exchange Language (HXL) tags and a suggestion engine to create charts and maps that make sense for your data set.  These suggestions are then used to build the dashboard in just a few clicks. The suggestions engine reduces the need to have a complex interface to build charts.</p>
+		<p>The suggestion engine works by analysing the tags present in your dataset, comparing them against a list of pre defined recipes for charts and maps. If the tags are present then the chart or map is produced.
+		<img class="info_image" src="{% static 'images/info/HXLDash_process.png' %}" />
+		<p class="center infocaption">Overview of intelligent suggestions process</p>
+		<h3>1) Data Preparation</h3>
+		<p>HXLDash works with data that is in the Humanitarian Exchange Language (HXL) format.  This involves adding a line of agreed up tags below your headers. Visit the <a href="http://hxlstandard.org/">HXL Standard Website</a> for more information. Use the <a href="http://prod.dev.hxlstandard.org/standard/1-1final/#starting-points">HXL postcard or HXL tagging tool</a> to help you add tags.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart1.png' %}" />
+		<p class="center infocaption">How to add HXL tags to your data set.</p>
+		<p>We have a data set ready for you to use with this tutorial if you do not have your own HXL data. Please find the link to the data <a href="https://docs.google.com/spreadsheets/d/1R9zfMTk7SQB8VoEp4XK0xAWtlsQcHgEvYiswZsj9YA4/edit#gid=0" target="_blank">here</a>.</p>
+		<h3>2) Hosting the Data</h3>
+		<p>None of the data that is visualised is hosted on HXLDash servers. Instead we ask users to use third party hosts such as Google Drive, DropBox, OneDrive etc. For HXLDash to be used the data has to be shared via a public URL. Therefore HXLDash should not be used for sensitive data.</p>
+		<div class="alert alert-warning" role="alert"><p>! There are plans for HXLDash to be able to host secure data in the future !</p></div>
+		<p>The example data is already set up, but if you are using your own data then ensure it is shared publicly and you have the URL. On Google Sheets for example this is done by clicking the 'Share" button and then choosing 'Anyone with the link can view'.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart2.png' %}" />
+		<p class="center infocaption">How to share data publicly on Google Sheets</p>
+		<h3>3) Loading the Data</h3>
+		<p>To load the data into HXLDash use the following link and paste your dataset URL into the text field and click 'Load Data'</p>
+		<img class="info_image" src="{% static 'images/info/quickstart3.png' %}" />
+		<p class="center infocaption">Loading data into HXLDash</p>
+		<div class="alert alert-warning" role="alert"><p>! If you get the error:</p><p><b>Please check data source has HXL tags and is accessible from the web (sharing is turned on)</b><p> with your own data then recheck the first two steps !</p></div>
+		<h3>4) Choosing the layout</h3>
+		<p>Wait a few seconds for the data to be loaded. Once it has successfully loaded it will show the number of chart, map and headline figure suggestions it has generated.</p>
+		<p>The next step is to choose the layout for your dashboard. The layouts are represented in miniature. Click to select the layout you have chosen.  If you are using the Ebola data we recommend the layout in the top right. At anytime you can go to the layout selector and choose another layout.  If a lyout you want is not present, then send us a message and we add it in the next update!</p>
+		<img class="info_image" src="{% static 'images/info/quickstart4.png' %}" />
+		<p class="center infocaption">Layout selector</p>
+		<h3>5) Selecting a colour</h3>
+		<p>To select a colour for your dashboard click the colour you want. It can be changed at anytime to another colour. A colour you want is no there?  Send us a message and we will add it in the next update.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart5.png' %}" />
+		<p class="center infocaption">Selecting a colour</p>
+		<h3>6) Adding a title and description</h3>
+		<p>Add a title and description in the corresponding boxes to appear above your dashboard.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart6.png' %}" />
+		<p class="center infocaption">Setting title and description</p>
+		<h3>7) Filters</h3>
+		<p>Filters are dropdown menus by which you can filter the data shown in your dashboard.  These are an optional item.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart9.png' %}" />
+		<p class="center infocaption">Filter selection</p>
+		Open up the filter selector by clicking the large plus sign.  Three boxes will appear and each can contain a filter.
+		<img class="info_image" src="{% static 'images/info/quickstart7.png' %}" />
+		<p class="center infocaption">Filter selection</p>
+		<p>Clicking the plus sign in a box will bring up the add filter menu. Select the column which you want the filter to act open. In the example above country was chosen which then gave the option to filter the data by Guinea, Liberia and Sierra Leone.  Once a filter has been added click the edit icon (<i class="edit icon"></i>) to change it or the delete icon (<i class="close icon"></i>) to remove it.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart8.png' %}" />
+		<p class="center infocaption">Filter selection</p>
+		<h3>8) Headline figures</h3>
+		<p>Headline figues are large summary numbers for your data set. You can add up to 3 at a time.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart10.png' %}" />
+		<p class="center infocaption">Headline figures for the Ebola dashboard</p>
+		<p>Chosing a headline figure occurs in much the same way as filters. Click the plus icon to open the headline figure selection menu and click the headline figure you want to add. If the headline figure you want is not appearing check out the FAQs.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart11.png' %}" />
+		<p class="center infocaption">Headline figure selection menu</p>
+		<h3>9) Chart and Map selection</h3>
+		<p>Below the headline figures you will find the layout you chose in step 4 of these instructions.  To add a map or a chart click a plus icon in the layout.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart12.png' %}" />
+		<p class="center infocaption">Dashboard Layout</p>
+		<p>The chart and amp selection menu will open. It has 3 tabs, row charts, time series charts and maps. Clicking on a chart or a map will add it to the dashboard layout.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart13.png' %}" />
+		<p class="center infocaption">Chart and map selection</p>
+		<h3>10) Changing details</h3>
+		<p>On charts and maps clicking the edit buttons provides further options such as renaming the automatically generated title and change the scale of the data on the map.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart14.png' %}" />
+		<p class="center infocaption">Dashboard layout with charts and maps chosen</p>
+		<img class="info_image" src="{% static 'images/info/quickstart15.png' %}" />
+		<p class="center infocaption">Further options in the edit menu</p>
+		<h3>11) Data tables</h3>
+		<p>A data table can be added below the dashboard by sliding on the data table checkbox</p>
+		<img class="info_image" src="{% static 'images/info/quickstart17.png' %}" />
+		<p class="center infocaption">Data table example</p>
+		<p>Once the data table is turned on you can select which columns you wish to show. We recommend chosen no more than 8 columns to make the data easier to understand.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart16.png' %}" />
+		<p class="center infocaption">Selecting data to include in the data table.</p>
+		<h3>12) Saving</h3>
+		<p>Once you have made all the edit and changes you want to the dashboard click the 'Save' button to bring up the save menu.</p>
+		<p>There are 4 fields in the save menu.  The top field is the most important.  It's the password to use if you ever want to edit the dashboard again in the future.  The second field is if you want to set a password for anyone trying to view the dashboard. Leave blank to have no password on the dashboard. Finally field 3 and 4 are to help us understand who is using HXLDash. Click save to then view the final dashboard.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart18.png' %}" />
+		<p class="center infocaption">Dashboard layout with charts and maps chosen</p>
+		<h3>13) Editing</h3>
+		<p>If you ever want to go back and make changes to your dashboard click the edit button in the buttom right of the footer.  Use the password you set in the previous stage.</p>
+		<img class="info_image" src="{% static 'images/info/quickstart19.png' %}" />
+		<p class="center infocaption">Dashboard layout with charts and maps chosen</p>
 	</div>
 </div>
 {% endblock %}

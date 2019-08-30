@@ -68,8 +68,15 @@ body {
 
 .info_image{
 	max-width:100%;
+	display: block;
+	margin: 0 auto;
 }
 
+.infocaption {
+	color:#999;
+	font-size:1em;
+	margin-top:10px;
+}
 
 /* front page */
 
@@ -420,4 +427,8 @@ p.highlighttitle{
 
 #submitbutton {
 	margin-top:10px;
+}
+
+.close {
+	float:none;
 }
