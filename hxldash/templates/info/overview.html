@@ -1,0 +1,21 @@
+{% extends 'hxldash/info.html' %}
+{% load staticfiles %}
+
+{% block info %}
+<div class="row">
+	<div class="col-md-12">
+		<h2>Overview</h2>
+		<p>HXLDash is a dashboard and online mapping tool designed for humanitarians and humanitarian contexts. HXLDash's aim is to make creating dashboards possible in less than 2 minutes by leveraging the power of the Humanitarian Exchange Language and linking to the common operation datasets.</p>
+
+		<p>HXLDash does not aim to replace popular, powerful and fully featured dashboarding tools such as Tableau or PowerBI, but rather be a complimentary tool with features built with humanitarians in mind.
+		You can read more about the unique features that make it suitable for humanitarians <a>here</a></p>
+
+		<p>It is currently in an alpha stage and we are looking to test the tool with different users to work out what is useful and what is not as we plan to add new features.</p>
+
+		<p>HXLDash is used in production by the IFRC and the British Red Cross.</p>
+
+		<img id="dashboard_examples" class="info_image" src="{% static 'images/Macbook__ipad__iphone.png' %}" />
+		<p class="center infocaption">Example of IFRC Cash Programming Dashboard</p>
+	</div>
+</div>
+{% endblock %}

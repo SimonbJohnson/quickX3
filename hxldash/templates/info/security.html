@@ -1,0 +1,15 @@
+{% extends 'hxldash/info.html' %}
+{% load staticfiles %}
+
+{% block info %}
+<div class="row">
+	<div class="col-md-12">
+		<h2>Security</h2>
+		<p>HXLDash stays GDPR compliant by storing no user data on our servers.  Data is hosted on external services of your choice such as Google Drive, DropBox, One Drive and more.  For the data to be accessed by HXLDash it has to be publicly viewable to the web. Therefore we advise that personal or sensitive data is not visualised on HXLDash.</p>
+		<p>HXLDash stores only select information on our servers, dashboard configurations and dashboard passwords (hashed and salted with <a href="https://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>) not associated with an account. The configuration and code to create the dashboard are then sent to the user where it is combined with the data.</p>
+		<img class="info_image" src="{% static 'images/info/InfoSec.png' %}" />
+		<p class="center infocaption">How HXLDash handles user data.</p>
+		<p>If the Alpha testing proves successful we will seek to get funding to implement a secure service which is GDPR compliant so HXLDash can be used to visualise sensitive data sets.</p>
+	</div>
+</div>
+{% endblock %}

@@ -1,5 +1,25 @@
 /* global */
 
+a {
+	color:#f26459;
+	text-decoration: underline;
+}
+
+a:hover {
+  color:#f26459;
+  text-decoration: underline;
+}
+
+a:active {
+  color:#f26459;
+  text-decoration: underline;
+}
+
+a:visited {
+  color:#f26459;
+  text-decoration: underline;
+}
+
 p {
     font-size:18px;
 }
@@ -10,7 +30,9 @@ p {
 }
 
 body {
-	background-color:#1ebfb3;
+	background-color:#f26459;
+	background-image: linear-gradient(hsla(0,0%,100%,.15) 1px,transparent 0),linear-gradient(90deg,hsla(0,0%,100%,.15) 1px,transparent 0);
+	background-size: 88px 88px,88px 88px;
 }
 
 .segment {
@@ -30,6 +52,32 @@ body {
 	font-size:2.5em;
 }
 
+/* info */
+
+#infopage {
+	background-color:#fff;
+	margin-top:60px;
+	border-radius:10px;
+	padding:20px;
+}
+
+#menulist {
+	
+}
+
+
+.info_image{
+	max-width:100%;
+	display: block;
+	margin: 0 auto;
+}
+
+.infocaption {
+	color:#999;
+	font-size:1em;
+	margin-top:10px;
+}
+
 /* front page */
 
 #datachooser {
@@ -44,6 +92,45 @@ body {
 	margin-bottom:30px;
 }
 
+.salespoint {
+	margin-bottom:10px;
+}
+
+.subtext {
+	font-size:1em;
+	margin-top:10px;
+}
+
+p.highlighttitle{
+	margin-top:20px;
+	color:#f26459;
+	font-weight:800;
+}
+
+#dashboard_examples {
+	width:70%;
+	margin-top:30px;
+}
+
+.frontpagebuttons {
+	margin-top:40px;
+	margin-bottom:40px;
+}
+
+.hxlbutton {
+	background-color: #f26459;
+	color:#ffffff;
+	margin-left:20px;
+	margin-right:20px;
+}
+
+@media only screen and (max-width: 600px){
+	#dashboard_examples {
+		width:100%;
+	}
+}
+
+/* */
 /* maker */
 
 
@@ -359,4 +446,8 @@ body {
 
 #submitbutton {
 	margin-top:10px;
+}
+
+.close {
+	float:none;
 }

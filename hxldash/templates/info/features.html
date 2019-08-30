@@ -1,0 +1,38 @@
+{% extends 'hxldash/info.html' %}
+{% load staticfiles %}
+
+{% block info %}
+<div class="row">
+	<div class="col-md-12">
+		<h2>Features</h2>
+		<p>Below is more details about what makes HXLDash optimised for humanitarians.</p>
+		<h3>Quick Mapping</h3>
+		<p>HXLDash supports mapping of areas (polygons) and points</p>
+		<h4>Area mapping</h4>
+		<p>HXLDash is linked to the common operational data sets. If you include Pcodes for in your data set for that country and have the right HXL tag (#country+code, #adm1+code, #adm2+code, #adm3+code, #adm4+code) the dashboard will automatically download the appropriate matching geometry file, link your data to the geometry and produce a map.  Please refer to list of support countries. Geometry files are taken from the UN Mapping Webservice and have been pre-processed to optimise them for web.</p>
+		<img class="info_image" src="{% static 'images/info/area_map.png' %}" />
+		<p class="center infocaption">An example of a choropleth map</p>
+		<h4>Point mapping</h4>
+		<p>If your data set contains the tags #geo+lat, #geo+lon this will create a point map which can then be styled with data values from other columns.</p>
+		<img class="info_image" src="{% static 'images/info/point_map.png' %}" />
+		<p class="center infocaption">An example of a point map</p>
+		<h3>Intelligent Suggestions</h3>
+		<p>HXLDash uses the HXL Humanitarian Exchange Language (HXL) tags and a suggestion engine to create charts and maps that make sense for your data set.  These suggestions are then used to build the dashboard in just a few clicks. The suggestions engine reduces the need to have a complex interface to build charts.  We are working on improving the suggestion engine algorithm so if a chart you want does not appear. <a href="{% url 'info' 'contact' %}">Contact us</a> and we'll correct the situation as soon as possible.</p>
+		<p>The suggestion engine works by analysing the tags present in your dataset, comparing them against a list of pre defined recipes for charts and maps. If the tags are present then the chart or map is produced.
+		<img class="info_image" src="{% static 'images/info/HXLDash_process.png' %}" />
+		<p class="center infocaption">Overview of intelligent suggestions process</p>
+		<h3>Print Friendly</h3>
+		<p>We know that 50% of data products used in the field are on paper.  HXLDash is designed to produced dashboards and maps that print easily on to an A4 piece of paper.</p>
+		<img class="info_image" src="{% static 'images/info/print_format.png' %}" width="50%" />
+		<p class="center infocaption">Example of print output</p>
+		<h3>Low Bandwidth</h3>
+		<p>Humanitarians work in many contexts where low bandwidth internet is the norm.  HXLDash is built with small file sizes in mind with some dashboards coming out as 10% the file size as popular dashboard products.</p>
+		<h3>Integrates with the HXL ecosystem</h3>
+		<p>HXLDash can be chained with other tools in the HXL ecosystem to create powerful workflows. The <a href="">HXL Proxy</a> in particular can be used to transform and combine data before being processed by HXLDash.  This means live workflows can be set up where updating the underlying data will update the visualisation.</p>
+		<img class="info_image" src="{% static 'images/info/HXL_workflow.png' %}" />
+		<p class="center infocaption">A workflow pulling data from Google Sheets, combining in the HXL Proxy and being visualised in HXL Dash.</p>
+		<h3>Free and Open Source</h3>
+		<p>HXLDash is free and open source under a MIT License. Please see the source code on our <a href="https://github.com/SimonbJohnson/quickX3">Github repo</a>.</p>
+	</div>
+</div>
+{% endblock %}

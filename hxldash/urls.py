@@ -13,4 +13,7 @@ urlpatterns = [
     url(r'^edit/(?P<id>.*)$', views.edit, name='edit'),
     url(r'^update/(?P<id>.*)$', views.update, name='update'),
     url(r'^catalogue$', views.catalogue, name='catalogue'),
+    url(r'^load$', views.load, name='load'),
+    url(r'^info$', views.info, name='info'),
+    url(r'^info/(?P<section>\w+)$', views.info, name='info'),
 ]

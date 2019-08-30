@@ -673,7 +673,7 @@ function createMap(id,bite,data,mapOptions,title){
                     className: getClass(feature.properties[geom_attribute]),
                     weight: 1,
                     opacity: 1,
-                    color: '#cccccc',
+                    color: '#999999',
                     dashArray: '3',
                     fillOpacity: 0.7
                 };
