@@ -72,7 +72,7 @@ function createDashboard(dataSets,filterDataSets,config){
     if(iframe){
         let extra = 0;
         if(config.table.fields.length>0){
-            extra = 600;
+            extra = 700;
         }
         height = $(window).height()-450-extra;
         $('#editlink').html('');
