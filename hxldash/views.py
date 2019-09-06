@@ -227,7 +227,7 @@ def view(request,id,iframe=False):
 	config = createConfig(id)
 	return render(request, 'hxldash/dashview.html', {'config':json.dumps(config).replace("u''",""),'id':id,'iframe':False})
 
-def createConfig(id):
+def createConfig(id,blanks=False):
 	dashConfig = DashboardConfig.objects.get(pk=id)
 	config = {
 		"title":"",
@@ -264,12 +264,13 @@ def createConfig(id):
 		if filt.text!='':
 			config['filtersOn'] = True
 			config['filters'].append({'text':filt.text,'tag':filt.tag})
-	if len(config['filters'])<3:
-	 	for i in range(len(config['filters'])-1,3):
-	 		config['filters'].append({'text':'','tag':''})
-	if len(config['headlinefigurecharts'])<3:
-	 	for i in range(len(config['headlinefigurecharts'])-1,3):
-	 		config['headlinefigurecharts'].append({'data':'','chartID':'','title':None})
+	if blanks==True:
+		if len(config['filters'])<3:
+		 	for i in range(len(config['filters'])-1,3):
+		 		config['filters'].append({'text':'','tag':''})
+		if len(config['headlinefigurecharts'])<3:
+		 	for i in range(len(config['headlinefigurecharts'])-1,3):
+		 		config['headlinefigurecharts'].append({'data':'','chartID':'','title':None})
 	if dashConfig.dataTable and dashConfig.dataTable.on == 1:
 		config['table']['data'] = dashConfig.dataTable.dataSource
 		for field in dashConfig.dataTable.tableField.all():
@@ -286,7 +287,7 @@ def edit(request,id):
 			user = request.session['user']
 		if check_password(user,editpassword)==False:
 			return password(request,'edit',id)
-	config = createConfig(id)
+	config = createConfig(id,True)
 	# config = {
 	# 	"title":"",
 	# 	"subtext":"",
