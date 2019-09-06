@@ -192,6 +192,10 @@ td {
 	min-height:55px;
 }
 
+.legendelement {
+	margin-bottom:5px;
+}
+
 /* chartist plugin style */
 
 .ct-legend {

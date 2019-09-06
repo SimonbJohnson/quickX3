@@ -602,7 +602,7 @@ function createMap(id,bite,data,mapOptions,title){
             } else {
                 let html = '';
                 for (var i = 0; i < grades.length; i++) {
-                    html += '<p><i class="'+classes[i]+'"></i> ';
+                    html += '<p class="legendelement"><i class="'+classes[i]+'"></i> ';
                     html += isNaN(Number(grades[i])) ? grades[i] : Math.ceil(grades[i]);
                     html += ((i + 1)<grades.length ? i==0 ? '' : ' &ndash; ' + Math.floor(grades[i + 1]) + '' : '+');
                     html += '</p>';
