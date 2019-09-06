@@ -107,10 +107,11 @@ function createChart(id,bite,sort,title){
         bite[0].bite.unshift(topline);
     }
     var variables = [];
+    
+    bite.forEach(function(b){
+        variables.push(b.title.split(' by ')[0]);
+    });
     if(title==null){
-        bite.forEach(function(b){
-            variables.push(b.title.split(' by ')[0]);
-        });
         if(variables.length>1){
             variables.forEach(function(v,i){
                 if(i==0){
