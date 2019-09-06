@@ -251,7 +251,6 @@ function filterDataSets(dataSets,filters,config){
 function createHeadlineFigures(count,charts,dataSets){
     charts.forEach(function(chart,i){
         var id="#headline"+i;
-        
         if(dataSets[chart.data].length==0){
             $(id).html('No Data');
         } else {

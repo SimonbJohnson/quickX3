@@ -290,6 +290,10 @@ td {
   border-color: #a748ca;
 }
 
+.ct-point {
+    stroke-width: 4px;
+}
+
 /* footer */
 
 .footer {

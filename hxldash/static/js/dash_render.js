@@ -197,7 +197,6 @@ function createChart(id,bite,sort,title){
             tension: 0
           }),
           height: ($('#chartcontainer'+id).height() - 20) + 'px',
-          showPoint: false,
           axisY: {
             type: Chartist.AutoScaleAxis,
             showLabel: true,
@@ -215,7 +214,7 @@ function createChart(id,bite,sort,title){
           },
           plugins: [
             Chartist.plugins.legend(),
-            Chartist.plugins.tooltip()
+            Chartist.plugins.tooltip({appendToBody:true,tooltipFnc:linetooltip})
             ]
         });        
     }
@@ -224,6 +223,17 @@ function createChart(id,bite,sort,title){
 
 function tooltip(meta,value){
     return niceNumber(value);
+}
+
+function linetooltip(meta,value){
+    console.log('here');
+    if(value!=null){
+        let time = parseInt(value.split(',')[0]);
+        time = new Date(time)
+        time = time.toISOString().split('T')[0];
+        value = value.split(',')[1];
+        return '<p>'+meta+'</p><p>'+time + ': ' + niceNumber(value)+'</p>';
+    }
 }
 
 function niceNumber(num) {

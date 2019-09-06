@@ -45,7 +45,6 @@
           $chart.appendChild($toolTip);
         } else {
           document.body.appendChild($toolTip);
-          $toolTip.style.top = 0;
         }
       }
       var height = $toolTip.offsetHeight;
@@ -60,7 +59,7 @@
         });
       }
 
-      on('mouseover', tooltipSelector, function (event) {
+      on('mouseover', null, function (event) {
         var $point = event.target;
         var tooltipText = '';
 
@@ -122,7 +121,7 @@
         }
       });
 
-      on('mouseout', tooltipSelector, function () {
+      on('mouseout', null, function () {
         hide($toolTip);
       });
 
