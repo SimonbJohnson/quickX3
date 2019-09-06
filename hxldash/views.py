@@ -264,6 +264,12 @@ def createConfig(id):
 		if filt.text!='':
 			config['filtersOn'] = True
 			config['filters'].append({'text':filt.text,'tag':filt.tag})
+	if len(config['filters'])<3:
+	 	for i in range(len(config['filters'])-1,3):
+	 		config['filters'].append({'text':'','tag':''})
+	if len(config['headlinefigurecharts'])<3:
+	 	for i in range(len(config['headlinefigurecharts'])-1,3):
+	 		config['headlinefigurecharts'].append({'data':'','chartID':'','title':None})
 	if dashConfig.dataTable and dashConfig.dataTable.on == 1:
 		config['table']['data'] = dashConfig.dataTable.dataSource
 		for field in dashConfig.dataTable.tableField.all():

@@ -18,12 +18,14 @@ function loadData(config){
 
     if('headlinefigurecharts' in config){
         config.headlinefigurecharts.forEach(function(chart){
-            var index = dataSets.indexOf(chart.data);
-            if(index==-1){
-                dataSets.push(chart.data);
-                chart.data = dataSets.length-1;
-            } else {
-                chart.data = index;
+            if(chart.chartID!=''){
+                var index = dataSets.indexOf(chart.data);
+                if(index==-1){
+                    dataSets.push(chart.data);
+                    chart.data = dataSets.length-1;
+                } else {
+                    chart.data = index;
+                }
             }
         });
     }
