@@ -491,7 +491,7 @@ function createMap(id,bite,data,mapOptions,title){
     function createChoroplethMap(){
 
         var maxValue = bite.bite[1][1];
-        var minValue = bite.bite[1][1]-1;
+        var minValue = bite.bite[1][1];
 
         bite['lookup'] = {}
 
@@ -499,8 +499,8 @@ function createMap(id,bite,data,mapOptions,title){
             if(d[1]>maxValue){
                 maxValue = d[1];
             }
-            if(d[1]-1<minValue){
-                minValue = d[1]-1;
+            if(d[1]<minValue){
+                minValue = d[1];
             }
             bite.lookup[d[0]] = d[1];
         });
