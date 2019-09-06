@@ -589,11 +589,14 @@ function createMap(id,bite,data,mapOptions,title){
                 div.innerHTML += '<i class="'+classes[0]+'"></i> No<br />';
                 div.innerHTML += '<i class="'+classes[5]+'"></i> Yes<br />';
             } else {
+                let html = '';
                 for (var i = 0; i < grades.length; i++) {
-                    div.innerHTML += '<i class="'+classes[i]+'"></i> ';
-                    div.innerHTML += isNaN(Number(grades[i])) ? grades[i] : Math.ceil(grades[i]);
-                    div.innerHTML += ((i + 1)<grades.length ? i==0 ? '<br>' : ' &ndash; ' + Math.floor(grades[i + 1]) + '<br>' : '+');
-                }    
+                    html += '<p><i class="'+classes[i]+'"></i> ';
+                    html += isNaN(Number(grades[i])) ? grades[i] : Math.ceil(grades[i]);
+                    html += ((i + 1)<grades.length ? i==0 ? '' : ' &ndash; ' + Math.floor(grades[i + 1]) + '' : '+');
+                    html += '</p>';
+                }
+                div.innerHTML = html    
             }
             return div;
         }
