@@ -70,7 +70,11 @@ function createDashboard(dataSets,filterDataSets,config){
     $('.sp-circle').remove();
     var height = $(window).height()- 100
     if(iframe){
-        height = $(window).height()-450
+        let extra = 0;
+        if(config.table.fields.length>0){
+            extra = 600;
+        }
+        height = $(window).height()-450-extra;
         $('#editlink').html('');
     }
     $('.whole').height(height);
