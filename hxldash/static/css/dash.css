@@ -105,23 +105,23 @@ td {
 }
 
 .mapcolor0 {
-	fill: #FFEBEE;
-	background-color: #FFEBEE;
+	fill: #FFCDD2;
+	background-color: #FFCDD2;
 }
 
 .mapcolor1 {
-	fill: #FFCDD2;
-	background-color:#FFCDD2;
+	fill: #F69697;
+	background-color: #F69697; 
 }
 
 .mapcolor2 {
-	fill: #E57373;
-	background-color: #E57373; 
+	fill: #EC5E5C;
+	background-color: #EC5E5C;
 }
 
 .mapcolor3 {
-	fill: #F44336;
-	background-color: #F44336;
+	fill: #E53935;
+	background-color: #E53935; 
 }
 
 .mapcolor4 {

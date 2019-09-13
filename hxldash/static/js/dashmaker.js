@@ -503,5 +503,5 @@ let bites = {'charts':[],'maps':[],'crossTables':[],'headlines':[],'time':[]};
 let dataSets = [];
 let charts = [];
 var colors=['#E53935','#2196F3','#283593','#388E3C','#FDD835'];
-var mapColors = [['#FFEBEE','#FFCDD2','#E57373','#F44336','#d70206'],['#E3F2FD','#90CAF9','#2196F3','#1976D2','#0D47A1'],['#C5CAE9','#7986CB','#3F51B5','#283593','#1A237E'],['#E8F5E9','#A5D6A7','#66BB6A','#388E3C','#1B5E20'],['#FFF9C4','#FFF176','#FDD835','#F9A825','#F57F17']];
+var mapColors = [['#FFCDD2','#F69697','#EC5E5C','#E53935','#d70206'],['#E3F2FD','#90CAF9','#2196F3','#1976D2','#0D47A1'],['#C5CAE9','#7986CB','#3F51B5','#283593','#1A237E'],['#E8F5E9','#A5D6A7','#66BB6A','#388E3C','#1B5E20'],['#FFF9C4','#FFF176','#FDD835','#F9A825','#F57F17']];
 loadData(dataURL);
