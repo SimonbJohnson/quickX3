@@ -23,6 +23,11 @@ https://github.com/TyMaszWeb/django-cookie-law
 
 ## Change database settings in settings.py for your database
 
+Create a copy of the settings.py template and rename as settings.py.
+Change the database settings to connect to your database.
+
+Example set up: https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-14-04
+
 ## To run the test server
 
 python manage.py runserver
