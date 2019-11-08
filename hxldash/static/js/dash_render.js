@@ -82,10 +82,15 @@ function createDataTable(id,data,fields,start=0,tableLength=10){
             $('#tbody').append('<tr id="dataTableRow'+i+'"></tr>');
         }
         row.forEach(function(cell,j){
+            cls="datatabletext";
+            if(!isNaN(cell)){
+                cell = numberWithCommas(cell);
+                cls = "datatablenumber"
+            }
             if(i==0){
                 $('#dataTableRow'+i).append('<th>'+cell+'</th>');
             } else {
-                $('#dataTableRow'+i).append('<td>'+cell+'</td>');
+                $('#dataTableRow'+i).append('<td class="'+cls+'">'+cell+'</td>');
             }
         });
     })
@@ -253,6 +258,10 @@ function niceNumber(num) {
   
   // return formatted original number
   return num.toLocaleString()
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function createMap(id,bite,data,mapOptions,title){

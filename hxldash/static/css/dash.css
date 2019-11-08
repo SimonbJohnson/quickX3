@@ -328,6 +328,14 @@ td {
 	min-height:500px;
 }
 
+.datatabletext {
+	text-align: left;
+}
+
+.datatablenumber {
+	text-align: right;
+}
+
 #buttonspace {
 	display:inline-block;
 	width:35px;
