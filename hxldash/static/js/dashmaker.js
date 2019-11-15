@@ -43,43 +43,40 @@ function generateBites(hb,data,dataURL){
 	
 	let matches = 0;
 	let headline = 0;
+	let pickrow = 0;
 	let row = 0;
 	let line = 0;
 	let map = 0;
-	hb.getChartBites().forEach(function(bite){
-		if(row==3){
-			$('#chartcontent').append('<div class="row pickrow">');
-		}
-		if(row>3 && row % 3 ==0){
-			$('#chartcontent').append('</div><div class="row pickrow">');
+	hb.getChartBites().forEach(function(bite,i){
+		if(i% 3 ==0){
+			row++;
+			$('#chartcontent').append('</div><div id="chartpickrow'+pickrow+'" class="row pickrow">');
 		}
 		matches++;
 		bites.charts.push({'data':dataURL,'bite':bite});
-		$('#chartcontent').append('<div class="col-md-4"><div id="chartselect'+row+'" class="chartedit"></div></div>');
+		$('#chartpickrow'+pickrow).append('<div class="col-md-4"><div id="chartselect'+row+'" class="chartedit"></div></div>');
 		charts.push(createChart('#chartselect'+row,[bite],'descending'));
-		row++;
+		row++
 	});
-	hb.getTimeSeriesBites().forEach(function(bite){
-		if(line==3){
-			$('#timecontent').append('<div class="row pickrow">');
-		}
-		if(line>3 && line % 3 ==0){
-			$('#timecontent').append('</div><div class="row pickrow">');
+	pickrow = 0;
+	hb.getTimeSeriesBites().forEach(function(bite,i){
+		if(i% 3 ==0){
+			pickrow++;
+			$('#timecontent').append('</div><div id="timepickrow'+pickrow+'" class="row pickrow">');
 		}
 		bites.time.push({'data':dataURL,'bite':bite});
-		$('#timecontent').append('<div class="col-md-4"><div id="timeselect'+line+'" class="timeedit"></div></div>');
+		$('#timepickrow'+pickrow).append('<div class="col-md-4"><div id="timeselect'+line+'" class="timeedit"></div></div>');
 		charts.push(createChart('#timeselect'+line,[bite],'descending'));
 		line++;
 	});
-	hb.getMapBites().forEach(function(bite){
-		if(map==3){
-			$('#mapcontent').append('<div class="row pickrow">');
-		}
-		if(map>3 && map % 3 ==0){
-			$('#mapcontent').append('</div><div class="row pickrow">');
+	pickrow = 0;
+	hb.getMapBites().forEach(function(bite,i){
+		if(i% 3 ==0){
+			row++;
+			$('#mapcontent').append('</div><div id="mappickrow'+pickrow+'" class="row pickrow">');
 		}		
 		bites.maps.push({'data':dataURL,'bite':bite});
-		$('#mapcontent').append('<div class="col-md-4"><div id="mapselect'+map+'" class="mapedit"><p>'+bite.title+'</p><img class="mappreview" src="'+mapPreviewURL+'"></div></div>');
+		$('#mappickrow'+pickrow).append('<div class="col-md-4"><div id="mapselect'+map+'" class="mapedit"><p>'+bite.title+'</p><img class="mappreview" src="'+mapPreviewURL+'"></div></div>');
 		matches++;
 		map++;
 	});
@@ -103,7 +100,6 @@ function generateBites(hb,data,dataURL){
 		}
 		
 	});
-	$('#chartcontent').append('</div>');
 	let filters = [];
 	$('#colourselect').append('<option value="none">None</option>');
 	$('#sizeselect').append('<option value="none">None</option>');

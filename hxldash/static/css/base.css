@@ -399,10 +399,6 @@ p.highlighttitle{
 }
 
 
-.chartelement {
-	height:100%;
-}
-
 .mappreview {
 	width:100%;
 	border: 1px solid #ccc;
@@ -423,6 +419,22 @@ p.highlighttitle{
 	display:inline-block;
 	width:90%;
 	vertical-align: top;
+	font-size:16px !important;
+}
+
+#chartcontent {
+	padding-left:15px;
+	padding-right:15px;
+}
+
+#timecontent {
+	padding-left:15px;
+	padding-right:15px;
+}
+
+#mapcontent {
+	padding-left:15px;
+	padding-right:15px;
 }
 /* saving */
 
