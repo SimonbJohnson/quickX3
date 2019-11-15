@@ -19,6 +19,9 @@ def load(request):
 def info(request,section='overview'):
 	return render(request, 'info/'+section+'.html')
 
+def tutorials(request,section='overview'):
+	return render(request, 'info/tutorials/'+section+'.html')
+
 def create(request,url):
 	data = {}
 	if url[0:7]=="https:/" and url[7]!="/":

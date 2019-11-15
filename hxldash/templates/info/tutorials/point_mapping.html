@@ -1,0 +1,67 @@
+{% extends 'hxldash/info.html' %}
+{% load staticfiles %}
+
+{% block info %}
+<div class="row">
+	<div class="col-md-12">
+		<h2>How to create a quick point map with HXLDash</h2>
+		<p>A 5 minute guide to creating a point web map with HXLDash. In this guide we will visualise a dataset about airports in Mozambqiue.</p>
+		<h3>1. Preparing your data</h3>
+		<p>For a data set to be used with HXL Dash is has to be in the Humanitarian Exchange Language (HXL) standard. For this tutorial we have a prepared data set from the Humanitarian Data Exchange (HDX) about airports in Mozambique. Click to get the <a href="https://docs.google.com/spreadsheets/d/1k96SbHJZmLZJou8RImAbM_TGiSdDsLlnQUhjzPpfq1E/edit#gid=0" target="_blank">dataset</a>.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_1.png' %}" />
+		<p class="center infocaption">The dataset headers are in the third row. HXL tags in the fourth row and data from the fifth row onwards.</p>
+		<p>For point mapping to be activated the data set must contain <b>#geo+lat</b> and <b>#geo+lon</b>. If don't have latitude and longitude data in your data it is possible to add via the process of geocoding. Some free geocoders are avaiable on <a href="https://www.gpsvisualizer.com/geocoding.html">GPS Visualiser</a>.</p>
+		<p>Currently the public version of HXLDash does not have the features to securely store data, so we recommend only using data that is non-sensitive.</p>
+		<h3>2. Loading your data</h3>
+		<p>The next step is to load the data into HXL Dash. Grab the URL of the google sheet and click load or alternatively visit this link to the <a href="https://hxldash.com/create/https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1k96SbHJZmLZJou8RImAbM_TGiSdDsLlnQUhjzPpfq1E%2Fedit%23gid%3D0" target="_blank">data preloaded into HXLDash</a> </p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_2.png' %}" />
+		<p class="center infocaption">Paste the URL of the data set in HXLDash and click load.</p>
+		<h3>3. Choosing your layout and color style</h3>
+		<p>The data set is automatically processed and shows the number of charts and maps generated</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_3.png' %}" />
+		<p class="center infocaption">The data set is automatically processed and this section show the number of suggestions for maps and charts generated.</p>
+		<p>The next section allows you to pick a layout. For this tutorial we will choose a single large box for the map. This layout is in the bottom left.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_4.png' %}" />
+		<p class="center infocaption">Choosing a layout</p>
+		<p>And lastly you can pick a colour of your choice. In this case for now we will use the default red.</p>
+		<h3>4. Setting the title and adding a filter</h3>
+		<p>We now set the title for the map and can add a description. We also use the menu to add a filter. This is done by clicking the plus sign in the fitler boxes. In this case we added a filter for <b>#loc+airport+type</b> so the map can be filtered for type of airport.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_5.png' %}" />
+		<p class="center infocaption">Filling in the details and adding a filter</p>
+		<h3>5. Adding the map</h3>
+		<p>Now we are ready to add the map. Click the plus sign in the top left corner of the layout you have choosen. In our case it was the one large box.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_6.png' %}" />
+		<p class="center infocaption">Adding the map</p>
+		<p>This brings a pop up where the charts and maps can be browsed and selected for adding. Click the maps tab and then select the Map of locations.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_7.png' %}" />
+		<p class="center infocaption">Choosing the map</p>
+		<p>This should add a point map the same as below. Hovering the mouse over the points provides further details</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_8.png' %}" />
+		<p class="center infocaption">The map has been added.</p>
+		<h3>6. Styling the map</h3>
+		<p>At this point we could publish the map and share it, but first we are going to style the point colour and point size based on our data. Click the pencil edit button in the top right above the map.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_9.png' %}" />
+		<p class="center infocaption">Click the pencil icon to edit the map</p>
+		<p>In the pop up that appears there are further options to edit the map. As seen below we have changed the title, sized the points by the score value (how important the airport is!) in the data and coloured the points by airport type.  You can use the dropdowns to select these values.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_10.png' %}" />
+		<p class="center infocaption">Map styling menu</p>
+		<p>Save those changes and you now get a map with the points coloured as per the airport type data and sized with how important they are</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_11.png' %}" />
+		<p class="center infocaption">The map with new styling</p>
+		<h3>7. Publishing</h3>
+		<p>We will skip adding a data table and jump to the last step of saving our map. To do this click the save button. Enter a password in the <b>edit password</b> field if you want to make changes to the map at a later date. Clicking submit will save the map and take you to the published version.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_12.png' %}" />
+		<p class="center infocaption">Saving the map</p>
+		<h3>8. Finished Map on the Web!</h3>
+		<p>And that's it our map is now on the web with the styles we chose. Click here to view <a href="https://hxldash.com/view/201" target="_blank">our version of the map</a>. Hovering a point with the map provides further details.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_13.png' %}" />
+		<p class="center infocaption">The final map</p>
+		<p>You can also use the drop down filter to show just the closed airports or the medium size airports for example.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_14.png' %}" />
+		<p class="center infocaption">Filtering the map</p>
+		<p>If you want to go back and make any changes to the map, click the edit link in the bottom right and use the password from earlier.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_15.png' %}" />
+		<p class="center infocaption">Clicking the edit link allows you to go back and make changes to the map.</p>
+	</div>
+</div>
+{% endblock %}

@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^load$', views.load, name='load'),
     url(r'^info$', views.info, name='info'),
     url(r'^info/(?P<section>\w+)$', views.info, name='info'),
+     url(r'^info/tutorials/(?P<section>\w+)$', views.tutorials, name='tutorials'),
 ]
