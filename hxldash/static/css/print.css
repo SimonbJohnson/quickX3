@@ -48,3 +48,15 @@
     background: white;
     border-radius: 5px;
 }
+
+@media print {
+    body {
+      -webkit-print-color-adjust: exact; 
+    }
+
+    .leaflet-control-zoom {
+        display:none!important;
+    }
+ }
+
+
