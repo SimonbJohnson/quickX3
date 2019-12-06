@@ -1,0 +1,25 @@
+{% extends 'hxldash/info.html' %}
+{% load staticfiles %}
+
+{% block info %}
+<div class="row">
+	<div class="col-md-12">
+		<h2>How to embed HXLDash in your website</h2>
+		<p>A guide of how to use an iframe to embed HXLdash in your website.</p>
+		<h3>1. Create a Dashboard</h3>
+		<p>The first step is to create a dashboard via HXLDash. When you save it will be given an ID and a URL.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_iframe_1.png' %}" />
+		<p class="center infocaption">A dashboard made about Red Cross cash activities.</p>
+		<h3>2. Create the iframe URL</h3>
+		<p>Take the URL you have create and replace 'view' in the url with 'iframe'. The above URL would be changed from <a href="https://hxldash.com/view/140" target="_blank">https://hxldash.com/view/140</a> to <a href="https://hxldash.com/iframe/140" target="_blank">https://hxldash.com/iframe/140</a>.</p>
+		<p>The iframe version has a couple of changes to the code to make it more appropriate to embedding in other websites such as removing the link to edit.</p>
+		<h3>3. Create the embed code</h3>
+		<p>The code below is the the code needed to embed on your website.  Change the src URL to make your own (or just the ID number). Then change the height number to make set the size of the charts on your page.</p>
+		<p><code>&ltiframe src="https://hxldash.com/iframe/140" style="border:0px #ffffff none;" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="1600px" width="100%" allowfullscreen="">&lt/iframe></code></p>
+		<h3>4. Include the code on your website</h3>
+		<p>The last step is to include the iframe code with the html of your site.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_iframe_2.png' %}" />
+		<p class="center infocaption"><a href="https://cash-hub.org/resources/cash-maps" target="_blank">Dashboard embedded into another website</a>.</p>
+	</div>
+</div>
+{% endblock %}

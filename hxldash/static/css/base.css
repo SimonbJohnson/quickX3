@@ -78,6 +78,10 @@ body {
 	margin-top:10px;
 }
 
+code {
+	white-space: normal;
+}
+
 /* front page */
 
 #datachooser {
