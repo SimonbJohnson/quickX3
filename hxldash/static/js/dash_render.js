@@ -375,9 +375,6 @@ function createMap(id,bite,data,mapOptions,title){
                 mapOptions.size = null;
             }
         }
-        console.log(minValue);
-        console.log(maxValue);
-        console.log(range);
         if(mapOptions.colour!='' && mapOptions.colour!=null){
             colourColumn = getColumn(data,mapOptions.colour);
             if(colourColumn!=null){
@@ -421,7 +418,6 @@ function createMap(id,bite,data,mapOptions,title){
         $('.info').on('mouseover',function(){infoBox = true;console.log('infoover');});
         $('.info').on('mouseout',function(){infoBox = false;info.update();});
 
-        console.log(bite);
         bite.bite[0].forEach(function(d,i){
             if(i>0){
                 if(!isNaN(d) && !isNaN(bite.bite[1][i])){
@@ -524,6 +520,10 @@ function createMap(id,bite,data,mapOptions,title){
             }
             bite.lookup[d[0]] = d[1];
         });
+
+        if(maxValue-5<minValue){
+            minValue = maxValue-6;
+        }
 
         var info = L.control();
 
