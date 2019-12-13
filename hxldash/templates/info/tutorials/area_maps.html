@@ -1,0 +1,64 @@
+{% extends 'hxldash/info.html' %}
+{% load staticfiles %}
+
+{% block info %}
+<div class="row">
+	<div class="col-md-12">
+		<h2>Using Pcodes to create area (choropleth) maps</h2>
+		<p>HXLdash is capable of two possible maps type.  Point data and area data.  This tutorial will guide you through how to create an area map (choropleth maps).</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/area_map_1.png' %}" />
+		<p class="center infocaption">A choropleth map of Ebola cases in DRC</p>
+		<ul>
+			<li><p><b>A</b>. column with pcodes</p></li>
+			<li><p><b>B</b>. The pcodes should be for a country supported by HXLDash</p></li>
+			<li><p><b>C.</b> A column with values in it</p></li>
+		</ul>
+		<h3>A. Supported countries</h3>
+		<p>Area map or choropleth maps only work for the countries HXLDash currently supports.</p>
+
+		<p><a href="{% url 'info' 'mapping' %}" target="_blank">The full list of supported countries.</a></p>
+
+		<p>If the country you want is not on the list send us a message and we will try to get in up in a couple of days.</p>
+
+		<h3>B. PCodes</h3>
+		<p>For those not familiar with place codes or pcodes, they are codes given to geographic administrative boundaries in countries by the responding humanitarian organisations.  The purpose is to easily identify places in data sets to overcome the problem that the same place can be spelt differently or different places can the same name.</p>
+
+		<p>Pcodes generally have a format like</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/area_map_2.png' %}" />
+		<p class="center infocaption">Examples of Pcodes in Ethiopia</p>
+
+		<p>More details about pcodes can be found on <a href="https://www.humanitarianresponse.info/en/help/cod-pcodes-use-hrinfo" target="_blank">the humanitarian response website</a>.</p>
+
+		<p>Once you are using the pcodes for you country make sure you use the correct HXL tags. The tags that will trigger a choropleth map:</p>
+
+		<code>#country+code, #adm1+code, #adm2+code, #adm3+code</code>
+		<h3>C. Mapping against a value</h3>
+		<p>The final ingredient is needing a column with values so the colour of each area can be calculated. The following value columns are supported for maps.</p>
+		<code>#value, #affected, #population, #reached, #targeted, #inneed, #indicator+value, #capacity'</code>
+		<h2>Example of how to make a choropleth map for Ebola cases in Guinea</h2>
+		<p>For this tutorial we will use <a href="https://docs.google.com/spreadsheets/d/1FVOn3iusUTmAVAjA5m_LXF1eo1FXIlcsxdK9OlRaOTU/edit?usp=sharing" target="_blank">a dataset on Ebola cases in Sierra Leone</a>.</p>
+
+		<h3>1. Loading the data</h3>
+		<p>Grab the URL of the google spreadsheet and drop it into the load dashboard data input. The dataset has the three key ingredients. <b>A.</b> Sierra Leone is supported by HXLDash, <b>B.</b> We have #adm2 pcodes and <b>C.</b> We have a column wih values and the #affected tag.</p>
+
+		<img class="info_image" src="{% static 'images/info/tutorials/area_map_3.png' %}" />
+		<p class="center infocaption">Ebola cases dataset</p>
+
+		<h3>2. Choosing your layout and color style</h3>
+		<p>The data set is automatically processed and shows the number of charts and maps generated</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_3.png' %}" />
+		<p class="center infocaption">The data set is automatically processed and this section show the number of suggestions for maps and charts generated.</p>
+		<p>The next section allows you to pick a layout. For this tutorial we will choose a single large box for the map. This layout is in the bottom left.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_point_4.png' %}" />
+		<p class="center infocaption">Choosing a layout</p>
+		<p>And lastly you can pick a colour of your choice. In this case for now we will use the default red.</p>
+		<h3>3. Adding the map</h3>
+		<p>On the layout click the plus icon to get the chart and map selector. Click the maps tab and then select the map labeled "Map of cases by district code".</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/area_map_4.png' %}" />
+		<p class="center infocaption">Selecting the map</p>
+		<p>This will auto generate the map with suitable legend and title. To make this map online so you can share click save and complete the optional meta data fields. The map is now ready to share.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/area_map_5.png' %}" />
+		<p class="center infocaption">The final result - <a href="https://hxldash.com/view/229">https://hxldash.com/view/229</a></p>
+	</div>
+</div>
+{% endblock %}
