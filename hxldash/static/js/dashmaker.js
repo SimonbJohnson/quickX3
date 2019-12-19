@@ -49,7 +49,7 @@ function generateBites(hb,data,dataURL){
 	let map = 0;
 	hb.getChartBites().forEach(function(bite,i){
 		if(i% 3 ==0){
-			row++;
+			pickrow++;
 			$('#chartcontent').append('</div><div id="chartpickrow'+pickrow+'" class="row pickrow">');
 		}
 		matches++;
