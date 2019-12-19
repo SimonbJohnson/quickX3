@@ -55,4 +55,4 @@ class DashboardConfig(models.Model):
 	dataTable = models.OneToOneField(DataTable, null=True, blank=True, related_name='dash')
 
 	def __str__(self):
-		return str(self.id) + str(' - ') + str(self.title)
+		return str(self.id) + str(' - ') + self.title.encode('utf-8')

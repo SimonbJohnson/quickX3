@@ -542,7 +542,7 @@ function createMap(id,bite,data,mapOptions,title){
                             value=d[1];
                         }
                     });
-            if(display.length>0){
+            if(display != null && display.length>0){
                 data.forEach(function(d,i){
                     if(d[idColumn]==id){
                         if(displayValue.indexOf(d[displayColumn])==-1){

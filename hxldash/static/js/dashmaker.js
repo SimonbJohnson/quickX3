@@ -156,6 +156,7 @@ function populateCharts(hb){
 	            if(chart.mapOptions[0]==undefined){
 	                chart.mapOptions.push({'scale':'linear','display':'','size':null,'colour':null});
 	            }
+
 	            createMap('#dashchart'+i,bite,dataSets[0],chart.mapOptions[0],chart.title);
 				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="edit icon editchartbutton"></i>');
 				$('#dashchart'+i+' .editchartbutton').on('click',function(){
@@ -211,7 +212,6 @@ function insertLayout(html){
 }
 
 function chooseChart(index){
-	console.log(index);
 	$('#chartmodal').modal({
 		duration:0,
 	    onVisible: function () {
@@ -259,7 +259,6 @@ function insertBiteClick(id,bite,i,index){
 }
 
 function insertMap(bite,index,mapOptions,title=null){
-	console.log(index);
 	createMap('#dashchart'+index,bite,dataSets[0],mapOptions[0],title);
 	$('#dashchart'+index+' .bitetitle').append('<i data-id="'+index+'" class="edit icon editchartbutton"></i>');
 	$('#dashchart'+index+' .editchartbutton').on('click',function(){
@@ -272,7 +271,6 @@ function insertMap(bite,index,mapOptions,title=null){
 }
 
 function chartOptions(chartType,i){
-	console.log();
 	$('#chartoptionsmodal').modal('show');
 	$('#savechartoptions').off();
 	$('#newtitle').val('');
