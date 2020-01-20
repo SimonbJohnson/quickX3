@@ -14,10 +14,12 @@ function createHeadlineFigures(count,charts,dataSets){
 function createHeadLineFigure(id,bite,title){
     var headlineHTML = '<div id="'+id.slice(1)+'text" class="headlinetext"></div><div id="'+id.slice(1)+'number" class="headlinenumber"></div>';
     $(id).html(headlineHTML);
+    console.log(bite.bite);
     if(title==null){
-        title = bite.bite.split(':')[0];
+        title = bite.bite.split(':<span')[0];
     }
-    var number = String(parseInt(bite.bite.split(':')[1].replace(/[^0-9\.]/g, ''))).replace(/(<([^>]+)>)/ig,"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    console.log(bite.bite);
+    var number = String(parseInt(bite.bite.split('<span class="hbvalue">')[1].replace(/[^0-9\.]/g, ''))).replace(/(<([^>]+)>)/ig,"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     $(id+'text').html(title);
     $(id+'number').html(number);
 }
