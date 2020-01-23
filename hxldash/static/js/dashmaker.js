@@ -3,26 +3,26 @@ function loadData(dataURL){
 	let proxyURL = 'https://proxy.hxlstandard.org/data.json?force=on&filter01=cut&cut-skip-untagged01=o&url=dataURL';
 	proxyURL = proxyURL.replace('dataURL',encodeURIComponent(dataURL));
 	$.ajax({
-            url: proxyURL,
-            success: function(result){
-                dataSets.push(result);
-                $('#status').html('<p>Data Loaded Successfully</p>');
-                let hb = hxlBites.data(result);
-                let matches = generateBites(hb,result,dataURL);
-                setColors(0,false);
-                injectLayouts(hb,10);
-                updateStatusForBites(bites,matches);
-                tablefields(result);
-            },
-            error: function(err){
-            	console.log(err);
-            	$('#status').html('<p>'+err['statusText']+'</p>');
-            	if(err['responseJSON']){
-            		$('#status').append('<p>'+err['responseJSON']['message']+'</p>');
-            	} else {
-            		$('#status').append('<p>Please check data source has HXL tags and is accessible from the web (sharing is turned on)</p>');
-            	}
-            }
+        url: proxyURL,
+        success: function(result){
+            dataSets.push(result);
+            $('#status').html('<p>Data Loaded Successfully</p>');
+            let hb = hxlBites.data(result);
+            let matches = generateBites(hb,result,dataURL);
+            setColors(0,false);
+            injectLayouts(hb,11);
+            updateStatusForBites(bites,matches);
+            tablefields(result);
+        },
+        error: function(err){
+        	console.log(err);
+        	$('#status').html('<p>'+err['statusText']+'</p>');
+        	if(err['responseJSON']){
+        		$('#status').append('<p>'+err['responseJSON']['message']+'</p>');
+        	} else {
+        		$('#status').append('<p>Please check data source has HXL tags and is accessible from the web (sharing is turned on)</p>');
+        	}
+        }
     });
 }
 
@@ -98,7 +98,6 @@ function generateBites(hb,data,dataURL){
 			matches++;
 			headline++;
 		}
-		
 	});
 	let filters = [];
 	$('#colourselect').append('<option value="none">None</option>');
@@ -450,6 +449,24 @@ function addFilter(filterNum,val){
 	});
 	config.filters[filterNum].text = val.split('(')[0];
 	config.filters[filterNum].tag = val.split('(')[1].split(')')[0];
+}
+
+function updateDataSource(oldData,newData,config){
+	if(config.table.data==oldData){
+		config.table.data=newData;
+	}
+	config.headlinefigurecharts.forEach(function(chart){
+		if(chart.data==oldData){
+			chart.data = newData;
+		}
+	});
+	config.charts.forEach(function(chart){
+		if(chart.data==oldData){
+			chart.data = newData;
+		}
+	});
+	console.log(config);
+	loadData(newData);
 }
 
 $('#save').on('click',function(){
