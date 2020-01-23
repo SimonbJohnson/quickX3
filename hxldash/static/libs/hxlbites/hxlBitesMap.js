@@ -112,6 +112,7 @@ hxlBites._mapValues = {'world':[
 		{'iso3':'VEN', 'iso2':'VE', 'use':'VE', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name'},
 		{'iso3':'VUT', 'iso2':'VU', 'use':'VU', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name'},
 		{'iso3':'YEM', 'iso2':'YE', 'use':'YE', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name'},
+		{'iso3':'ZBM', 'iso2':'ZM', 'use':'ZM', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name'},
 		{'iso3':'ZWE', 'iso2':'ZW', 'use':'ZW', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name'},
 		{'iso3':'CDH', 'iso2':'CD', 'use':'CDH', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'ZSCode','name_att':'Nom'},
 	]};
