@@ -467,3 +467,28 @@ p.highlighttitle{
 .close {
 	float:none;
 }
+
+.sizenone {
+	color: #E65100;
+	font-weight:800;
+}
+
+.sizesmall {
+	color: #4CAF50;
+	font-weight:800;
+}
+
+.sizemedium {
+	color: #8BC34A;
+	font-weight:800;
+}
+
+.sizelarge {
+	color: #FBC02D;
+	font-weight:800;
+}
+
+.sizevlarge {
+	color: #FF8F00;
+	font-weight:800;
+}
