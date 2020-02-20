@@ -36,7 +36,6 @@ for subdir, dirs, files in os.walk(rootdir):
 print fileList
 
 
-
 with open('iso3_lookup.csv', 'rU') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
