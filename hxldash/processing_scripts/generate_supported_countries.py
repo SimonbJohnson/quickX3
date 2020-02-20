@@ -2,7 +2,7 @@ import os
 import csv
 #params
 cutOffLevel = 4
-rootdir = '../static/geoms/topojson/'
+rootdir = '../static/gz/'
 
 
 #script variables
@@ -14,8 +14,10 @@ fileList = {}
 for subdir, dirs, files in os.walk(rootdir):
     for file in files:
     	filePath = os.path.join(subdir, file)
-        level = filePath[-11]
-        country = filePath[-15:-12]
+        level = filePath[-9]
+        print filePath
+        print level
+        country = filePath[-13:-10]
         print country
         if country not in countries:
         	countries.append(country)
@@ -63,11 +65,11 @@ for country in countryList:
 		if size>0:
 			text = 'Yes ('+str(size)+'KB)'
 			cssclass="sizesmall"
-			if size>250:
+			if size>100:
 				cssclass="sizemedium"
-			if size>500:
+			if size>250:
 				cssclass="sizelarge"
-			if size>1000:
+			if size>500:
 				cssclass="sizevlarge"
 		row = row.replace('{{'+replace+'class}}',cssclass)
 		row = row.replace('{{'+replace+'}}',text)
