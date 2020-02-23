@@ -280,7 +280,6 @@ let hxlBites = {
 	getMapBites: function(){
 		let self = this;
 		let bites = [];
-		console.log('maps');
 		this._mapBites.forEach(function(bite,i){
 			let distinctOptions = {};
 			bite.ingredients.forEach(function(ingredient){
@@ -761,7 +760,6 @@ let hxlBites = {
 				} else {
 					countryCode = d.substring(0,2);
 				}
-				console.log(countryCode);
 				if(parsed.indexOf(countryCode)==-1){
 					parsed.push(countryCode);
 					if(iso3){
@@ -1185,16 +1183,25 @@ let hxlBites = {
 		var found = false;
 		var tag = this._data[1][col.number].split('+')[0];
 		var colTag = col.tag.split('+')[0];
+		var colAttributes = col.tag.split('+').pop(0);
 		if(tag == colTag){
 			col.header = this._data[0][col.number];
+			found = true;
+		}
+		/*if(!found){
+			//pick up here
+			this._data[1].forEach(function(tag){
+				tag = 
+			});
+		}*/
+		if(found){
 			return col;
 		} else {
-			return {}
+			return 'Error'
 		}
 	},
 
 	createMatchingValues: function(bite,cols){
-
 		var self = this;
 		var matchingValues = {}
 		bite.ingredients.forEach(function(ingredient){
