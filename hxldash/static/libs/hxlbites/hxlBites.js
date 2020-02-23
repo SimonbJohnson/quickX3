@@ -715,7 +715,6 @@ let hxlBites = {
 
 	_checkMapCodes: function(level,values){
 
-
 		worldgeos = hxlBites._mapValues.world;
 		codCodes = hxlBites._mapValues.cod;
 
@@ -764,7 +763,7 @@ let hxlBites = {
 					parsed.push(countryCode);
 					if(iso3){
 						codCodes.forEach(function(code){
-							if(code.iso3==countryCode){
+							if(code.iso3==countryCode && code.levels.indexOf(level)>-1){
 								iso3Codes.push(code);
 								if(code.iso3!=code.use){
 									pcodeClean.push([code.iso3,code.use]);
@@ -773,7 +772,7 @@ let hxlBites = {
 						});
 					} else {
 						codCodes.forEach(function(code){
-							if(code.iso2==countryCode){
+							if(code.iso2==countryCode && code.levels.indexOf(level)>-1){
 								iso3Codes.push(code);
 								if(code.iso2!=code.use){
 									pcodeClean.push([code.iso2,code.use]);
@@ -787,17 +786,20 @@ let hxlBites = {
 			let codes = [];
 			let name_atts = [];
 			let urlPattern = "https://gistmaps.itos.uga.edu/arcgis/rest/services/COD_External/{{country}}_pcode/MapServer/{{level}}/query?where=1%3D1&outFields=*&f=geojson";
-			iso3Codes.forEach(function(d){
-		        var url = d.url.replace(/{{country}}/g, d.iso3.toUpperCase());
-		        url = url.replace("{{level}}", level+d.adjustment);
-		        urls.push(url);
-		        var code = d.code_att.replace("{{level}}", level);
-		        var name_att = d.name_att.replace("{{level}}", level);
-		        codes.push(code);
-		        name_atts.push(name_att);
-			});
-			//admin code to go in here
-			return {'code':codes,'name':'cod','url':urls,'clean':pcodeClean,'name_att':name_atts};			
+			if(iso3Codes.length>0){
+				iso3Codes.forEach(function(d){
+			        var url = d.url.replace(/{{country}}/g, d.iso3.toUpperCase());
+			        url = url.replace("{{level}}", level+d.adjustment);
+			        urls.push(url);
+			        var code = d.code_att.replace("{{level}}", level);
+			        var name_att = d.name_att.replace("{{level}}", level);
+			        codes.push(code);
+			        name_atts.push(name_att);
+				});
+				return {'code':codes,'name':'cod','url':urls,'clean':pcodeClean,'name_att':name_atts};			
+			}
+			return false;
+					
 		}
 		return false
 
@@ -926,13 +928,15 @@ let hxlBites = {
 			if(level>-1){
 				values = v.table[0].slice(1, v.table[0].length);
 				let mapCheck = self._checkMapCodes(level,values);
-				mapCheck.clean.forEach(function(c){
-					mapData.forEach(function(d){
-						d[0] = d[0].replace(c[0],c[1]);
+				if(mapCheck){
+					mapCheck.clean.forEach(function(c){
+						mapData.forEach(function(d){
+							d[0] = d[0].replace(c[0],c[1]);
+						});
 					});
-				});
-				let bite = {'bite':mapData,'uniqueID':v.uniqueID,'title':v.title,'geom_attribute':mapCheck.code,'geom_url':mapCheck.url,'name_attribute':mapCheck.name_att};
-				bites.push(bite);
+					let bite = {'bite':mapData,'uniqueID':v.uniqueID,'title':v.title,'geom_attribute':mapCheck.code,'geom_url':mapCheck.url,'name_attribute':mapCheck.name_att};
+					bites.push(bite);
+				}
 			}
 			if(tag=='#geo+lat'){
 				let bite = {'bite':mapData,'uniqueID':v.uniqueID,'title':v.title,'geom_attribute':'','geom_url':'','name_attribute':''};
