@@ -6,7 +6,7 @@ hxlBites._mapBites = [{
 'criteria':['where > 1'],
 'variables': ['where', 'count()'],
 'map':'',
-'title':'Count of reports',
+'title':'Count of reports by {1}',
 'priority': 10,
 },
 {
