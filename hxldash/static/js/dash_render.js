@@ -231,7 +231,6 @@ function tooltip(meta,value){
 }
 
 function linetooltip(meta,value){
-    console.log('here');
     if(value!=null){
         let time = parseInt(value.split(',')[0]);
         time = new Date(time)
@@ -271,7 +270,6 @@ function createMap(id,bite,data,mapOptions,title){
     let display = mapOptions.display;
     let scale = mapOptions.scale;
     let displayColumn = 0;
-    console.log(bite);
     let idTag = bite.uniqueID.split('/')[1];
     let idColumn = '';
     if(display!=''){
@@ -415,7 +413,7 @@ function createMap(id,bite,data,mapOptions,title){
 
         info.addTo(map);
 
-        $('.info').on('mouseover',function(){infoBox = true;console.log('infoover');});
+        $('.info').on('mouseover',function(){infoBox = true;});
         $('.info').on('mouseout',function(){infoBox = false;info.update();});
 
         bite.bite[0].forEach(function(d,i){
@@ -630,8 +628,6 @@ function createMap(id,bite,data,mapOptions,title){
                 success: function(result){
                     var geom = {};
                     if(result.type=='Topology'){
-                        console.log(result);
-                        console.log(urls[0]);
                       geom = topojson.feature(result,result.objects.geom);
                     } else {
                       geom = result;
