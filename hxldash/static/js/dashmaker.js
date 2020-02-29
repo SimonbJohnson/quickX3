@@ -102,11 +102,13 @@ function generateBites(hb,data,dataURL){
 	let filters = [];
 	$('#colourselect').append('<option value="none">None</option>');
 	$('#sizeselect').append('<option value="none">None</option>');
+	$('#displayattributeselect').append('<option value="none">None</option>');
 	for(let i = 0;i<data[0].length;i++){
 		filters.push({'header':data[0][i],'tag':data[1][i]});
 		$('#filterselect').append('<option value="'+data[0][i]+'('+data[1][i]+'">'+data[0][i]+'('+data[1][i]+')</option>');
 		$('#colourselect').append('<option value="'+data[1][i]+'">'+data[0][i]+'('+data[1][i]+')</option>');
 		$('#sizeselect').append('<option value="'+data[1][i]+'">'+data[0][i]+'('+data[1][i]+')</option>');
+		$('#displayattributeselect').append('<option value="'+data[1][i]+'">'+data[0][i]+'('+data[1][i]+')</option>');
 	}
 	return matches;
 }
@@ -298,6 +300,9 @@ function changeMapOptions(bite,mapType,i){
 			$("#colourselect").val(config.charts[i].mapOptions[0]['colour']);
 		}
 	}
+	if(config.charts[i].mapOptions[0]['display']!=null){
+		$("#displayattributeselect").val(config.charts[i].mapOptions[0]['display']);
+	}
 	$('#savemapoptions').off();
 	$('#savemapoptions').on('click',function(){
 		let newTitle = $('#newtitlemap').val();
@@ -323,6 +328,12 @@ function changeMapOptions(bite,mapType,i){
 			} else {
 				config.charts[i].mapOptions[0]['colour']= null;
 			}
+		}
+		let display = $('#displayattributeselect').val();
+		if(display!='none'){
+			config.charts[i].mapOptions[0]['display']= display;
+		} else {
+			config.charts[i].mapOptions[0]['display']= null;
 		}
 		$('#mapoptionsmodal').modal('hide');
 		insertMap(bite,i,config.charts[i].mapOptions,newTitle);
