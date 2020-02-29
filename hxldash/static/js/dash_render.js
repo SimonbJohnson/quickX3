@@ -630,6 +630,8 @@ function createMap(id,bite,data,mapOptions,title){
                 success: function(result){
                     var geom = {};
                     if(result.type=='Topology'){
+                        console.log(result);
+                        console.log(urls[0]);
                       geom = topojson.feature(result,result.objects.geom);
                     } else {
                       geom = result;
