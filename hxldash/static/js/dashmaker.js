@@ -157,7 +157,6 @@ function populateCharts(hb){
 	            if(chart.mapOptions[0]==undefined){
 	                chart.mapOptions.push({'scale':'linear','display':'','size':null,'colour':null});
 	            }
-
 	            createMap('#dashchart'+i,bite,dataSets[0],chart.mapOptions[0],chart.title);
 				$('#dashchart'+i+' .bitetitle').append('<i data-id="'+i+'" class="edit icon editchartbutton"></i>');
 				$('#dashchart'+i+' .editchartbutton').on('click',function(){
@@ -239,6 +238,7 @@ function insertBiteClick(id,bite,i,index){
 		$('#chartmodal').modal('hide');
 		if(bite.bite.type=='map'){
 			config.charts[index].mapOptions = [{'scale':'linear','display':'','size':null,'colour':null}]
+			console.log(bite);
 			insertMap(bite.bite,index,config.charts[index].mapOptions);
 		} else {
 			config.charts[index].mapOptions = []

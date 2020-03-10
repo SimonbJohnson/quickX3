@@ -77,7 +77,7 @@ let hxlBites = {
   				if (a.key > b.key)
     				return 1;
   				return 0;
-			});	
+			});
 			var values = keyValues.map(function(d){return new Date(d.key)});
 			var diffs = diff(values);
 			
@@ -426,9 +426,9 @@ let hxlBites = {
 	},
 
 	_getTableVariablesForPoint: function(data,bite,matchingValues){
-		let table = [['lat','lon']];
+		let table = [['lat','lon',data[1],data[0]]];
 		matchingValues['lat'][0].values.forEach(function(d,i){
-			let row = [d,matchingValues['lon'][0].values[i]];
+			let row = [d,matchingValues['lon'][0].values[i],data[i+2]];
 			table.push(row);
 		});
 		let uniqueID = bite.id + '/' + matchingValues['lat'][0].tag + '/' + matchingValues['lat'][0].col +'/'+ matchingValues['lon'][0].tag + '/' + matchingValues['lon'][0].col

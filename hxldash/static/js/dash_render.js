@@ -321,22 +321,23 @@ function createMap(id,bite,data,mapOptions,title){
 
         let infoBox = false;
         let circleOver = false;
+        console.log(bite);
         if(mapOptions.size!='' && mapOptions.size!=null){
-            sizeColumn = getColumn(data,mapOptions.size);
+            sizeColumn = getColumn(bite.bite,mapOptions.size);
             if (sizeColumn != null) {
-                maxValue = data[2][sizeColumn];
-                minValue = data[2][sizeColumn];
+                maxValue = bite.bite[2][1][sizeColumn];
+                minValue = bite.bite[2][1][sizeColumn];
                 if(scale=='log'){
-                    if(isNaN(Math.log(data[2][sizeColumn]))|| Math.log(data[2][sizeColumn])<0){
+                    if(isNaN(Math.log(bite.bite[2][1][sizeColumn]))|| Math.log(bite.bite[2][1][sizeColumn])<0){
                         maxValue = 0;
                         minValue = 0;
                     } else {
-                        maxValue = Math.log(data[2][sizeColumn]);
-                        minValue = Math.log(data[2][sizeColumn]);
+                        maxValue = Math.log(bite.bite[2][1][sizeColumn]);
+                        minValue = Math.log(bite.bite[2][1][sizeColumn]);
                     }
                 }
 
-                data.forEach(function(d,i){
+                bite.bite[2].forEach(function(d,i){
                     if(i>1){
                         if(scale == 'log'){
                             let logValue = Math.log(d[sizeColumn]);
@@ -372,9 +373,9 @@ function createMap(id,bite,data,mapOptions,title){
             //}
         }
         if(mapOptions.colour!='' && mapOptions.colour!=null){
-            colourColumn = getColumn(data,mapOptions.colour);
+            colourColumn = getColumn(bite.bite,mapOptions.colour);
             if(colourColumn!=null){
-                data.forEach(function(d,i){
+                bite.bite[2].forEach(function(d,i){
                     if(i>1){
                         if(categories.length<discreteColors.length-1){
                             let value = d[colourColumn];
@@ -421,13 +422,13 @@ function createMap(id,bite,data,mapOptions,title){
                     let radius = 5;
                     if(mapOptions.size!='' && mapOptions.size!=null){
                         if(scale == 'log'){
-                            let logValue = Math.log(data[i+1][sizeColumn]);
+                            let logValue = Math.log(bite.bite[2][i][sizeColumn]);
                             if(isNaN(logValue) || logValue<0){
                                 logValue=0;
                             }
                             radius = (logValue-minValue)/range*10+2;
                         } else {
-                            radius = (data[i+1][sizeColumn]-minValue)/range*10+2;
+                            radius = (bite.bite[2][i][sizeColumn]-minValue)/range*10+2;
                         }
                         if(isNaN(radius)){
                             radius = 5;
@@ -441,7 +442,7 @@ function createMap(id,bite,data,mapOptions,title){
                         }
 
                     if(mapOptions.colour!='' && mapOptions.colour!=null){
-                        let value = data[i+1][colourColumn];
+                        let value = bite.bite[2][i][colourColumn];
                         let cat = categories.indexOf(value);
                         let colour;
                         if(cat>-1){
@@ -460,9 +461,9 @@ function createMap(id,bite,data,mapOptions,title){
                     circle.on('mouseover',function(){
                         circleOver = true;
                         var text = '';
-                        data[0].forEach(function(d,j){
+                        bite.bite[3][0].forEach(function(d,j){
                             if(j<8){
-                                text += '<p>'+data[0][j]+': '+data[i+1][j]+'</p>';
+                                text += '<p>'+d+': '+bite.bite[2][i][j]+'</p>';
                             }
                         });
                         info.update(text);
@@ -754,12 +755,13 @@ function createMap(id,bite,data,mapOptions,title){
 
 }
 
-function getColumn(data,tag){
+function getColumn(bite,tag){
     let column = null;
     let justTag = tag.split('+')[0];
     let tagAttributes = tag.split('+');
     tagAttributes.shift();
-    data[1].forEach(function(d,i){
+    console.log(bite);
+    bite[2][0].forEach(function(d,i){
         let matchTag = d.split('+')[0];
         if(matchTag == justTag){
 
