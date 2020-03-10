@@ -321,10 +321,8 @@ function createMap(id,bite,data,mapOptions,title){
 
         let infoBox = false;
         let circleOver = false;
-
         if(mapOptions.size!='' && mapOptions.size!=null){
             sizeColumn = getColumn(data,mapOptions.size);
-
             if (sizeColumn != null) {
                 maxValue = data[2][sizeColumn];
                 minValue = data[2][sizeColumn];
@@ -369,9 +367,9 @@ function createMap(id,bite,data,mapOptions,title){
                 });
 
                 range = maxValue-minValue
-            } else {
-                mapOptions.size = null;
-            }
+            }// else {
+            //    mapOptions.size = null;
+            //}
         }
         if(mapOptions.colour!='' && mapOptions.colour!=null){
             colourColumn = getColumn(data,mapOptions.colour);
@@ -758,9 +756,27 @@ function createMap(id,bite,data,mapOptions,title){
 
 function getColumn(data,tag){
     let column = null;
+    let justTag = tag.split('+')[0];
+    let tagAttributes = tag.split('+');
+    tagAttributes.shift();
     data[1].forEach(function(d,i){
-        if(d == tag){
-            column = i;
+        let matchTag = d.split('+')[0];
+        if(matchTag == justTag){
+
+            let matchAtts = d.split('+');
+            matchAtts.shift();
+
+            let noMatch = false;
+
+            tagAttributes.forEach(function(att){
+                if(matchAtts.indexOf(att)==-1){
+                    noMatch = true;
+                }
+            });
+
+            if(!noMatch){
+                column = i;
+            }
         }
     });
     return column;
