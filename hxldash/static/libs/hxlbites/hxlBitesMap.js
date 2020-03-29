@@ -77,6 +77,7 @@ hxlBites._mapValues = {'world':[
 		{'iso3':'ECU', 'iso2':'EC', 'use':'EC', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[1,2,3]},
 		{'iso3':'EGY', 'iso2':'EG', 'use':'EG', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[1,2,3]},
 		{'iso3':'ETH', 'iso2':'ET', 'use':'ET', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[1,2,3]},
+		{'iso3':'GBR', 'iso2':'GB', 'use':'GBR', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[2,3]},
 		{'iso3':'GEO', 'iso2':'GE', 'use':'GE', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[1,2]},
 		{'iso3':'GIN', 'iso2':'GN', 'use':'GN', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[1,2,3]},
 		{'iso3':'GTM', 'iso2':'GT', 'use':'GT', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[1,2]},

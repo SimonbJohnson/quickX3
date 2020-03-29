@@ -439,6 +439,7 @@ function createMap(id,bite,data,mapOptions,title){
                             className: 'circlepoint',
                             fillOpacity: 0.75,
                             radius: radius,
+                            weight:1
                         }
 
                     if(mapOptions.colour!='' && mapOptions.colour!=null){
