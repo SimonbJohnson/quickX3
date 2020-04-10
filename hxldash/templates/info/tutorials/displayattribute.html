@@ -1,0 +1,43 @@
+{% extends 'hxldash/info.html' %}
+{% load staticfiles %}
+
+{% block info %}
+<div class="row">
+	<div class="col-md-12">
+		<h2>How to add more information to map hover info box</h2>
+		<p>In this tutorial we cover how to use the display field dropdown to add extra information to you map info boxes.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_1.png' %}" />
+		<p class="center infocaption">A dashboard with added text to the map info box showing the orgs and locations they are working.</p>
+		<h3>1. Load the data</h3>
+		<p>For this tutorial we will be using a dataset of Ebola cases by treatment centre. The number of cases and deaths are not real. This data set is purely for use with this tutorial.</p>
+		<p>Drop the dataset into the HXLDash load data screen and click load.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_2.png' %}" />
+		<p class="center infocaption">A dashboard with add text to the map info box showing the orgs and locations they are working.</p>
+		<p>Once loaded the first panel gives an overview of the suggestions maps and graphs generated.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_3.png' %}" />
+		<p class="center infocaption">Intelligent suggestions overview.</p>
+		<h3>2. Setting up the dashboard</h3>
+		<p>Select the single large dashboard layout in the bottom left. Optionally add a title and any filters or headlines numbers you want. For more details on creating maps please read the <a href="{% url 'tutorials' 'area_maps' %}">area map tutorial</a>.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_4.png' %}" />
+		<p class="center infocaption">Picking a layout for the dashboard</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_5.png' %}" />
+		<p class="center infocaption">Optional extras such as adding a title.</p>
+		<h3>3. Create a map</h3>
+		<p>Next click the add buttom at the top of the dashboard layout. You will be presented with a set of graphs to add. Click the maps tab and then choose the map Discount Count of Primary Organisations.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_6.png' %}" />
+		<p class="center infocaption">The map selector</p>
+		<p>This is a map quite often used by humanitarians for a 3w (who, what, where). An organisation might be reported multiple time working in an area over different sectors. This map only counts distinct organisations, so as not to double count one organisation and inflate the number.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_7.png' %}" />
+		<p class="center infocaption">A map of number of organisations working per area.</p>
+		<h3>4. Adding the display options</h3>
+		<p>In the top right hand corner of the map there is the edit button represented by the pen. Clicking this brings up the map options menu.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_8.png' %}" />
+		<p class="center infocaption">The map options menu</p>
+		<p>The drop down menu below the words <b>Display Attribute</b> show the fields from data set. Select Primary Organisation (<b>#org</b>) and click save. Now when you hover over an area it lists the organisations working there.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_9.png' %}" />
+		<p class="center infocaption"></p>
+		<h3>5. Customising the attribute</h3>
+		<p>It's possible to add customised display attributes by using functions in a spreadsheet. </p>
+	</div>
+</div>
+{% endblock %}
