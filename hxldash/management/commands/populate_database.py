@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
 	def handle(self, *args, **kwargs):
 		with open('hxldash/management/commands/data.json') as f:
-  			configs = json.load(f)
-  			for config in configs:
-  				saveConfig(config,'','','Demo data','Demo data')
+  			dashboards = json.load(f)
+  			for dashboard in dashboards:
+  				saveConfig(dashboard["config"],dashboard["editpassword"],'','Demo data','Demo data')
 		self.stdout.write("Success")

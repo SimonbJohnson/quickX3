@@ -118,7 +118,7 @@ def saveConfig(config,editpassword,viewpassword,user,org):
 	dashConfig.color = config['color']
 	if editpassword != '':
 		dashConfig.editpassword = make_password(editpassword)
-	viewpassword = editpassword
+	viewpassword = viewpassword
 	if viewpassword != '':
 		dashConfig.viewpassword = make_password(viewpassword)
 	dashConfig.user = user
