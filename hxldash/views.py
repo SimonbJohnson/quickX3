@@ -101,44 +101,53 @@ def save(request):
 	if request.method == 'POST':
 		jsonstring = urllib.unquote(request.POST['formconfig'])
 		config = json.loads(jsonstring)
-		dashConfig = DashboardConfig()
-		dashConfig.title = config['title']
-		dashConfig.subtext = config['subtext']
-		dashConfig.grid = config['grid']
-		dashConfig.color = config['color']
-		editpassword = request.POST['editpassword'] 
-		if editpassword != '':
-			dashConfig.editpassword = make_password(request.POST['editpassword'])
+		editpassword = request.POST['editpassword']
 		viewpassword = request.POST['viewpassword']
-		if viewpassword != '':
-			dashConfig.viewpassword = make_password(request.POST['viewpassword'])
-		dashConfig.user = request.POST['user']
-		dashConfig.org = request.POST['org']
-		dashConfig.headlinefigures = 0
-		dashConfig.save()
-		dashID = dashConfig.id
-		if len(config['table']['fields'])>0:
-			dt = DataTable.objects.create(on = 1,dataSource = config['table']['data'])
-			dashConfig.dataTable = dt
-			dashConfig.save()
-			for field in config['table']['fields']:
-				TableField.objects.create(dataTable = dt, columnNum = field['column'], tag = field['tag'])
-		for headline in config['headlinefigurecharts']:
-			hl = BiteConfig.objects.create(variety = 'headline', dataSource = headline['data'], biteID = headline['chartID'], title = headline['title'])
-			dashConfig.bites.add(hl)
-		for chart in config['charts']:
-			ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'], title = chart['title'])
-			if chart['mapOptions']!=None and len(chart['mapOptions'])>0:
-		 		mb = MapBite.objects.create(displayField = chart['mapOptions'][0]['display'], scale = chart['mapOptions'][0]['scale'], size = chart['mapOptions'][0]['size'], colour = chart['mapOptions'][0]['colour'])
-		 		ch.mapOptions = mb
-		 		ch.save()
-		 	dashConfig.bites.add(ch)
-			dashConfig.bites.add(ch)
-		for filt in config['filters']:
-			ft = FilterConfig.objects.create(text=filt['text'],tag=filt['tag'])
-			dashConfig.filters.add(ft)
+		user = request.POST['user']
+		org = request.POST['org'] 
+		dashID = saveConfig(config,editpassword,viewpassword,user,org)
 	
 	return render(request, 'hxldash/dashsave.html', {'dashID':dashID})
+
+def saveConfig(config,editpassword,viewpassword,user,org):
+
+	dashConfig = DashboardConfig()
+	dashConfig.title = config['title']
+	dashConfig.subtext = config['subtext']
+	dashConfig.grid = config['grid']
+	dashConfig.color = config['color']
+	if editpassword != '':
+		dashConfig.editpassword = make_password(editpassword)
+	viewpassword = viewpassword
+	if viewpassword != '':
+		dashConfig.viewpassword = make_password(viewpassword)
+	dashConfig.user = user
+	dashConfig.org = org
+	dashConfig.headlinefigures = 0
+	dashConfig.save()
+	dashID = dashConfig.id
+	if len(config['table']['fields'])>0:
+		dt = DataTable.objects.create(on = 1,dataSource = config['table']['data'])
+		dashConfig.dataTable = dt
+		dashConfig.save()
+		for field in config['table']['fields']:
+			TableField.objects.create(dataTable = dt, columnNum = field['column'], tag = field['tag'])
+	for headline in config['headlinefigurecharts']:
+		hl = BiteConfig.objects.create(variety = 'headline', dataSource = headline['data'], biteID = headline['chartID'], title = headline['title'])
+		dashConfig.bites.add(hl)
+	for chart in config['charts']:
+		ch = BiteConfig.objects.create(variety = 'chart', dataSource = chart['data'], biteID = chart['chartID'], title = chart['title'])
+		if chart['mapOptions']!=None and len(chart['mapOptions'])>0:
+	 		mb = MapBite.objects.create(displayField = chart['mapOptions'][0]['display'], scale = chart['mapOptions'][0]['scale'], size = chart['mapOptions'][0]['size'], colour = chart['mapOptions'][0]['colour'])
+	 		ch.mapOptions = mb
+	 		ch.save()
+	 	dashConfig.bites.add(ch)
+		dashConfig.bites.add(ch)
+	for filt in config['filters']:
+		ft = FilterConfig.objects.create(text=filt['text'],tag=filt['tag'])
+		dashConfig.filters.add(ft)
+
+	return dashID
 
 def update(request,id):
 	dashConfig = DashboardConfig.objects.get(pk=id)

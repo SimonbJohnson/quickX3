@@ -1,0 +1,14 @@
+[
+	{
+		"config":{"filtersOn": true, "subtext": "Ebola Treatment Centres", "filters": [{"text": "Adm1", "tag": "#adm1"}], "title": "Ebola", "color": 0, "grid": "1", "table": {"fields": [], "data": ""}, "headlinefigures": 3, "charts": [{"chartID": "map0002/#adm1+code/3/#affected+dead/8", "mapOptions": [], "data": "https://docs.google.com/spreadsheets/d/1R9zfMTk7SQB8VoEp4XK0xAWtlsQcHgEvYiswZsj9YA4/edit#gid=0", "title": null}, {"chartID": "chart0018/#adm1/2/#affected+suspected/10", "mapOptions": [], "data": "https://docs.google.com/spreadsheets/d/1R9zfMTk7SQB8VoEp4XK0xAWtlsQcHgEvYiswZsj9YA4/edit#gid=0", "title": null}, {"chartID": "chart0018/#adm1/2/#affected+confirmed/9", "mapOptions": [], "data": "https://docs.google.com/spreadsheets/d/1R9zfMTk7SQB8VoEp4XK0xAWtlsQcHgEvYiswZsj9YA4/edit#gid=0", "title": null}], "headlinefigurecharts": [{"chartID": "text0012/#affected+dead/8", "data": "https://docs.google.com/spreadsheets/d/1R9zfMTk7SQB8VoEp4XK0xAWtlsQcHgEvYiswZsj9YA4/edit#gid=0", "title": null}, {"chartID": "text0012/#affected+suspected/10", "data": "https://docs.google.com/spreadsheets/d/1R9zfMTk7SQB8VoEp4XK0xAWtlsQcHgEvYiswZsj9YA4/edit#gid=0", "title": null}, {"chartID": "text0012/#affected+confirmed/9", "data": "https://docs.google.com/spreadsheets/d/1R9zfMTk7SQB8VoEp4XK0xAWtlsQcHgEvYiswZsj9YA4/edit#gid=0", "title": null}]},
+		"editpassword":"edit"
+	},
+	{
+		"config":{"filtersOn": true, "subtext": "A map showing airports in Mozambique", "filters": [{"text": "type", "tag": "#loc+airport+type"}], "title": "Mozambique Airports", "color": 0, "grid": "9", "table": {"fields": [], "data": ""}, "headlinefigures": 0, "charts": [{"chartID": "map0003/#geo+lat/3/#geo+lon/4", "mapOptions": [{"colour": "#loc+airport+type", "scale": "linear", "display": "", "size": "#meta+score"}], "data": "https://docs.google.com/spreadsheets/d/1k96SbHJZmLZJou8RImAbM_TGiSdDsLlnQUhjzPpfq1E/edit#gid=0", "title": "Map of Airports"}], "headlinefigurecharts": []},
+		"editpassword":""
+	},
+	{
+		"config":{"filtersOn": false, "subtext": "A map of the number of Ebola cases in Sierra Leone in March 2015", "filters": [], "title": "Ebola cases in Sierra Leone", "color": 0, "grid": "9", "table": {"fields": [], "data": ""}, "headlinefigures": 1, "charts": [{"chartID": "map0002/#adm2+code/3/#affected/2", "mapOptions": [{"colour": null, "scale": "linear", "display": "", "size": null}], "data": "https://docs.google.com/spreadsheets/d/1FVOn3iusUTmAVAjA5m_LXF1eo1FXIlcsxdK9OlRaOTU/edit?folder=1OT26HDHGJQ6GMS0llceD-163FQ8l59N2#gid=0", "title": null}], "headlinefigurecharts": [{"chartID": "text0012/#affected/2", "data": "https://docs.google.com/spreadsheets/d/1FVOn3iusUTmAVAjA5m_LXF1eo1FXIlcsxdK9OlRaOTU/edit?folder=1OT26HDHGJQ6GMS0llceD-163FQ8l59N2#gid=0", "title": null}]},
+		"editpassword":""
+	}
+]

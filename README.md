@@ -32,6 +32,10 @@ Example set up: https://www.digitalocean.com/community/tutorials/how-to-use-post
 
 python manage.py runserver
 
+## To populate the database with test data
+
+python manage.py populate_database
+
 ## HXL Proxy
 
 The default version uses the public version of the HXL proxy hosted at https://proxy.hxlstandard.org/data/source. Files used with HXL Proxy will have to be exposed to the web.
