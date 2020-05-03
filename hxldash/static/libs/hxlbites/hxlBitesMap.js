@@ -67,6 +67,7 @@ hxlBites._mapValues = {'world':[
 		{'iso3':'BFA', 'iso2':'BF', 'use':'BF', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[1,2,3]},
 		{'iso3':'BGD', 'iso2':'BD', 'use':'BD', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[1,2,2]},
 		{'iso3':'BOL', 'iso2':'BO', 'use':'BO', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[1,2,3]},
+		{'iso3':'BRA', 'iso2':'BR', 'use':'BR', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[1]},
 		{'iso3':'CAF', 'iso2':'CF', 'use':'CF', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[1,2,3]},
 		{'iso3':'CIV', 'iso2':'CI', 'use':'CI', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[1,2,3]},
 		{'iso3':'CMR', 'iso2':'CM', 'use':'CM', 'url':'/static/geoms/topojson/{{country}}/{{level}}/geom.json','adjustment':0,'code_att':'admin{{level}}Pcode','name_att':'admin{{level}}Name','levels':[1,2,3]},
