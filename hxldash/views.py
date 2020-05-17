@@ -99,7 +99,7 @@ def create(request,url):
 
 def save(request):
 	if request.method == 'POST':
-		jsonstring = urllib.unquote(request.POST['formconfig'])
+		jsonstring = request.POST['formconfig']
 		config = json.loads(jsonstring)
 		dashConfig = DashboardConfig()
 		dashConfig.title = config['title']

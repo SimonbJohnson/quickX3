@@ -484,7 +484,7 @@ $('#save').on('click',function(){
 	config.title = $('#create-title').val();
 	config.subtext = $('#create-description').val();
 	tableToConfig();
-	$('#formconfig').val(encodeURIComponent(JSON.stringify(config)));
+	$('#formconfig').val(JSON.stringify(config));
 	$('#savemodal').modal('show');
 });
 
