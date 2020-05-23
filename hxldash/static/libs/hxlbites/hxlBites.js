@@ -730,7 +730,7 @@ let hxlBites = {
 				geomMeta.codes.forEach(function(code){
 					let match = 0;
 					values.forEach(function(value,i){
-						if(code.values.indexOf(value)>-1){
+						if(code.values.indexOf(value.toUpperCase())>-1){
 							match++;
 						}
 					});
@@ -933,6 +933,9 @@ let hxlBites = {
 						mapData.forEach(function(d){
 							d[0] = d[0].replace(c[0],c[1]);
 						});
+					});
+					mapData.forEach(function(d){
+						d[0] = d[0].toUpperCase();
 					});
 					let bite = {'bite':mapData,'uniqueID':v.uniqueID,'title':v.title,'geom_attribute':mapCheck.code,'geom_url':mapCheck.url,'name_attribute':mapCheck.name_att};
 					bites.push(bite);
