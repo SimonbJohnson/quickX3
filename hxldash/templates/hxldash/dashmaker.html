@@ -2,10 +2,10 @@
 {% load staticfiles %}
 
 {% block content %}
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script>
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/icon.min.css' />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css" />
-    <link rel="stylesheet" href="{% static 'css/base.css' %}" />	
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
 	<link rel="stylesheet" href="{% static 'css/dash.css' %}">
 	<style id="colourstyle"></style>
 	<div class="row segment">
@@ -31,7 +31,7 @@
     <div class="row segment">
 		<div id="" class="col-md-12 sectiontitle">
 			<p>3. Style<i id="styleedit" class="edit icon"></i></p>
-        </div>		
+        </div>
 	    <div id="colorchooser" class="col-md-12 center">
 	    	<p>Please choose a colour scheme</p>
 	    	<div id="colorchoices" class="row">
@@ -42,11 +42,11 @@
 	    		<i id="color5" data-id="4" class="circle icon huge colorpick"></i>
 	    	</div>
         </div>
-    </div>    
+    </div>
     <div class="row segment">
 		<div id="" class="col-md-12 sectiontitle">
 			<p>4. Create</p>
-        </div>		
+        </div>
 	    <div class="col-md-12">
 	    	<div id="create-text" class="row">
 	    		<div class="col-md-12">
@@ -59,18 +59,6 @@
 					  <div class="field">
 					    <textarea id="create-description" rows="2"></textarea>
 					  </div>
-					</div>
-					<p class="create-text">Filters<i id="filterplus" class="plus circle icon large plusicon"></i></p>
-					<div id="filterchooser" class="row">
-						<div class="col-md-4 filterbox">
-							<div id="filter0" class="filterselect center"><i data-id="0" class="plus circle icon large plusicon filterselectbutton"></i></div>
-						</div>
-						<div class="col-md-4 filterbox">
-							<div id="filter1" class="filterselect center"><i data-id="1" class="plus circle icon large plusicon filterselectbutton"></i></div>
-						</div>
-						<div class="col-md-4 filterbox">
-							<div id="filter2" class="filterselect center"><i data-id="2" class="plus circle icon large plusicon filterselectbutton"></i></div>
-						</div>
 					</div>
 					<p class="create-text">Headline numbers<i id="headlineplus" class="plus circle icon large plusicon"></i></p>
 					<div id="headlinechooser" class="row">
@@ -86,15 +74,16 @@
 					</div>
 					<p class="create-text">Dashboard</p>
 					<div id="dashboardlayout" class="row">
-					</div>						            
+					</div>
 	    		</div>
 	    	</div>
         </div>
     </div>
+
     <div class="row segment">
 		<div id="" class="col-md-12 sectiontitle">
 			<p>5. Data Table</p>
-        </div>		
+        </div>
         <div class="ui toggle checkbox">
 		  <input id="tablecheck" type="checkbox" name="public">
 		  <label>Enable data table</label>
@@ -103,15 +92,33 @@
 	    	<div class="col-md-12">
 	    		<p>Choose fields to include</p>
 	    		<ul id="tablefields">
-
 	    		</ul>
 	    	</div>
 	    </div>
     </div>
+
+    <div class="row segment">
+    <div id="" class="col-md-12 sectiontitle">
+      <p>6. Choose Filters</p>
+      </div>
+    <p class="create-text">Filters<i id="filterplus" class="plus circle icon large plusicon"></i></p>
+    <div id="filterchooser" class="row">
+      <div class="col-md-4 filterbox">
+        <div id="filter0" class="filterselect center"><i data-id="0" class="plus circle icon large plusicon filterselectbutton"></i></div>
+      </div>
+      <div class="col-md-4 filterbox">
+        <div id="filter1" class="filterselect center"><i data-id="1" class="plus circle icon large plusicon filterselectbutton"></i></div>
+      </div>
+      <div class="col-md-4 filterbox">
+        <div id="filter2" class="filterselect center"><i data-id="2" class="plus circle icon large plusicon filterselectbutton"></i></div>
+      </div>
+    </div>
+    </div>
+
     <div class="row segment">
 		<div id="" class="col-md-12 sectiontitle">
-			<p>6. Save and Share</p>
-        </div>		
+			<p>7. Save and Share</p>
+        </div>
 	    <div id="savebutton" class="col-md-12 center">
 			<button id="save" class="ui primary button large">Save</button>
         </div>
@@ -146,7 +153,7 @@
 		</div>
 		<div class="ui bottom attached tab segment" data-tab="maps">
 			<div id="mapcontent" class="row"></div>
-		</div>				
+		</div>
 	  </div>
 	  <div class="actions">
 	    <div class="ui black button cancel">
@@ -198,7 +205,7 @@
 	  	<p>Size Point by</p>
 		<select id="sizeselect"></select>
 	  	<p>Colour Point by</p>
-		<select id="colourselect"></select>		
+		<select id="colourselect"></select>
 	  </div>
 	  <div class="actions">
 	  	<div id="savemapoptions" class="ui blue button save">
@@ -208,7 +215,7 @@
 	      Close
 	    </div>
 	  </div>
-	</div>	
+	</div>
 	<div id="filtermodal" class="ui modal">
 	  <div class="header">
 	    <p>Add a filter</p>
@@ -259,7 +266,7 @@
 	      Close
 	    </div>
 	  </div>
-	</div>		
+	</div>
     <script>
     	var dataURL = '{{ dataURL|safe }}';
     	var gridURL = "{% static 'grid_data/gridxxx.html' %}";
@@ -268,6 +275,6 @@
     	var config = {{ config|safe }};
     	var id = {{id}}
     </script>
-    <script src="{% static 'js/dashmaker.js' %}"></script> 
-    <script src="{% static 'js/dash_render.js' %}"></script> 
+    <script src="{% static 'js/dashmaker.js' %}"></script>
+    <script src="{% static 'js/dash_render.js' %}"></script>
 {% endblock %}
