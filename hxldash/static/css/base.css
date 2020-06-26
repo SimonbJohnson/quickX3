@@ -492,3 +492,7 @@ p.highlighttitle{
 	color: #FF8F00;
 	font-weight:800;
 }
+
+#filterchooser {
+	margin-bottom:15px;
+}
