@@ -9,7 +9,7 @@
 		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_1.png' %}" />
 		<p class="center infocaption">A dashboard with added text to the map info box showing the orgs and locations they are working.</p>
 		<h3>1. Load the data</h3>
-		<p>For this tutorial we will be using a dataset of Ebola cases by treatment centre. The number of cases and deaths are not real. This data set is purely for use with this tutorial.</p>
+		<p>For this tutorial we will be using <a href="https://docs.google.com/spreadsheets/d/1gmPKvQA8z438NsKSYTOheG_107y90_S_HweuoUQLhD4/edit" target="_blank">a dataset of Ebola cases by treatment centre</a>. The number of cases and deaths are not real. This data set is purely for use with this tutorial.</p>
 		<p>Drop the dataset into the HXLDash load data screen and click load.</p>
 		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_2.png' %}" />
 		<p class="center infocaption">A dashboard with add text to the map info box showing the orgs and locations they are working.</p>
@@ -35,9 +35,14 @@
 		<p class="center infocaption">The map options menu</p>
 		<p>The drop down menu below the words <b>Display Attribute</b> show the fields from data set. Select Primary Organisation (<b>#org</b>) and click save. Now when you hover over an area it lists the organisations working there.</p>
 		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_9.png' %}" />
-		<p class="center infocaption"></p>
+		<p class="center infocaption">The organisation is now used as the display attribute</p>
 		<h3>5. Customising the attribute</h3>
-		<p>It's possible to add customised display attributes by using functions in a spreadsheet. </p>
+		<p>It's possible to add customised display attributes by using functions in a spreadsheet.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_10.png' %}" />
+		<p class="center infocaption">Using spreadsheet formulas to create a new field</p>
+		<p>Here we combine the organisation column and the location column via a spreadsheet formula to create a new column containing both. Choosing this column in the chart options displays the newly created field.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_display_11.png' %}" />
+		<p class="center infocaption">The hover details now show data from multiple columns as seen below.</p>
 	</div>
 </div>
 {% endblock %}
