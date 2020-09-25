@@ -1,0 +1,70 @@
+{% extends 'hxldash/info.html' %}
+{% load staticfiles %}
+
+{% block info %}
+<div class="row">
+	<div class="col-md-12">
+		<h2>Tutorials</h2>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<a class="invisiblelink" href="{% url 'info' 'quickstart' %}">
+			<div class="tutorialbox">
+				<h3>Quickstart</h3>
+				<img class="tutorial_image" src="{% static 'images/info/quickstart14.png' %}" />
+				<p>Cover the basics of how to make a dashboard with HXLDash.</p>
+			</div>
+		</a>
+	</div>
+	<div class="col-md-6">
+		<a class="invisiblelink" href="{% url 'tutorials' 'area_maps' %}">
+			<div class="tutorialbox">
+				<h3>Area Maps</h3>
+				<img class="tutorial_image" src="{% static 'images/info/tutorials/area_map_1.png' %}" />
+				<p>How to prepare data for and create a choropleth map.</p>
+			</div>
+		</a>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<a class="invisiblelink" href="{% url 'tutorials' 'point_mapping' %}">
+			<div class="tutorialbox">
+				<h3>Points Maps</h3>
+				<img class="tutorial_image" src="{% static 'images/info/tutorials/tutorial_point_11.png' %}" />
+				<p>How to prepare data for and create a point map.</p>
+			</div>
+		</a>
+	</div>
+	<div class="col-md-6">
+		<a class="invisiblelink" href="{% url 'tutorials' 'iframe' %}">
+			<div class="tutorialbox">
+				<h3>Embedding HXLDash</h3>
+				<img class="tutorial_image" src="{% static 'images/info/tutorials/tutorial_iframe_2.png' %}" />
+				<p>How to use an iframe to embed a HXLDash onto other websites.</p>
+			</div>
+		</a>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<a class="invisiblelink" href="{% url 'tutorials' 'displayattribute' %}">
+			<div class="tutorialbox">
+				<h3>Custom info boxes on maps</h3>
+				<img class="tutorial_image" src="{% static 'images/info/tutorials/tutorial_display_1.png' %}" />
+				<p>How to change what information appears on maps when you hover different areas.</p>
+			</div>
+		</a>
+	</div>
+	<div class="col-md-6">
+		<a class="invisiblelink" href="{% url 'tutorials' 'kobo' %}">
+			<div class="tutorialbox">
+				<h3>Connecting Kobo to HXLDash</h3>
+				<img class="tutorial_image" src="{% static 'images/info/tutorials/tutorial_kobo_1.png' %}" />
+				<p>How to link HXLDash to Kobo for an automatically updating dashboard.</p>
+			</div>
+		</a>
+	</div>
+</div>
+{% endblock %}

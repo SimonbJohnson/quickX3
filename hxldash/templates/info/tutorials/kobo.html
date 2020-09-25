@@ -1,0 +1,59 @@
+{% extends 'hxldash/info.html' %}
+{% load staticfiles %}
+
+{% block info %}
+<div class="row">
+	<div class="col-md-12">
+		<h2>How to connect Kobo to HXLDash</h2>
+		<p>A guide of how to connect Kobo to HXLDash and setting up an automatically updating dashboard and workflow with no code</p>
+		<h3>1. How it will work</h3>
+		<p>HXLDash will be connected to Kobo via a tool called the HXLProxy.</p>
+		<ul>
+			<li><p>Kobo collects and stores the data</p></li>
+			<li><p>HXLProxy moves the data (and can apply transforms and analysis) to HXLDash</p></li>
+			<li><p>HXLDash visualises the data</p></li>
+		</ul>
+		<p>The data in this workflow will update every 4 hours</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_kobo_1.png' %}" />
+		<p class="center infocaption">Kobo to HXLDash workflow</p>
+		<h3>2. Prerequisites</h3>
+		<p>Before starting, you will need the following:</p>
+		<ul>
+			<li><p>An account on <a href="https://kobo.humanitarianresponse.info">https://kobo.humanitarianresponse.info</a></p></li> 
+			<li><p>A Kobo survey with HXL hashtags defined for at least one question</p></li>
+			<li><p>Some data in the survey</p></li>
+		</ul>
+		<h3>3. Get your Kobo API key</h3>
+		<p>Go to <a href="https://kobo.humanitarianresponse.info/#/account-settings">https://kobo.humanitarianresponse.info/#/account-settings</a>. Click on the eye-shaped icon to make the API token visible. You need to do this only once: your API token will be the same for every survey associated with your account.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_kobo_2.png' %}" />
+		<p class="center infocaption">Getting you Kobo API key</p>
+		<h3>4. Get the link to your survey</h3>
+		<p>Browse to your survey in Kobo and copy the URL. It should be of a similar format to</p>
+		<p><code>https://kobo.humanitarianresponse.info/#/forms/445e3cd1032b85fa7ad15d/summary</code></p>
+		<h3>5. Connect Kobo to HXLProxy</h3>
+		<p>Paste your survey link into the <a href="https://proxy.hxlstandard.org/">HXL Proxy</a></p>.
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_kobo_3.png' %}" />
+		<p class="center infocaption">Loading your survey into the HXLProxy</p>
+		<h3>6. Enter your Kobo API key into the HXL Proxy</h3>
+		<p>The HXL Proxy will detect that the link for Kobo and bring up the saved recipe screen. In the box labeled <b>Authorisation Token</b> enter your kobo API key. Please make sure your write it in the format <b>TOKEN &ltAPI KEY></b> as seen in the image below.</p>
+		<p>You will also have to enter a recipe name and a password. The password is specific to the recipe, not to you, and there is no way to retrieve it if you lose it.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_kobo_4.png' %}" />
+		<p class="center infocaption">Loading your survey into the HXLProxy</p>
+		<h3>7. Add filters</h3>
+		<p>The next step is to use the HXL Proxy to apply filters to your data. This could be to aggregate your data to a level that is safe to share or you could filter out sensitive columns such as contact details. To see more ways the HXL proxy please see the <a href="https://github.com/HXLStandard/hxl-proxy/wiki/Use-cases">HXL Proxy use case page</a>.</p>
+		<div class="alert alert-warning" role="alert"><p>Please note that data from HXL Proxy to HXLDash is public, so the data has to be aggregated and sensitive data removed to a level that safe.</p></div>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_kobo_5.png' %}" />
+		<p class="center infocaption">HXL Proxy Example: A filter to aggregate data for Adm1</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_kobo_6.png' %}" />
+		<p class="center infocaption">HXL Proxy Example: A filter to remove columns tagged #contact</p>
+		<h3>8. Get the URL</h3>
+		<p>Copy the URL for the data from the HXL Proxy.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_kobo_7.png' %}" />
+		<p class="center infocaption">How to get the URL from HXL Proxy</p>
+		<h3>9. Load into HXLDash</h3>
+		<p>Paste this link into HXLDash and then you are ready to create a dashboard in HXLDash with data automatically flowing from Kobo.</p>
+		<img class="info_image" src="{% static 'images/info/tutorials/tutorial_kobo_8.png' %}" />
+		<p class="center infocaption">Loading your Kobo data into HXLDash</p>
+	</div>
+</div>
+{% endblock %}
