@@ -1,18 +1,22 @@
 {% extends 'base/base.html' %}
 {% load staticfiles %}
+{% load cookielaw_tags %}
 
 {% block content %}
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script> 
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/icon.min.css' />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" /> 
-    <div class="row">
-        <div id="datachooser" class="col-md-6 col-md-offset-3">
-            <ul>
-                {% for dash in dashboards %}
-                    <li><p><a href="{% url 'view' dash.id %}">{{ dash.title }}</a> - {{ dash.org }} - {{ dash.user }}</p></li>
-                {% endfor %}
-            </ul>
+    {% cookielaw_banner %}
+    <div class="content container dashcontent"> 
+        <div class="row">
+            <div id="datachooser" class="col-md-6 col-md-offset-3">
+                <ul>
+                    {% for dash in dashboards %}
+                        <li><p><a href="{% url 'view' dash.id %}">{{ dash.title }}</a> - {{ dash.org }} - {{ dash.user }}</p></li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
 {% endblock %}

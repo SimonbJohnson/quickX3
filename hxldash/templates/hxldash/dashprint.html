@@ -2,45 +2,45 @@
 {% load staticfiles %}
 
 {% block content %}
-            <link rel="stylesheet" href="{% static 'css/dash.css' %}">
-            <link rel="stylesheet" href="{% static 'css/print.css' %}">
-            <style id="colourstyle"></style>
-            <div class="row">
-                <div id="title" class="col-md-12">
+    <div class="content container dashcontent"> 
+                <link rel="stylesheet" href="{% static 'css/dash.css' %}">
+                <link rel="stylesheet" href="{% static 'css/print.css' %}">
+                <style id="colourstyle"></style>
+                <div class="row">
+                    <div id="title" class="col-md-12">
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div id="description" class="col-md-12">
+                <div class="row">
+                    <div id="description" class="col-md-12">
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div id="update" class="col-md-12">
-            </div>
-            </div>
-            <div id="filter" class="row">
-            </div>
-            <div id="filterline" class="row">
-            </div>
-            <div id="headline" class="row">
-            </div>             
-            <div class="row">
-                <div id="grid" class="col-md-12">
+                <div class="row">
+                    <div id="update" class="col-md-12">
                 </div>
-            </div>
-            <div class="row">
-                <div id="table" class="col-md-12"></div>
-            </div>
-    </div>
-    <div class="sp sp-circle"></div>
-    <div class="footer container-fluid">
-        <div class="container">
-            <div id="footercontent" class="row">
-                <div class="col-md-12"><p>Made with HXLDash</p></div>
+                </div>
+                <div id="filter" class="row">
+                </div>
+                <div id="filterline" class="row">
+                </div>
+                <div id="headline" class="row">
+                </div>             
+                <div class="row">
+                    <div id="grid" class="col-md-12">
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="table" class="col-md-12"></div>
+                </div>
+        </div>
+        <div class="sp sp-circle"></div>
+        <div class="footer container-fluid">
+            <div class="container">
+                <div id="footercontent" class="row">
+                    <div class="col-md-12"><p>Made with HXLDash</p></div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="container">
-
     <script>
         var config = {{ config|safe }};
         var gridURL = "{% static 'grid_data/gridxxx.html' %}";

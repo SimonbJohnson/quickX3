@@ -1,5 +1,4 @@
 {% load staticfiles %}
-{% load cookielaw_tags %}
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -47,10 +46,7 @@
         </script>
     </head>
     <body>
-        {% cookielaw_banner %}        
-        <div class="content container dashcontent">
-            {% block content %}
-            {% endblock %}
-        </div>
+        {% block content %}
+        {% endblock %}
     </body>
 </html>

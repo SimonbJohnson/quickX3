@@ -1,278 +1,282 @@
 {% extends 'base/base.html' %}
 {% load staticfiles %}
+{% load cookielaw_tags %}
 
 {% block content %}
+	{% cookielaw_banner %}
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script>
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/icon.min.css' />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
 	<link rel="stylesheet" href="{% static 'css/dash.css' %}">
 	<style id="colourstyle"></style>
-	<div class="row segment">
-		<div id="" class="col-md-12 sectiontitle">
-			<p>1. Data</p>
-        </div>
-	    <div id="datasegmentcontent" class="col-md-6 col-md-offset-3 center">
-            <div id="status"><p>Loading data...</p></div>
-            <p>Please refer to our <a href="{% url 'info' %}" target="_blank">help section</a> to get started.</p>
-        </div>
-    </div>
-    <div class="row segment">
-		<div class="col-md-12 sectiontitle">
-			<p id="layoutsegment">2. Layout<i id="layoutedit" class="edit icon"></i></p>
-        </div>
-	    <div id="layoutchooser" class="col-md-12 center">
-	    	<p>Select a layout for your dashboard.</p>
-	    	<p>Large sections are better for maps.</p>
-	    	<div id="layoutsegmentcontent" class="row">
-	    	</div>
-        </div>
-    </div>
-    <div class="row segment">
-		<div id="" class="col-md-12 sectiontitle">
-			<p>3. Style<i id="styleedit" class="edit icon"></i></p>
-        </div>
-	    <div id="colorchooser" class="col-md-12 center">
-	    	<p>Please choose a colour scheme</p>
-	    	<div id="colorchoices" class="row">
-	    		<i id="color1" data-id="0" class="circle icon huge colorpick"></i>
-	    		<i id="color2" data-id="1" class="circle icon huge colorpick"></i>
-	    		<i id="color3" data-id="2" class="circle icon huge colorpick"></i>
-	    		<i id="color4" data-id="3" class="circle icon huge colorpick"></i>
-	    		<i id="color5" data-id="4" class="circle icon huge colorpick"></i>
-	    	</div>
-        </div>
-    </div>
-    <div class="row segment">
-		<div id="" class="col-md-12 sectiontitle">
-			<p>4. Create</p>
-        </div>
-	    <div class="col-md-12">
-	    	<div id="create-text" class="row">
-	    		<div class="col-md-12">
-	    			<p class="create-text">Title</p>
-		            <div class="ui input fluid huge">
-		                <input id="create-title" type="text" placeholder="Title...">
-		            </div>
-	    			<p class="create-text">Description</p>
-					<div class="ui form">
-					  <div class="field">
-					    <textarea id="create-description" rows="2"></textarea>
-					  </div>
-					</div>
-					<p class="create-text">Headline numbers<i id="headlineplus" class="plus circle icon large plusicon"></i></p>
-					<div id="headlinechooser" class="row">
-						<div class="col-md-4 headlinebox">
-							<div id="headline0" class="headlineselect center"><i data-id="0" class="plus circle icon large plusicon headlineselectbutton"></i></div>
-						</div>
-						<div class="col-md-4 headlinebox">
-							<div id="headline1" class="headlineselect center"><i data-id="1" class="plus circle icon large plusicon headlineselectbutton"></i></div>
-						</div>
-						<div class="col-md-4 headlinebox">
-							<div id="headline2" class="headlineselect center"><i data-id="2" class="plus circle icon large plusicon headlineselectbutton"></i></div>
-						</div>
-					</div>
-					<p class="create-text">Dashboard</p>
-					<div id="dashboardlayout" class="row">
-					</div>
-	    		</div>
-	    	</div>
-        </div>
-    </div>
-
-    <div class="row segment">
-		<div id="" class="col-md-12 sectiontitle">
-			<p>5. Data Table</p>
-        </div>
-        <div class="ui toggle checkbox">
-		  <input id="tablecheck" type="checkbox" name="public">
-		  <label>Enable data table</label>
-		</div>
-		<div id="tableselect"">
-	    	<div class="col-md-12">
-	    		<p>Choose fields to include</p>
-	    		<ul id="tablefields">
-	    		</ul>
-	    	</div>
+	<div class="content container dashcontent"> 
+		<div class="row segment">
+			<div id="" class="col-md-12 sectiontitle">
+				<p>1. Data</p>
+	        </div>
+		    <div id="datasegmentcontent" class="col-md-6 col-md-offset-3 center">
+	            <div id="status"><p>Loading data...</p></div>
+	            <p>Please refer to our <a href="{% url 'info' %}" target="_blank">help section</a> to get started.</p>
+	        </div>
 	    </div>
-    </div>
+	    <div class="row segment">
+			<div class="col-md-12 sectiontitle">
+				<p id="layoutsegment">2. Layout<i id="layoutedit" class="edit icon"></i></p>
+	        </div>
+		    <div id="layoutchooser" class="col-md-12 center">
+		    	<p>Select a layout for your dashboard.</p>
+		    	<p>Large sections are better for maps.</p>
+		    	<div id="layoutsegmentcontent" class="row">
+		    	</div>
+	        </div>
+	    </div>
+	    <div class="row segment">
+			<div id="" class="col-md-12 sectiontitle">
+				<p>3. Style<i id="styleedit" class="edit icon"></i></p>
+	        </div>
+		    <div id="colorchooser" class="col-md-12 center">
+		    	<p>Please choose a colour scheme</p>
+		    	<div id="colorchoices" class="row">
+		    		<i id="color1" data-id="0" class="circle icon huge colorpick"></i>
+		    		<i id="color2" data-id="1" class="circle icon huge colorpick"></i>
+		    		<i id="color3" data-id="2" class="circle icon huge colorpick"></i>
+		    		<i id="color4" data-id="3" class="circle icon huge colorpick"></i>
+		    		<i id="color5" data-id="4" class="circle icon huge colorpick"></i>
+		    	</div>
+	        </div>
+	    </div>
+	    <div class="row segment">
+			<div id="" class="col-md-12 sectiontitle">
+				<p>4. Create</p>
+	        </div>
+		    <div class="col-md-12">
+		    	<div id="create-text" class="row">
+		    		<div class="col-md-12">
+		    			<p class="create-text">Title</p>
+			            <div class="ui input fluid huge">
+			                <input id="create-title" type="text" placeholder="Title...">
+			            </div>
+		    			<p class="create-text">Description</p>
+						<div class="ui form">
+						  <div class="field">
+						    <textarea id="create-description" rows="2"></textarea>
+						  </div>
+						</div>
+						<p class="create-text">Headline numbers<i id="headlineplus" class="plus circle icon large plusicon"></i></p>
+						<div id="headlinechooser" class="row">
+							<div class="col-md-4 headlinebox">
+								<div id="headline0" class="headlineselect center"><i data-id="0" class="plus circle icon large plusicon headlineselectbutton"></i></div>
+							</div>
+							<div class="col-md-4 headlinebox">
+								<div id="headline1" class="headlineselect center"><i data-id="1" class="plus circle icon large plusicon headlineselectbutton"></i></div>
+							</div>
+							<div class="col-md-4 headlinebox">
+								<div id="headline2" class="headlineselect center"><i data-id="2" class="plus circle icon large plusicon headlineselectbutton"></i></div>
+							</div>
+						</div>
+						<p class="create-text">Dashboard</p>
+						<div id="dashboardlayout" class="row">
+						</div>
+		    		</div>
+		    	</div>
+	        </div>
+	    </div>
 
-    <div class="row segment">
-    	<div id="" class="col-md-12 sectiontitle">
-      		<p>6. Choose Filters</p>
-      	</div>
-      	<div class="col-md-12">
-      		<p class="create-text">Filters<i id="filterplus" class="plus circle icon large plusicon"></i></p>
-	      	<div id="filterchooser" class="row">
-	        	<div class="col-md-4 filterbox">
-	          		<div id="filter0" class="filterselect center">
-	          			<i data-id="0" class="plus circle icon large plusicon filterselectbutton"></i>
-	          		</div>
-	        	</div>
-	        	<div class="col-md-4 filterbox">
-	          		<div id="filter1" class="filterselect center">
-	          			<i data-id="1" class="plus circle icon large plusicon filterselectbutton"></i>
-	          		</div>
-	        	</div>
-	        	<div class="col-md-4 filterbox">
-	          		<div id="filter2" class="filterselect center">
-	          			<i data-id="2" class="plus circle icon large plusicon filterselectbutton"></i>
-	          		</div>
-	        	</div>
+	    <div class="row segment">
+			<div id="" class="col-md-12 sectiontitle">
+				<p>5. Data Table</p>
+	        </div>
+	        <div class="ui toggle checkbox">
+			  <input id="tablecheck" type="checkbox" name="public">
+			  <label>Enable data table</label>
+			</div>
+			<div id="tableselect"">
+		    	<div class="col-md-12">
+		    		<p>Choose fields to include</p>
+		    		<ul id="tablefields">
+		    		</ul>
+		    	</div>
+		    </div>
+	    </div>
+
+	    <div class="row segment">
+	    	<div id="" class="col-md-12 sectiontitle">
+	      		<p>6. Choose Filters</p>
 	      	</div>
+	      	<div class="col-md-12">
+	      		<p class="create-text">Filters<i id="filterplus" class="plus circle icon large plusicon"></i></p>
+		      	<div id="filterchooser" class="row">
+		        	<div class="col-md-4 filterbox">
+		          		<div id="filter0" class="filterselect center">
+		          			<i data-id="0" class="plus circle icon large plusicon filterselectbutton"></i>
+		          		</div>
+		        	</div>
+		        	<div class="col-md-4 filterbox">
+		          		<div id="filter1" class="filterselect center">
+		          			<i data-id="1" class="plus circle icon large plusicon filterselectbutton"></i>
+		          		</div>
+		        	</div>
+		        	<div class="col-md-4 filterbox">
+		          		<div id="filter2" class="filterselect center">
+		          			<i data-id="2" class="plus circle icon large plusicon filterselectbutton"></i>
+		          		</div>
+		        	</div>
+		      	</div>
+		    </div>
 	    </div>
-    </div>
-    <div class="row segment">
-		<div id="" class="col-md-12 sectiontitle">
-			<p>7. Save and Share</p>
-        </div>
-	    <div id="savebutton" class="col-md-12 center">
-			<button id="save" class="ui primary button large">Save</button>
-        </div>
-    </div>
-	<div id="headlinemodal" class="ui modal">
-	  <div class="header">
-	    <p>Choose a headline figure</p>
-	  </div>
-	  <div id="headlinecontent" class="content row">
-	  </div>
-	  <div class="actions">
-	    <div class="ui black button cancel">
-	      Close
+	    <div class="row segment">
+			<div id="" class="col-md-12 sectiontitle">
+				<p>7. Save and Share</p>
+	        </div>
+		    <div id="savebutton" class="col-md-12 center">
+				<button id="save" class="ui primary button large">Save</button>
+	        </div>
 	    </div>
-	  </div>
-	</div>
-	<div id="chartmodal" class="ui modal">
-	  <div class="header">
-	    <p>Choose a chart, map or table</p>
-	  </div>
-	  <div id="dashcontent" class="content row">
-		<div class="ui top attached tabular menu">
-		  <div class="active item" data-tab="charts">Charts</div>
-		  <div class="item" data-tab="timeseries">TimeSeries</div>
-		  <div class="item" data-tab="maps">Maps</div>
+		<div id="headlinemodal" class="ui modal">
+		  <div class="header">
+		    <p>Choose a headline figure</p>
+		  </div>
+		  <div id="headlinecontent" class="content row">
+		  </div>
+		  <div class="actions">
+		    <div class="ui black button cancel">
+		      Close
+		    </div>
+		  </div>
 		</div>
-		<div class="ui bottom attached active tab segment" data-tab="charts">
-			<div id="chartcontent" class="row"></div>
+		<div id="chartmodal" class="ui modal">
+		  <div class="header">
+		    <p>Choose a chart, map or table</p>
+		  </div>
+		  <div id="dashcontent" class="content row">
+			<div class="ui top attached tabular menu">
+			  <div class="active item" data-tab="charts">Charts</div>
+			  <div class="item" data-tab="timeseries">TimeSeries</div>
+			  <div class="item" data-tab="maps">Maps</div>
+			</div>
+			<div class="ui bottom attached active tab segment" data-tab="charts">
+				<div id="chartcontent" class="row"></div>
+			</div>
+			<div class="ui bottom attached tab segment" data-tab="timeseries">
+				<div id="timecontent" class="row"></div>
+			</div>
+			<div class="ui bottom attached tab segment" data-tab="maps">
+				<div id="mapcontent" class="row"></div>
+			</div>
+		  </div>
+		  <div class="actions">
+		    <div class="ui black button cancel">
+		      Close
+		    </div>
+		  </div>
 		</div>
-		<div class="ui bottom attached tab segment" data-tab="timeseries">
-			<div id="timecontent" class="row"></div>
+		<div id="chartoptionsmodal" class="ui modal">
+		  <div class="header">
+		    <p>Configure chart</p>
+		  </div>
+		  <div id="filtercontent" class="content row">
+		  	<p>Title</p>
+		  	<div class="ui input fluid large">
+		        <input id="newtitle" name="newtitle" placeholder="New title">
+		    </div>
+		  </div>
+		  <div class="actions">
+		  	<div id="savechartoptions" class="ui blue button save">
+		      Save
+		    </div>
+		    <div class="ui black button cancel">
+		      Close
+		    </div>
+		  </div>
 		</div>
-		<div class="ui bottom attached tab segment" data-tab="maps">
-			<div id="mapcontent" class="row"></div>
-		</div>
-	  </div>
-	  <div class="actions">
-	    <div class="ui black button cancel">
-	      Close
-	    </div>
-	  </div>
-	</div>
-	<div id="chartoptionsmodal" class="ui modal">
-	  <div class="header">
-	    <p>Configure chart</p>
-	  </div>
-	  <div id="filtercontent" class="content row">
-	  	<p>Title</p>
-	  	<div class="ui input fluid large">
-	        <input id="newtitle" name="newtitle" placeholder="New title">
-	    </div>
-	  </div>
-	  <div class="actions">
-	  	<div id="savechartoptions" class="ui blue button save">
-	      Save
-	    </div>
-	    <div class="ui black button cancel">
-	      Close
-	    </div>
-	  </div>
-	</div>
-	<div id="mapoptionsmodal" class="ui modal">
-	  <div class="header">
-	    <p>Configure Map</p>
-	  </div>
-	  <div id="mapoptions" class="content">
-	  	<p>Title</p>
-	  	<div class="ui input fluid large">
-	        <input id="newtitlemap" name="newtitlemap" placeholder="New title">
-	    </div>
-	    <p>Map scale</p>
-	    <select id="scaleselect">
-	    	<option value="linear">Linear</option>
-	    	<option value="log">Logarithmic</option>
-	    	<option value="binary">Binary</option>
-	    </select>
-	    <p>Display Attribute</p>
-	    <p>Choose a field to show in the hover over information panel</p>
-	    <select id="displayattributeselect">
+		<div id="mapoptionsmodal" class="ui modal">
+		  <div class="header">
+		    <p>Configure Map</p>
+		  </div>
+		  <div id="mapoptions" class="content">
+		  	<p>Title</p>
+		  	<div class="ui input fluid large">
+		        <input id="newtitlemap" name="newtitlemap" placeholder="New title">
+		    </div>
+		    <p>Map scale</p>
+		    <select id="scaleselect">
+		    	<option value="linear">Linear</option>
+		    	<option value="log">Logarithmic</option>
+		    	<option value="binary">Binary</option>
+		    </select>
+		    <p>Display Attribute</p>
+		    <p>Choose a field to show in the hover over information panel</p>
+		    <select id="displayattributeselect">
 
-	    </select>
-	  </div>
-	  <div id="mapoptionspoint" class="content">
-	  	<p>Size Point by</p>
-		<select id="sizeselect"></select>
-	  	<p>Colour Point by</p>
-		<select id="colourselect"></select>
-	  </div>
-	  <div class="actions">
-	  	<div id="savemapoptions" class="ui blue button save">
-	      Save
-	    </div>
-	    <div class="ui black button cancel">
-	      Close
-	    </div>
-	  </div>
-	</div>
-	<div id="filtermodal" class="ui modal">
-	  <div class="header">
-	    <p>Add a filter</p>
-	  </div>
-	  <div id="filtercontent" class="content row">
-	  	<p>Select a filter to add</p>
-		<select id="filterselect"></select>
-		<button id="addfilter" class="ui primary button">Add filter</button>
-	  </div>
-	  <div class="actions">
-	    <div class="ui black button cancel">
-	      Close
-	    </div>
-	  </div>
-	</div>
-	<div id="savemodal" class="ui modal">
-	  <div class="header">
-	    <p>Save your dashboard</p>
-	  </div>
-	  <div id="savecontent" class="content row">
-	  	<p>Saving your dashboard content</p>
-	  	<form action="/save" method="post" id="form1">{% csrf_token %}
-	  		<input type="hidden" id="formconfig" name="formconfig" value="">
-	  		<div id="saveform">
-		  		<p id="editprompt" class="savetext">Enter password if you want to edit this dashboard in the future (optional)</p>
-		  		<div class="ui input fluid large">
-	                <input id="editpassword" name="editpassword" type="password" placeholder="password...">
+		    </select>
+		  </div>
+		  <div id="mapoptionspoint" class="content">
+		  	<p>Size Point by</p>
+			<select id="sizeselect"></select>
+		  	<p>Colour Point by</p>
+			<select id="colourselect"></select>
+		  </div>
+		  <div class="actions">
+		  	<div id="savemapoptions" class="ui blue button save">
+		      Save
+		    </div>
+		    <div class="ui black button cancel">
+		      Close
+		    </div>
+		  </div>
+		</div>
+		<div id="filtermodal" class="ui modal">
+		  <div class="header">
+		    <p>Add a filter</p>
+		  </div>
+		  <div id="filtercontent" class="content row">
+		  	<p>Select a filter to add</p>
+			<select id="filterselect"></select>
+			<button id="addfilter" class="ui primary button">Add filter</button>
+		  </div>
+		  <div class="actions">
+		    <div class="ui black button cancel">
+		      Close
+		    </div>
+		  </div>
+		</div>
+		<div id="savemodal" class="ui modal">
+		  <div class="header">
+		    <p>Save your dashboard</p>
+		  </div>
+		  <div id="savecontent" class="content row">
+		  	<p>Saving your dashboard content</p>
+		  	<form action="/save" method="post" id="form1">{% csrf_token %}
+		  		<input type="hidden" id="formconfig" name="formconfig" value="">
+		  		<div id="saveform">
+			  		<p id="editprompt" class="savetext">Enter password if you want to edit this dashboard in the future (optional)</p>
+			  		<div class="ui input fluid large">
+		                <input id="editpassword" name="editpassword" type="password" placeholder="password...">
+		            </div>
+			  		<p class="savetext">Enter password for view access (optional)</p>
+			  		<div class="ui input fluid large">
+		                <input id="viewpassword" name="viewpassword" type="password" placeholder="password...">
+		            </div>
+			  		<p class="savetext">Your name (optional). Used if we want to follow up on testing.</p>
+			  		<div class="ui input fluid large">
+		                <input id="user" name="user" type="text" placeholder="name...">
+		            </div>
+			  		<p class="savetext">Your organisation (optional). Used if we want to follow up on testing.</p>
+			  		<div class="ui input fluid large">
+		                <input id="org" name="org" type="text" placeholder="organisation...">
+		            </div>
 	            </div>
-		  		<p class="savetext">Enter password for view access (optional)</p>
-		  		<div class="ui input fluid large">
-	                <input id="viewpassword" name="viewpassword" type="password" placeholder="password...">
-	            </div>
-		  		<p class="savetext">Your name (optional). Used if we want to follow up on testing.</p>
-		  		<div class="ui input fluid large">
-	                <input id="user" name="user" type="text" placeholder="name...">
-	            </div>
-		  		<p class="savetext">Your organisation (optional). Used if we want to follow up on testing.</p>
-		  		<div class="ui input fluid large">
-	                <input id="org" name="org" type="text" placeholder="organisation...">
-	            </div>
-            </div>
-            <div id="updateform"><p>This will save changes over old dashboard</p></div>
-            <button id="submitbutton" class="ui primary button large" type="submit" form="form1" value="Submit">Submit</button>
-		</form>
-	  </div>
-	  <div class="actions">
-	    <div class="ui black button cancel">
-	      Close
-	    </div>
-	  </div>
+	            <div id="updateform"><p>This will save changes over old dashboard</p></div>
+	            <button id="submitbutton" class="ui primary button large" type="submit" form="form1" value="Submit">Submit</button>
+			</form>
+		  </div>
+		  <div class="actions">
+		    <div class="ui black button cancel">
+		      Close
+		    </div>
+		  </div>
+		</div>
 	</div>
     <script>
     	var dataURL = '{{ dataURL|safe }}';
